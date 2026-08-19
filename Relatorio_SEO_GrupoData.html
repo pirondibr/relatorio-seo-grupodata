@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatório SEO · Grupo Data</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --ink: #14211f;
+  --ink-soft: #5d6b68;
+  --line: #e2ded4;
+  --line-soft: #efece4;
+  --paper: #ffffff;
+  --bg: #f4f2ec;
+  --accent: #0d3b3a;
+  --accent-soft: #14544f;
+  --gold: #b3893f;
+  --facil: #1e8a5f;
+  --facil-bg: #dff3e6;
+  --medio: #b26a12;
+  --medio-bg: #fbeacd;
+  --dificil: #b23a35;
+  --dificil-bg: #fadedb;
+  --ref: #1f5f86;
+  --ref-bg: #ddebf6;
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(20,33,31,.04), 0 8px 24px rgba(20,33,31,.05);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 520px at 8% -8%, #e0efec 0%, transparent 62%),
+    radial-gradient(820px 420px at 96% -4%, #f3e8d6 0%, transparent 58%),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1220px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* ---------- header ---------- */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--gold);
+}
+.masthead h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.35rem;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.masthead .lede { margin: 8px 0 0; color: var(--ink-soft); max-width: 56ch; }
+.meta-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.meta-chips span {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: .78rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* ---------- tabs ---------- */
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  gap: 4px;
+  margin: 0 -24px 26px;
+  padding: 14px 24px;
+  background: rgba(244,242,236,.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-weight: 600;
+  font-size: .92rem;
+  padding: 9px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: .18s ease;
+}
+.tab:hover { color: var(--accent); background: rgba(13,59,58,.06); }
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(13,59,58,.22);
+}
+.tab .n {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: .72rem;
+  opacity: .7;
+  font-variant-numeric: tabular-nums;
+}
+.panel-view { display: none; animation: fade .28s ease; }
+.panel-view.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- callout ---------- */
+.callout {
+  position: relative;
+  background: linear-gradient(180deg, #fffefb, #fdfbf6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.callout::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent), var(--gold));
+}
+.callout.warn::before { background: linear-gradient(180deg, var(--medio), var(--dificil)); }
+.callout-badge {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.callout h2 {
+  margin: 0 0 10px;
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  color: var(--accent);
+  font-weight: 600;
+}
+.callout p { margin: 0; color: var(--ink-soft); max-width: 82ch; }
+.callout strong { color: var(--ink); }
+.conc-lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
+}
+.list-label {
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.tag.op { background: var(--facil-bg); color: var(--facil); border-color: #bfe6cd; }
+.tag.hard { background: var(--dificil-bg); color: var(--dificil); border-color: #f2c8c4; }
+
+/* ---------- kpis ---------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.kpi {
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+}
+.kpi-label {
+  display: block;
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .72;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  display: block;
+  font-size: 2.05rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.02em;
+}
+.kpi-hint { display: block; margin-top: 8px; font-size: .76rem; opacity: .62; }
+
+/* ---------- layout ---------- */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: 14px;
+  margin-bottom: 30px;
+  align-items: start;
+}
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.stack { display: grid; gap: 14px; }
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 34px 0 16px;
+}
+.section-label span {
+  font-family: Georgia, serif;
+  font-size: 1.12rem;
+  color: var(--accent);
+}
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ---------- panel ---------- */
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-width: 0;
+}
+.panel.soft { background: linear-gradient(180deg, #fffefc, var(--paper)); }
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.panel-title h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: -.01em;
+}
+.panel-title p { margin: 4px 0 0; font-size: .78rem; color: var(--ink-soft); }
+
+.sorter { display: inline-flex; gap: 4px; flex-shrink: 0; }
+.chip {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .15s;
+}
+.chip:hover { border-color: var(--accent-soft); color: var(--accent); }
+.chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ---------- funnel ---------- */
+.funnel { padding: 16px 18px 20px; display: grid; gap: 16px; }
+.funnel-row { display: grid; grid-template-columns: 86px 1fr auto; align-items: center; gap: 12px; }
+.funnel-name { font-size: .84rem; font-weight: 600; display: inline-flex; align-items: center; gap: 7px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.topo { background: #6aa8d8; }
+.dot.meio { background: #e0b054; }
+.dot.fundo { background: #5cb389; }
+.funnel-track { height: 9px; background: var(--line-soft); border-radius: 999px; overflow: hidden; }
+.funnel-fill { height: 100%; border-radius: 999px; }
+.funnel-fill.topo { background: linear-gradient(90deg, #8fc0e6, #5a95c9); }
+.funnel-fill.meio { background: linear-gradient(90deg, #f0cd88, #d69f38); }
+.funnel-fill.fundo { background: linear-gradient(90deg, #8fd3b1, #48a175); }
+.funnel-meta { font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- category cards ---------- */
+.cat-grid {
+  padding: 16px 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.panel.feature { margin-bottom: 14px; }
+.cat-grid.wide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; padding: 18px 20px 22px; }
+.cat-grid.wide-grid .cat-card {
+  padding: 15px 18px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "top top" "bar bar" "meta term";
+  column-gap: 18px;
+  align-items: center;
+}
+.cat-grid.wide-grid .cat-card-top { grid-area: top; }
+.cat-grid.wide-grid .bar { grid-area: bar; }
+.cat-grid.wide-grid .cat-card-meta { grid-area: meta; }
+.cat-grid.wide-grid .cat-card-top-term { grid-area: term; margin: 0; text-align: right; }
+.cat-grid.wide-grid .cat-card-top h3 { font-size: .95rem; }
+.panel.funnel-panel { margin-bottom: 30px; }
+.panel.funnel-panel .funnel { grid-template-columns: repeat(3, minmax(0, 1fr)); display: grid; gap: 22px; }
+.panel.funnel-panel .funnel-row { grid-template-columns: 78px 1fr; grid-template-areas: "name track" "meta meta"; row-gap: 7px; }
+.panel.funnel-panel .funnel-name { grid-area: name; }
+.panel.funnel-panel .funnel-track { grid-area: track; }
+.panel.funnel-panel .funnel-meta { grid-area: meta; }
+.cat-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  padding: 13px 14px;
+  background: #fff;
+  transition: .18s ease;
+}
+.cat-card:hover {
+  border-color: var(--accent-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(20,33,31,.07);
+}
+.cat-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.cat-card-top h3 { margin: 0; font-size: .88rem; color: var(--accent); line-height: 1.3; }
+.share { font-size: .78rem; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+.bar { height: 5px; background: var(--line-soft); border-radius: 999px; margin: 10px 0 9px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent-soft), var(--accent)); }
+.cat-card-meta { display: flex; gap: 14px; font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.cat-card-meta strong { color: var(--ink); }
+.cat-card-top-term {
+  margin: 8px 0 0;
+  font-size: .72rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- difficulty bars ---------- */
+.dbars { padding: 16px 18px 8px; display: grid; gap: 12px; }
+.dbar-row { display: grid; grid-template-columns: minmax(0, 150px) 1fr auto; align-items: center; gap: 12px; }
+.dbar-name { font-size: .8rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dbar { display: flex; height: 9px; border-radius: 999px; overflow: hidden; background: var(--line-soft); }
+.seg.facil { background: #4dae7f; }
+.seg.medio { background: #e0a24a; }
+.seg.dificil { background: #d4726c; }
+.dbar-meta { font-size: .74rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; padding: 6px 18px 18px; font-size: .74rem; color: var(--ink-soft); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.sw.facil { background: #4dae7f; }
+.sw.medio { background: #e0a24a; }
+.sw.dificil { background: #d4726c; }
+
+.method { margin: 0; padding: 16px 18px 20px 36px; color: var(--ink-soft); font-size: .86rem; }
+.method li { margin-bottom: 7px; }
+.method strong { color: var(--ink); }
+
+/* ---------- tables ---------- */
+.scroll { overflow-x: auto; max-height: 460px; }
+table.grid { width: 100%; border-collapse: collapse; font-size: .84rem; }
+table.grid thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-align: left;
+  padding: 9px 12px;
+  background: #f7f5ef;
+  border-bottom: 1px solid var(--line);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+table.grid tbody td { padding: 9px 12px; border-bottom: 1px solid var(--line-soft); }
+table.grid tbody tr:last-child td { border-bottom: none; }
+table.grid tbody tr:hover { background: #f8fbfa; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { color: var(--accent); }
+.idx { width: 38px; color: #a8a29a; font-variant-numeric: tabular-nums; text-align: right; }
+.term { font-weight: 500; }
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.num.strong { font-weight: 700; }
+.soft-col { color: var(--ink-soft); }
+.rank-cell { width: 78px; }
+.rank { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .8rem; }
+.rank.ok { color: var(--facil); }
+.rank.none { color: #b8b2a8; }
+
+.pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+.pill.topo { background: #e2eef8; color: #1c5e8c; }
+.pill.meio { background: #fbf0d5; color: #8a6416; }
+.pill.fundo { background: #ddf2e6; color: #1c7a52; }
+
+.diff {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.diff.facil { background: var(--facil-bg); color: var(--facil); }
+.diff.medio { background: var(--medio-bg); color: var(--medio); }
+.diff.dificil { background: var(--dificil-bg); color: var(--dificil); }
+.diff.ref, .diff.na { background: var(--ref-bg); color: var(--ref); }
+
+/* ---------- programação ---------- */
+.prog-kpis .ok-kpi { background: linear-gradient(160deg, #14544f, #0d3b3a); }
+.prog-kpis .bad-kpi { background: linear-gradient(160deg, #8f3a36, #6d2824); }
+.crit-list { display: grid; gap: 14px; }
+.crit {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.crit.ok { border-left: 4px solid var(--facil); }
+.crit.bad { border-left: 4px solid var(--dificil); }
+.crit-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: start;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.crit-num {
+  font-family: Georgia, serif;
+  font-size: 1.35rem;
+  color: var(--gold);
+  line-height: 1;
+  padding-top: 2px;
+}
+.crit-head h3 { margin: 0; font-size: 1.05rem; color: var(--accent); }
+.crit-head p { margin: 4px 0 0; font-size: .84rem; color: var(--ink-soft); }
+.crit-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.crit-badge.ok { background: var(--facil-bg); color: var(--facil); }
+.crit-badge.bad { background: var(--dificil-bg); color: var(--dificil); }
+.crit-body { padding: 16px 20px 20px; }
+.crit-note { margin: 0 0 12px; font-size: .84rem; color: var(--ink-soft); }
+.crit-note code, .meta-desc code, .method code {
+  background: var(--line-soft);
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: .8em;
+}
+.meta-proof {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.meta-card {
+  background: #faf8f3;
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  padding: 14px 16px;
+  min-width: 0;
+}
+.meta-card.wide { grid-column: 1 / -1; }
+.meta-card.warn-card {
+  background: #fbf3f2;
+  border-color: #f0cfcb;
+}
+.meta-label {
+  display: block;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.meta-card code {
+  display: block;
+  font-size: .82rem;
+  color: var(--accent);
+  word-break: break-word;
+  line-height: 1.45;
+}
+.meta-title-preview {
+  display: block;
+  font-size: 1.05rem;
+  color: #1a0dab;
+  line-height: 1.3;
+}
+.meta-desc {
+  margin: 0;
+  font-size: .88rem;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.source-block {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  background: #141f1e;
+  color: #d7e6e2;
+  border-radius: 10px;
+  font-size: .75rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.url-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.url-chip {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #f3f7f6;
+  border: 1px solid #d5e4e1;
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .8rem;
+}
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.medium-link {
+  display: inline-block;
+  color: var(--dificil);
+  font-weight: 700;
+  text-decoration: none;
+  word-break: break-all;
+}
+.medium-link:hover { text-decoration: underline; }
+
+/* ---------- blog factors ---------- */
+.blog-kpis .bad-kpi { background: linear-gradient(160deg, #8f3a36, #6d2824); }
+.factor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.factor-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: start;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 18px 16px;
+  min-width: 0;
+}
+.factor-num {
+  font-family: Georgia, serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  line-height: 1;
+  padding-top: 3px;
+}
+.factor-card h3 {
+  margin: 0;
+  font-size: .98rem;
+  color: var(--accent);
+  letter-spacing: -.01em;
+}
+.factor-card p {
+  margin: 6px 0 0;
+  font-size: .84rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.factor-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: #efece4;
+  color: #7a7368;
+  border: 1px solid var(--line);
+}
+
+/* ---------- serp blocks ---------- */
+.panel.wide { grid-column: 1 / -1; }
+.kw { border-top: 1px solid var(--line-soft); }
+.kw-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  padding: 13px 18px 9px;
+}
+.kw-head h4 { margin: 0; font-size: .92rem; color: var(--ink); }
+.kw-meta { font-size: .76rem; color: var(--ink-soft); }
+table.serp .scroll { max-height: none; }
+table.serp tbody tr.jk { background: #f2f8f7; }
+table.serp tbody tr.jk td { border-bottom-color: #dbe9e6; }
+.term a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.term a:hover { text-decoration: underline; }
+.dom { display: block; font-size: .7rem; color: var(--ink-soft); margin-top: 2px; }
+.muted { color: var(--ink-soft); }
+
+footer.foot {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: .78rem;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1040px) {
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .split, .panel-grid { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: 1fr 1fr; }
+  .cat-grid.wide-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  .wrap { padding: 26px 16px 60px; }
+  .masthead h1 { font-size: 1.8rem; }
+  .kpi-grid, .cat-grid, .cat-grid.wide-grid, .conc-lists, .meta-proof, .blog-grid, .factor-grid { grid-template-columns: 1fr; }
+  .panel.funnel-panel .funnel { grid-template-columns: 1fr; gap: 16px; }
+  .crit-head { grid-template-columns: auto 1fr; }
+  .crit-badge { grid-column: 2; justify-self: start; }
+  .factor-card { grid-template-columns: auto 1fr; }
+  .factor-status { grid-column: 2; justify-self: start; }
+  .tabs { margin: 0 -16px 20px; padding: 12px 16px; }
+  .soft-col { display: none; }
+}
+
+@media print {
+  body { background: #fff; }
+  .tabs { display: none; }
+  .panel-view { display: block !important; }
+  .panel, .callout, .kpi { box-shadow: none; break-inside: avoid; }
+  .scroll { max-height: none; overflow: visible; }
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <div>
+        <span class="eyebrow">Pesquisa de SEO · Brasil</span>
+        <h1>Grupo Data</h1>
+        <p class="lede">Potencial de busca, concorrência, programação, blog e backlinks para <a href="https://grupodata.com.br/" target="_blank" rel="noopener">grupodata.com.br</a>.</p>
+      </div>
+      <div class="meta-chips">
+        <span>94 palavras</span>
+        <span>757.690 buscas/mês</span>
+        <span>DataForSEO · Semrush</span>
+        <span>Atualizado 2026-08-19</span>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" type="button" data-view="potencial">Potencial<span class="n">94</span></button>
+      <button class="tab" type="button" data-view="concorrencia">Concorrência<span class="n">25</span></button>
+      <button class="tab" type="button" data-view="programacao">Programação<span class="n">5</span></button>
+      <button class="tab" type="button" data-view="blog">Blog<span class="n">8</span></button>
+      <button class="tab" type="button" data-view="backlinks">Backlinks<span class="n">9</span></button>
+    </nav>
+
+    <div id="view-potencial" class="panel-view active">
+    <section class="callout">
+      <span class="callout-badge">Conclusão</span>
+      <h2>Existe um ótimo potencial para SEO</h2>
+      <p>O público-alvo está pesquisando ativamente termos relacionados aos produtos e ao posicionamento do Grupo Data no Google. São <strong>94 palavras</strong> validadas somando <strong>757.690 buscas mensais</strong> no Brasil, distribuídas em <strong>9 categorias macro</strong> — todas conectadas às ofertas do site (outsourcing de TI, gestão de TI, service desk, infraestrutura, cibersegurança, LGPD, automação com IA e desenvolvimento).</p>
+    </section>
+
+    <div class="kpi-grid">
+        <div class="kpi">
+          <span class="kpi-label">Palavras mapeadas</span>
+          <strong class="kpi-value">94</strong>
+          <span class="kpi-hint">termos validados no DataForSEO</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Volume mensal</span>
+          <strong class="kpi-value">757,7k</strong>
+          <span class="kpi-hint">757.690 buscas/mês no Brasil</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Categorias macro</span>
+          <strong class="kpi-value">9</strong>
+          <span class="kpi-hint">pilares de conteúdo</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Já ranqueando</span>
+          <strong class="kpi-value">1</strong>
+          <span class="kpi-hint">termos com posição registrada</span>
+        </div></div>
+
+    <section class="panel soft feature">
+      <header class="panel-head"><div class="panel-title"><h3>Categorias macro</h3><p>Participação no volume total de busca</p></div></header>
+      <div class="cat-grid wide-grid">
+        <a class="cat-card" href="#cat-outsourcing-ti-para-empresas">
+          <div class="cat-card-top">
+            <h3>Outsourcing &amp; TI para empresas</h3>
+            <span class="share">1%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:1.8%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>16</strong> palavras</span>
+            <span><strong>6.540</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: empresa de ti · 2.400</p>
+        </a>
+        <a class="cat-card" href="#cat-gestão-de-ti-service-desk">
+          <div class="cat-card-top">
+            <h3>Gestão de TI &amp; Service Desk</h3>
+            <span class="share">7%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:14.2%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>15</strong> palavras</span>
+            <span><strong>52.830</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: help desk · 22.200</p>
+        </a>
+        <a class="cat-card" href="#cat-infraestrutura">
+          <div class="cat-card-top">
+            <h3>Infraestrutura</h3>
+            <span class="share">9%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:17.6%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>13</strong> palavras</span>
+            <span><strong>65.210</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: data center · 33.100</p>
+        </a>
+        <a class="cat-card" href="#cat-cibersegurança-lgpd">
+          <div class="cat-card-top">
+            <h3>Cibersegurança &amp; LGPD</h3>
+            <span class="share">28%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:56.5%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>15</strong> palavras</span>
+            <span><strong>209.950</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: soc · 110.000</p>
+        </a>
+        <a class="cat-card" href="#cat-automação-ia">
+          <div class="cat-card-top">
+            <h3>Automação &amp; IA</h3>
+            <span class="share">49%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:100.0%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>14</strong> palavras</span>
+            <span><strong>371.400</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: inteligência artificial · 301.000</p>
+        </a>
+        <a class="cat-card" href="#cat-desenvolvimento">
+          <div class="cat-card-top">
+            <h3>Desenvolvimento</h3>
+            <span class="share">2%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:4.5%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>9</strong> palavras</span>
+            <span><strong>16.740</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: desenvolvimento de sistemas · 9.900</p>
+        </a>
+        <a class="cat-card" href="#cat-consultoria-cloud">
+          <div class="cat-card-top">
+            <h3>Consultoria &amp; Cloud</h3>
+            <span class="share">1%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:2.6%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>7</strong> palavras</span>
+            <span><strong>9.520</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: cobit · 2.900</p>
+        </a>
+        <a class="cat-card" href="#cat-open-finance">
+          <div class="cat-card-top">
+            <h3>Open Finance</h3>
+            <span class="share">3%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:6.8%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>3</strong> palavras</span>
+            <span><strong>25.080</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: open finance · 22.200</p>
+        </a>
+        <a class="cat-card" href="#cat-branding">
+          <div class="cat-card-top">
+            <h3>Branding</h3>
+            <span class="share">0%</span>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:0.1%"></div></div>
+          <div class="cat-card-meta">
+            <span><strong>2</strong> palavras</span>
+            <span><strong>420</strong> /mês</span>
+          </div>
+          <p class="cat-card-top-term">Top: grupo data · 210</p>
+        </a></div>
+    </section>
+
+    <section class="panel soft funnel-panel">
+      <header class="panel-head"><div class="panel-title"><h3>Distribuição por funil</h3><p>Onde está o volume de busca</p></div></header>
+      <div class="funnel">
+          <div class="funnel-row">
+            <span class="funnel-name"><i class="dot topo"></i>Topo</span>
+            <div class="funnel-track"><div class="funnel-fill topo" style="width:64.7%"></div></div>
+            <span class="funnel-meta">29 termos · 490.520</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-name"><i class="dot meio"></i>Meio</span>
+            <div class="funnel-track"><div class="funnel-fill meio" style="width:32.6%"></div></div>
+            <span class="funnel-meta">24 termos · 247.070</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-name"><i class="dot fundo"></i>Fundo</span>
+            <div class="funnel-track"><div class="funnel-fill fundo" style="width:2.7%"></div></div>
+            <span class="funnel-meta">41 termos · 20.100</span>
+          </div></div>
+    </section>
+
+    <div class="section-label"><span>Termos por categoria</span></div>
+    <div class="panel-grid">
+      <section class="panel" id="cat-outsourcing-ti-para-empresas">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Outsourcing &amp; TI para empresas</h3>
+            <p>16 palavras · 6.540 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='2400' data-pos='0'><td class='idx'>1</td><td class='term'>empresa de ti</td><td class='num'>2.400</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='2400' data-pos='0'><td class='idx'>2</td><td class='term'>empresas de ti</td><td class='num'>2.400</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='720' data-pos='0'><td class='idx'>3</td><td class='term'>empresa de informatica</td><td class='num'>720</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='390' data-pos='0'><td class='idx'>4</td><td class='term'>outsourcing de ti</td><td class='num'>390</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='260' data-pos='0'><td class='idx'>5</td><td class='term'>solucoes em ti</td><td class='num'>260</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='170' data-pos='0'><td class='idx'>6</td><td class='term'>suporte de ti para empresas</td><td class='num'>170</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='50' data-pos='0'><td class='idx'>7</td><td class='term'>cloud para empresas</td><td class='num'>50</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='40' data-pos='0'><td class='idx'>8</td><td class='term'>ti para empresas</td><td class='num'>40</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='30' data-pos='0'><td class='idx'>9</td><td class='term'>servicos gerenciados de ti</td><td class='num'>30</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='20' data-pos='0'><td class='idx'>10</td><td class='term'>terceirizacao de ti</td><td class='num'>20</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>11</td><td class='term'>contratar empresa de ti</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>12</td><td class='term'>hunting de ti</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>13</td><td class='term'>o que e outsourcing de ti</td><td class='num'>10</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>14</td><td class='term'>recrutamento de ti</td><td class='num'>10</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>15</td><td class='term'>terceirizar ti</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>16</td><td class='term'>ti gerenciada</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-gestão-de-ti-service-desk">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Gestão de TI &amp; Service Desk</h3>
+            <p>15 palavras · 52.830 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='22200' data-pos='0'><td class='idx'>1</td><td class='term'>help desk</td><td class='num'>22.200</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='9900' data-pos='0'><td class='idx'>2</td><td class='term'>service desk</td><td class='num'>9.900</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='8100' data-pos='0'><td class='idx'>3</td><td class='term'>noc</td><td class='num'>8.100</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='6600' data-pos='0'><td class='idx'>4</td><td class='term'>itil</td><td class='num'>6.600</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='3600' data-pos='0'><td class='idx'>5</td><td class='term'>gestão de ti</td><td class='num'>3.600</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='1300' data-pos='0'><td class='idx'>6</td><td class='term'>suporte de ti</td><td class='num'>1.300</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='590' data-pos='0'><td class='idx'>7</td><td class='term'>o que e service desk</td><td class='num'>590</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='210' data-pos='0'><td class='idx'>8</td><td class='term'>o que e gestao de ti</td><td class='num'>210</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='140' data-pos='0'><td class='idx'>9</td><td class='term'>gestao de ativos de ti</td><td class='num'>140</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='90' data-pos='0'><td class='idx'>10</td><td class='term'>inventario de ti</td><td class='num'>90</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='40' data-pos='0'><td class='idx'>11</td><td class='term'>monitoramento de ti</td><td class='num'>40</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='30' data-pos='0'><td class='idx'>12</td><td class='term'>monitoramento de infraestrutura</td><td class='num'>30</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>13</td><td class='term'>gestão de dispositivos móveis</td><td class='num'>10</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>14</td><td class='term'>help desk para empresas</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>15</td><td class='term'>service desk para empresas</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-infraestrutura">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Infraestrutura</h3>
+            <p>13 palavras · 65.210 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='33100' data-pos='0'><td class='idx'>1</td><td class='term'>data center</td><td class='num'>33.100</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='18100' data-pos='0'><td class='idx'>2</td><td class='term'>cloud computing</td><td class='num'>18.100</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='8100' data-pos='0'><td class='idx'>3</td><td class='term'>internet das coisas</td><td class='num'>8.100</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='2900' data-pos='0'><td class='idx'>4</td><td class='term'>iaas</td><td class='num'>2.900</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='1300' data-pos='0'><td class='idx'>5</td><td class='term'>infraestrutura de ti</td><td class='num'>1.300</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='880' data-pos='0'><td class='idx'>6</td><td class='term'>o que e data center</td><td class='num'>880</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='320' data-pos='0'><td class='idx'>7</td><td class='term'>serviços em nuvem</td><td class='num'>320</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='210' data-pos='0'><td class='idx'>8</td><td class='term'>microsoft 365 para empresas</td><td class='num'>210</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='210' data-pos='0'><td class='idx'>9</td><td class='term'>virtualizacao</td><td class='num'>210</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='50' data-pos='0'><td class='idx'>10</td><td class='term'>redes corporativas</td><td class='num'>50</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='20' data-pos='0'><td class='idx'>11</td><td class='term'>backup para empresas</td><td class='num'>20</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>12</td><td class='term'>data center para empresas</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>13</td><td class='term'>o que e infraestrutura de ti</td><td class='num'>10</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-cibersegurança-lgpd">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Cibersegurança &amp; LGPD</h3>
+            <p>15 palavras · 209.950 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='110000' data-pos='0'><td class='idx'>1</td><td class='term'>soc</td><td class='num'>110.000</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='33100' data-pos='0'><td class='idx'>2</td><td class='term'>cybersecurity</td><td class='num'>33.100</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='22200' data-pos='0'><td class='idx'>3</td><td class='term'>ciberseguranca</td><td class='num'>22.200</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='12100' data-pos='0'><td class='idx'>4</td><td class='term'>segurança da informação</td><td class='num'>12.100</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='9900' data-pos='0'><td class='idx'>5</td><td class='term'>dpo</td><td class='num'>9.900</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='9900' data-pos='0'><td class='idx'>6</td><td class='term'>iso 27001</td><td class='num'>9.900</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='8100' data-pos='0'><td class='idx'>7</td><td class='term'>pentest</td><td class='num'>8.100</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='2900' data-pos='0'><td class='idx'>8</td><td class='term'>microsoft defender</td><td class='num'>2.900</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='1300' data-pos='0'><td class='idx'>9</td><td class='term'>o que e lgpd</td><td class='num'>1.300</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='140' data-pos='0'><td class='idx'>10</td><td class='term'>o que e ciberseguranca</td><td class='num'>140</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='110' data-pos='0'><td class='idx'>11</td><td class='term'>consultoria lgpd</td><td class='num'>110</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='110' data-pos='0'><td class='idx'>12</td><td class='term'>teste de invasao</td><td class='num'>110</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='50' data-pos='0'><td class='idx'>13</td><td class='term'>lgpd para empresas</td><td class='num'>50</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='30' data-pos='0'><td class='idx'>14</td><td class='term'>ciberseguranca para empresas</td><td class='num'>30</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>15</td><td class='term'>adequacao lgpd</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-automação-ia">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Automação &amp; IA</h3>
+            <p>14 palavras · 371.400 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='301000' data-pos='0'><td class='idx'>1</td><td class='term'>inteligência artificial</td><td class='num'>301.000</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='27100' data-pos='0'><td class='idx'>2</td><td class='term'>automação industrial</td><td class='num'>27.100</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='27100' data-pos='0'><td class='idx'>3</td><td class='term'>rpa</td><td class='num'>27.100</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='8100' data-pos='0'><td class='idx'>4</td><td class='term'>agentes de ia</td><td class='num'>8.100</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='6600' data-pos='0'><td class='idx'>5</td><td class='term'>o que e rpa</td><td class='num'>6.600</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='590' data-pos='0'><td class='idx'>6</td><td class='term'>automacao com ia</td><td class='num'>590</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='390' data-pos='0'><td class='idx'>7</td><td class='term'>automacao de processos</td><td class='num'>390</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='260' data-pos='0'><td class='idx'>8</td><td class='term'>automacao inteligente</td><td class='num'>260</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='90' data-pos='0'><td class='idx'>9</td><td class='term'>inteligencia artificial para empresas</td><td class='num'>90</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='70' data-pos='0'><td class='idx'>10</td><td class='term'>consultoria em ia</td><td class='num'>70</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='70' data-pos='0'><td class='idx'>11</td><td class='term'>consultoria ia</td><td class='num'>70</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>12</td><td class='term'>ia generativa para empresas</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>13</td><td class='term'>licenciamento claude</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>14</td><td class='term'>o que e automacao de processos</td><td class='num'>10</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-desenvolvimento">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Desenvolvimento</h3>
+            <p>9 palavras · 16.740 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='9900' data-pos='0'><td class='idx'>1</td><td class='term'>desenvolvimento de sistemas</td><td class='num'>9.900</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='4400' data-pos='0'><td class='idx'>2</td><td class='term'>desenvolvimento de software</td><td class='num'>4.400</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='1000' data-pos='0'><td class='idx'>3</td><td class='term'>sistemas web</td><td class='num'>1.000</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='720' data-pos='0'><td class='idx'>4</td><td class='term'>fabrica de software</td><td class='num'>720</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='480' data-pos='0'><td class='idx'>5</td><td class='term'>desenvolvimento de aplicativos</td><td class='num'>480</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='110' data-pos='0'><td class='idx'>6</td><td class='term'>o que e desenvolvimento de sistemas</td><td class='num'>110</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='110' data-pos='0'><td class='idx'>7</td><td class='term'>software sob medida</td><td class='num'>110</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>8</td><td class='term'>aplicativo sob medida</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='10' data-pos='0'><td class='idx'>9</td><td class='term'>fabrica de testes de software</td><td class='num'>10</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-consultoria-cloud">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Consultoria &amp; Cloud</h3>
+            <p>7 palavras · 9.520 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='2900' data-pos='0'><td class='idx'>1</td><td class='term'>cobit</td><td class='num'>2.900</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='2400' data-pos='0'><td class='idx'>2</td><td class='term'>transformacao digital</td><td class='num'>2.400</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='1600' data-pos='0'><td class='idx'>3</td><td class='term'>governanca de ti</td><td class='num'>1.600</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='1600' data-pos='0'><td class='idx'>4</td><td class='term'>itil 4</td><td class='num'>1.600</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='720' data-pos='0'><td class='idx'>5</td><td class='term'>consultoria de ti</td><td class='num'>720</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='260' data-pos='0'><td class='idx'>6</td><td class='term'>consultoria em ti</td><td class='num'>260</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='40' data-pos='0'><td class='idx'>7</td><td class='term'>migracao para nuvem</td><td class='num'>40</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-open-finance">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Open Finance</h3>
+            <p>3 palavras · 25.080 buscas/mês · 0 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='22200' data-pos='0'><td class='idx'>1</td><td class='term'>open finance</td><td class='num'>22.200</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='2400' data-pos='0'><td class='idx'>2</td><td class='term'>open banking</td><td class='num'>2.400</td><td><span class='pill meio'>Meio</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr><tr data-volume='480' data-pos='0'><td class='idx'>3</td><td class='term'>o que e open finance</td><td class='num'>480</td><td><span class='pill topo'>Topo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cat-branding">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Branding</h3>
+            <p>2 palavras · 420 buscas/mês · 1 ranqueando</p>
+          </div>
+          <div class="sorter">
+            <button type="button" class="chip active" data-sort="desc">Maior</button>
+            <button type="button" class="chip" data-sort="asc">Menor</button>
+          </div>
+        </header>
+        <div class="scroll">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th class="idx">#</th>
+                <th>Termo</th>
+                <th class="num sortable">Pesquisa/mês</th>
+                <th>Funil</th>
+                <th>Posição</th>
+              </tr>
+            </thead>
+            <tbody><tr data-volume='210' data-pos='10'><td class='idx'>1</td><td class='term'>grupo data</td><td class='num'>210</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank ok'>#10</span></td></tr><tr data-volume='210' data-pos='0'><td class='idx'>2</td><td class='term'>grupodata</td><td class='num'>210</td><td><span class='pill fundo'>Fundo</span></td><td class='rank-cell'><span class='rank none'>—</span></td></tr></tbody>
+          </table>
+        </div>
+      </section></div>
+    </div>
+    <div id="view-concorrencia" class="panel-view">
+    <section class="callout">
+      <span class="callout-badge">Conclusão</span>
+      <h2>Existem diversas categorias com dificuldade Fácil ou Média</h2>
+      <p>Há espaço real para competir com conteúdo e autoridade nas categorias abaixo, onde a marca dos concorrentes não supera 3× a referência do Grupo Data (140 buscas de marca).</p>
+      <div class="conc-lists">
+        <div>
+          <span class="list-label">Categorias com oportunidade (Fácil / Média)</span>
+          <div class="tags"><span class='tag op'>Outsourcing &amp; TI para empresas</span></div>
+        </div>
+        <div>
+          <span class="list-label">Categorias difíceis</span>
+          <div class="tags"><span class='tag hard'>Gestão de TI &amp; Service Desk</span><span class='tag hard'>Infraestrutura</span><span class='tag hard'>Cibersegurança &amp; LGPD</span><span class='tag hard'>Automação &amp; IA</span><span class='tag hard'>Desenvolvimento</span><span class='tag hard'>Consultoria &amp; Cloud</span><span class='tag hard'>Open Finance</span><span class='tag hard'>Branding</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="split">
+      <section class="panel soft">
+        <header class="panel-head"><div class="panel-title"><h3>Dificuldade por categoria</h3><p>Distribuição dos top 5 do Google</p></div></header>
+        <div class="dbars">
+          <div class="dbar-row">
+            <span class="dbar-name">Outsourcing &amp; TI para empresas</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:50.0%" title="Fácil: 5"></span>
+              <span class="seg medio" style="width:30.0%" title="Médio: 3"></span>
+              <span class="seg dificil" style="width:20.0%" title="Difícil: 2"></span>
+            </div>
+            <span class="dbar-meta">5/3/2</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Gestão de TI &amp; Service Desk</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:26.7%" title="Fácil: 4"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:73.3%" title="Difícil: 11"></span>
+            </div>
+            <span class="dbar-meta">4/0/11</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Infraestrutura</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:6.7%" title="Fácil: 1"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:93.3%" title="Difícil: 14"></span>
+            </div>
+            <span class="dbar-meta">1/0/14</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Cibersegurança &amp; LGPD</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:13.3%" title="Fácil: 2"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:86.7%" title="Difícil: 13"></span>
+            </div>
+            <span class="dbar-meta">2/0/13</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Automação &amp; IA</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:6.7%" title="Fácil: 1"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:93.3%" title="Difícil: 14"></span>
+            </div>
+            <span class="dbar-meta">1/0/14</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Desenvolvimento</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:6.7%" title="Fácil: 1"></span>
+              <span class="seg medio" style="width:20.0%" title="Médio: 3"></span>
+              <span class="seg dificil" style="width:73.3%" title="Difícil: 11"></span>
+            </div>
+            <span class="dbar-meta">1/3/11</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Consultoria &amp; Cloud</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:13.3%" title="Fácil: 2"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:86.7%" title="Difícil: 13"></span>
+            </div>
+            <span class="dbar-meta">2/0/13</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Open Finance</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:6.7%" title="Fácil: 1"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:93.3%" title="Difícil: 14"></span>
+            </div>
+            <span class="dbar-meta">1/0/14</span>
+          </div>
+          <div class="dbar-row">
+            <span class="dbar-name">Branding</span>
+            <div class="dbar">
+              <span class="seg facil" style="width:50.0%" title="Fácil: 4"></span>
+              <span class="seg medio" style="width:0.0%" title="Médio: 0"></span>
+              <span class="seg dificil" style="width:50.0%" title="Difícil: 4"></span>
+            </div>
+            <span class="dbar-meta">4/0/4</span>
+          </div></div>
+        <div class="legend">
+          <span><i class="sw facil"></i>Fácil &lt; 140</span>
+          <span><i class="sw medio"></i>Médio até 420</span>
+          <span><i class="sw dificil"></i>Difícil &gt; 420</span>
+        </div>
+      </section>
+      <section class="panel soft">
+        <header class="panel-head"><div class="panel-title"><h3>Como ler</h3><p>Metodologia do MVP</p></div></header>
+        <ul class="method">
+          <li><strong>Marca</strong> — tráfego orgânico de buscas com o nome da empresa (branded).</li>
+          <li><strong>Seo</strong> — tráfego orgânico de termos genéricos (non-branded).</li>
+          <li>Top 3 keywords de cada categoria pesquisadas no Google (Brasil).</li>
+          <li>Top 5 resultados + Grupo Data na posição 6 como referência.</li>
+          <li>Categoria marcada como difícil quando ≥50% dos resultados são Difícil.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="section-label"><span>Concorrentes por categoria</span></div>
+    <div class="stack">
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Outsourcing &amp; TI para empresas</h3>
+            <p>Fácil 5 · Médio 3 · Difícil 2</p>
+          </div>
+          <span class="tag op">Oportunidade</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>empresa de ti</h4>
+              <span class="kw-meta">2.400 buscas/mês · Fundo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>5</td><td class='term'><a href='https://elinfor.com.br/' target='_blank' rel='noopener'>Elinfor: Empresa de TI, Gestão e Consultoria</a><span class='dom'>elinfor.com.br</span></td><td class='num strong'>0</td><td class='num'>164</td><td class='num soft-col'>0</td><td class='num soft-col'>945</td><td class='num soft-col'>0</td><td class='num soft-col'>790</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.globalti.com.br/' target='_blank' rel='noopener'>Global TI - Tecnologia em Negócios</a><span class='dom'>globalti.com.br</span></td><td class='num strong'>0</td><td class='num'>458</td><td class='num soft-col'>88</td><td class='num soft-col'>92</td><td class='num soft-col'>0</td><td class='num soft-col'>49</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.tecnoporto.com.br/' target='_blank' rel='noopener'>Tecnoporto: Empresa de TI em BH | Gestão de TI para ...</a><span class='dom'>tecnoporto.com.br</span></td><td class='num strong'>136</td><td class='num'>3</td><td class='num soft-col'>136</td><td class='num soft-col'>7</td><td class='num soft-col'>168</td><td class='num soft-col'>10</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://davet.com.br/' target='_blank' rel='noopener'>Empresa de T.I - Suporte, terceirização e infraestrutura - Davet ...</a><span class='dom'>davet.com.br</span></td><td class='num strong'>0</td><td class='num'>197</td><td class='num soft-col'>280</td><td class='num soft-col'>26</td><td class='num soft-col'>351</td><td class='num soft-col'>0</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>10</td><td class='term'><a href='https://4infra.com.br/empresa-de-ti-em-sp/' target='_blank' rel='noopener'>Empresa de TI em SP | Consultoria em TI em São Paulo</a><span class='dom'>4infra.com.br</span></td><td class='num strong'>208</td><td class='num'>4.739</td><td class='num soft-col'>208</td><td class='num soft-col'>11.030</td><td class='num soft-col'>208</td><td class='num soft-col'>16.783</td><td><span class='diff medio'>Médio</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>empresas de ti</h4>
+              <span class="kw-meta">2.400 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>4</td><td class='term'><a href='https://www.globalti.com.br/' target='_blank' rel='noopener'>Global TI - Tecnologia em Negócios</a><span class='dom'>globalti.com.br</span></td><td class='num strong'>0</td><td class='num'>458</td><td class='num soft-col'>88</td><td class='num soft-col'>92</td><td class='num soft-col'>0</td><td class='num soft-col'>49</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.softdesign.com.br/blog/4-coisas-que-a-sua-empresa-de-ti-parceria-deve-ter/' target='_blank' rel='noopener'>10 melhores empresas de TI do Brasil em 2026</a><span class='dom'>softdesign.com.br</span></td><td class='num strong'>208</td><td class='num'>14.042</td><td class='num soft-col'>376</td><td class='num soft-col'>8.675</td><td class='num soft-col'>304</td><td class='num soft-col'>1.957</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.ohub.com.br/empresas/ti/mg/belo-horizonte' target='_blank' rel='noopener'>Melhores empresas de TI em Belo Horizonte - MG 2026</a><span class='dom'>ohub.com.br</span></td><td class='num strong'>273</td><td class='num'>47.938</td><td class='num soft-col'>2.060</td><td class='num soft-col'>62.099</td><td class='num soft-col'>9.062</td><td class='num soft-col'>74.772</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.glassdoor.com.br/Explorar/melhores-tecnologia-da-informa%C3%A7%C3%A3o-empresas_IS.9,33_ISEC10013.htm' target='_blank' rel='noopener'>As melhores empresas do setor de Tecnologia Da Informação</a><span class='dom'>glassdoor.com.br</span></td><td class='num strong'>238.686</td><td class='num'>1.887.875</td><td class='num soft-col'>218.680</td><td class='num soft-col'>2.978.307</td><td class='num soft-col'>175.633</td><td class='num soft-col'>1.826.448</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://digital.futurecom.com.br/tecnologia/ranking-divulga-as-100-empresas-mais-inovadoras-de-ti/' target='_blank' rel='noopener'>Ranking divulga as 100 empresas mais inovadoras de TI</a><span class='dom'>digital.futurecom.com.br</span></td><td class='num strong'>5.483</td><td class='num'>12.470</td><td class='num soft-col'>4.974</td><td class='num soft-col'>156.493</td><td class='num soft-col'>5.029</td><td class='num soft-col'>4.272</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Gestão de TI &amp; Service Desk</h3>
+            <p>Fácil 4 · Médio 0 · Difícil 11</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>help desk</h4>
+              <span class="kw-meta">22.200 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/help-desk' target='_blank' rel='noopener'>O que é um Help Desk?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.helpdesk.com/' target='_blank' rel='noopener'>HelpDesk.com | AI Help Desk Software &amp; Ticketing System for ...</a><span class='dom'>helpdesk.com</span></td><td class='num strong'>0</td><td class='num'>1.546</td><td class='num soft-col'>72</td><td class='num soft-col'>3.397</td><td class='num soft-col'>8.379</td><td class='num soft-col'>926</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.zendesk.com.br/blog/customer-service/help-desk/help-desk/' target='_blank' rel='noopener'>o que é help desk? Guia sobre o tema - Zendesk</a><span class='dom'>zendesk.com.br</span></td><td class='num strong'>6.838</td><td class='num'>64.836</td><td class='num soft-col'>26.952</td><td class='num soft-col'>355.430</td><td class='num soft-col'>24.676</td><td class='num soft-col'>304.637</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.reddit.com/r/ITCareerQuestions/comments/1o2hevq/whats_the_help_desk_like/?tl=pt-br' target='_blank' rel='noopener'>Como é o Help Desk? : r/ITCareerQuestions</a><span class='dom'>reddit.com</span></td><td class='num strong'>1.832.004</td><td class='num'>38.581.040</td><td class='num soft-col'>1.649.898</td><td class='num soft-col'>15.178.818</td><td class='num soft-col'>1.457.597</td><td class='num soft-col'>2.388.514</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://otrs.com/pt/casos-de-uso/help-desk/' target='_blank' rel='noopener'>Help Desk – Metas, funções e implementação</a><span class='dom'>otrs.com</span></td><td class='num strong'>1.819</td><td class='num'>1.800</td><td class='num soft-col'>1.813</td><td class='num soft-col'>783</td><td class='num soft-col'>2.035</td><td class='num soft-col'>711</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>service desk</h4>
+              <span class="kw-meta">9.900 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.tjba.jus.br/portal/service-desk/' target='_blank' rel='noopener'>Service Desk – Tribunal de Justiça do Estado da Bahia</a><span class='dom'>tjba.jus.br</span></td><td class='num strong'>1.236.983</td><td class='num'>186.276</td><td class='num soft-col'>1.418.167</td><td class='num soft-col'>279.258</td><td class='num soft-col'>1.346.027</td><td class='num soft-col'>175.676</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>3</td><td class='term'><a href='https://www.servicedesk.ba.gov.br/' target='_blank' rel='noopener'>Service Desk PRODEB Logon</a><span class='dom'>servicedesk.ba.gov.br</span></td><td class='num strong'>0</td><td class='num'>494</td><td class='num soft-col'>0</td><td class='num soft-col'>406</td><td class='num soft-col'>0</td><td class='num soft-col'>212</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/service-desk' target='_blank' rel='noopener'>O que é Service Desk?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://ici.tec.br/servicedesk' target='_blank' rel='noopener'>Service Desk - ICI</a><span class='dom'>ici.tec.br</span></td><td class='num strong'>6.917</td><td class='num'>1.533</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://suporte.tjsp.jus.br/homepage' target='_blank' rel='noopener'>Service Desk</a><span class='dom'>suporte.tjsp.jus.br</span></td><td class='num strong'>4.175.513</td><td class='num'>1.363.052</td><td class='num soft-col'>4.514.074</td><td class='num soft-col'>2.484.236</td><td class='num soft-col'>5.096.688</td><td class='num soft-col'>1.331.748</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>noc</h4>
+              <span class="kw-meta">8.100 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.claranet.com/br/blog/noc-soc-o-que-e-como-funciona' target='_blank' rel='noopener'>NOC vs SOC: o que é e como funciona</a><span class='dom'>claranet.com</span></td><td class='num strong'>2.383</td><td class='num'>7.828</td><td class='num soft-col'>1.866</td><td class='num soft-col'>9.515</td><td class='num soft-col'>1.834</td><td class='num soft-col'>8.902</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/network-operations-center' target='_blank' rel='noopener'>O que é um centro de operações de rede?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.flowti.com.br/blog/entenda-o-que-e-noc-e-conheca-os-beneficios-da-sua-implementacao' target='_blank' rel='noopener'>Entenda o que é NOC e conheça os benefícios da sua ...</a><span class='dom'>flowti.com.br</span></td><td class='num strong'>0</td><td class='num'>1.183</td><td class='num soft-col'>208</td><td class='num soft-col'>6.724</td><td class='num soft-col'>256</td><td class='num soft-col'>6.719</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.opservices.com.br/noc/' target='_blank' rel='noopener'>NOC (Network Operations Center) | Estrutura, Níveis e ...</a><span class='dom'>opservices.com.br</span></td><td class='num strong'>72</td><td class='num'>3.786</td><td class='num soft-col'>115</td><td class='num soft-col'>17.935</td><td class='num soft-col'>0</td><td class='num soft-col'>36.985</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.checkpoint.com/pt/cyber-hub/network-security/what-is-a-network-operations-center-noc/' target='_blank' rel='noopener'>O que é um Centro de Operações de Rede (NOC)?</a><span class='dom'>checkpoint.com</span></td><td class='num strong'>7.781</td><td class='num'>42.313</td><td class='num soft-col'>10.103</td><td class='num soft-col'>29.350</td><td class='num soft-col'>5.430</td><td class='num soft-col'>12.318</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Infraestrutura</h3>
+            <p>Fácil 1 · Médio 0 · Difícil 14</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>data center</h4>
+              <span class="kw-meta">33.100 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://aws.amazon.com/pt/what-is/data-center/' target='_blank' rel='noopener'>O que é um datacenter?</a><span class='dom'>aws.amazon.com</span></td><td class='num strong'>741.640</td><td class='num'>3.316.018</td><td class='num soft-col'>1.254.875</td><td class='num soft-col'>3.510.656</td><td class='num soft-col'>752.570</td><td class='num soft-col'>2.902.483</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/data-centers' target='_blank' rel='noopener'>O que é um data center?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://datacenters.google/intl/pt-BR_ALL/' target='_blank' rel='noopener'>Página inicial: data centers do Google</a><span class='dom'>datacenters.google</span></td><td class='num strong'>1.033</td><td class='num'>1.220</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://prodest.es.gov.br/conheca-os-cinco-principais-tipos-de-data-center' target='_blank' rel='noopener'>Conheça os cinco principais tipos de Data Center</a><span class='dom'>prodest.es.gov.br</span></td><td class='num strong'>872</td><td class='num'>6.910</td><td class='num soft-col'>1.516</td><td class='num soft-col'>30.282</td><td class='num soft-col'>1.112</td><td class='num soft-col'>23.269</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>12</td><td class='term'><a href='https://datacenters.abdi.com.br/' target='_blank' rel='noopener'>ABDI - Data Centers</a><span class='dom'>datacenters.abdi.com.br</span></td><td class='num strong'>5.866</td><td class='num'>2.303</td><td class='num soft-col'>4.671</td><td class='num soft-col'>3.185</td><td class='num soft-col'>5.091</td><td class='num soft-col'>468</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>cloud computing</h4>
+              <span class="kw-meta">18.100 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://aws.amazon.com/pt/what-is-cloud-computing/' target='_blank' rel='noopener'>O que é a computação em nuvem?</a><span class='dom'>aws.amazon.com</span></td><td class='num strong'>741.640</td><td class='num'>3.316.018</td><td class='num soft-col'>1.254.875</td><td class='num soft-col'>3.510.656</td><td class='num soft-col'>752.570</td><td class='num soft-col'>2.902.483</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.salesforce.com/br/platform/cloud-computing/' target='_blank' rel='noopener'>O que é Cloud Computing? Guia Completo</a><span class='dom'>salesforce.com</span></td><td class='num strong'>77.051</td><td class='num'>266.174</td><td class='num soft-col'>157.049</td><td class='num soft-col'>162.010</td><td class='num soft-col'>172.662</td><td class='num soft-col'>92.196</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://fia.com.br/blog/computacao-em-nuvem/' target='_blank' rel='noopener'>Computação em nuvem: o que é, como funciona e ...</a><span class='dom'>fia.com.br</span></td><td class='num strong'>7.079</td><td class='num'>830.925</td><td class='num soft-col'>20.436</td><td class='num soft-col'>414.387</td><td class='num soft-col'>22.341</td><td class='num soft-col'>925.464</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.ipm.com.br/gestao-publica/historia-da-computacao-em-nuvem-como-surgiu-a-cloud-computing/' target='_blank' rel='noopener'>Cloud computing</a><span class='dom'>ipm.com.br</span></td><td class='num strong'>0</td><td class='num'>9.630</td><td class='num soft-col'>2.316</td><td class='num soft-col'>7.498</td><td class='num soft-col'>3.808</td><td class='num soft-col'>10.023</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.redhat.com/pt-br/topics/cloud-computing' target='_blank' rel='noopener'>O que é cloud computing?</a><span class='dom'>redhat.com</span></td><td class='num strong'>5.512</td><td class='num'>62.273</td><td class='num soft-col'>23.922</td><td class='num soft-col'>89.616</td><td class='num soft-col'>17.698</td><td class='num soft-col'>82.063</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>internet das coisas</h4>
+              <span class="kw-meta">8.100 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/internet-of-things' target='_blank' rel='noopener'>O que é internet das coisas (IoT)?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.cnnbrasil.com.br/tecnologia/internet-das-coisas/' target='_blank' rel='noopener'>Internet das Coisas: o que é, como funciona e exemplos de ...</a><span class='dom'>cnnbrasil.com.br</span></td><td class='num strong'>2.655.019</td><td class='num'>12.161.754</td><td class='num soft-col'>1.770.554</td><td class='num soft-col'>30.115.787</td><td class='num soft-col'>1.892.961</td><td class='num soft-col'>22.938.834</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.oracle.com/br/internet-of-things/' target='_blank' rel='noopener'>Por que a Internet das Coisas (IoT) é tão importante?</a><span class='dom'>oracle.com</span></td><td class='num strong'>241.167</td><td class='num'>279.608</td><td class='num soft-col'>414.689</td><td class='num soft-col'>399.079</td><td class='num soft-col'>317.016</td><td class='num soft-col'>333.833</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://aws.amazon.com/pt/what-is/iot/' target='_blank' rel='noopener'>O que é IoT – Explicação sobre a Internet das Coisas</a><span class='dom'>aws.amazon.com</span></td><td class='num strong'>741.640</td><td class='num'>3.316.018</td><td class='num soft-col'>1.254.875</td><td class='num soft-col'>3.510.656</td><td class='num soft-col'>752.570</td><td class='num soft-col'>2.902.483</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://www.sp.senac.br/blog/artigo/o-que-e-internet-das-coisas' target='_blank' rel='noopener'>O que é Internet das Coisas? | Blog do Senac São Paulo</a><span class='dom'>sp.senac.br</span></td><td class='num strong'>2.163.974</td><td class='num'>952.131</td><td class='num soft-col'>3.372.519</td><td class='num soft-col'>1.382.215</td><td class='num soft-col'>2.740.858</td><td class='num soft-col'>1.276.892</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Cibersegurança &amp; LGPD</h3>
+            <p>Fácil 2 · Médio 0 · Difícil 13</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>soc</h4>
+              <span class="kw-meta">110.000 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>1</td><td class='term'><a href='https://www.soc.com.br/' target='_blank' rel='noopener'>SOC - O Líder em Software de SST | Top Of Mind 2026</a><span class='dom'>soc.com.br</span></td><td class='num strong'>110.247</td><td class='num'>11.530</td><td class='num soft-col'>116.710</td><td class='num soft-col'>10.359</td><td class='num soft-col'>83.791</td><td class='num soft-col'>16.479</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.microsoft.com/pt-br/security/business/security-101/what-is-a-security-operations-center-soc' target='_blank' rel='noopener'>O que é um centro de operações de segurança (SOC)?</a><span class='dom'>microsoft.com</span></td><td class='num strong'>7.294.395</td><td class='num'>15.333.598</td><td class='num soft-col'>12.703.258</td><td class='num soft-col'>26.888.392</td><td class='num soft-col'>15.815.222</td><td class='num soft-col'>19.505.262</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://premierocupacional.com.br/o-que-e-soc-na-seguranca-do-trabalho/' target='_blank' rel='noopener'>O que é SOC na Segurança do Trabalho?</a><span class='dom'>premierocupacional.com.br</span></td><td class='num strong'>88</td><td class='num'>2.068</td><td class='num soft-col'>0</td><td class='num soft-col'>2.994</td><td class='num soft-col'>0</td><td class='num soft-col'>3.249</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.fortinet.com/br/resources/cyberglossary/what-is-soc' target='_blank' rel='noopener'>O que é um Centro de operações de segurança (SOC)?</a><span class='dom'>fortinet.com</span></td><td class='num strong'>57.741</td><td class='num'>236.419</td><td class='num soft-col'>80.061</td><td class='num soft-col'>133.913</td><td class='num soft-col'>32.839</td><td class='num soft-col'>68.799</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/security-operations-center' target='_blank' rel='noopener'>O que é um centro de operações de segurança (SOC)?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>cybersecurity</h4>
+              <span class="kw-meta">33.100 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/cybersecurity' target='_blank' rel='noopener'>O que é cibersegurança?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.cybersecbrazil.com.br/' target='_blank' rel='noopener'>Cyber Security Brazil</a><span class='dom'>cybersecbrazil.com.br</span></td><td class='num strong'>0</td><td class='num'>5.460</td><td class='num soft-col'>0</td><td class='num soft-col'>49</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.netacad.com/pt/cybersecurity' target='_blank' rel='noopener'>O que é segurança cibernética? | Cursos e recursos gratuitos</a><span class='dom'>netacad.com</span></td><td class='num strong'>87.936</td><td class='num'>28.462</td><td class='num soft-col'>89.832</td><td class='num soft-col'>7.640</td><td class='num soft-col'>56.426</td><td class='num soft-col'>14.248</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.akamai.com/pt/glossary/what-is-cybersecurity' target='_blank' rel='noopener'>O que é cibersegurança ou segurança cibernética?</a><span class='dom'>akamai.com</span></td><td class='num strong'>732</td><td class='num'>32.623</td><td class='num soft-col'>5.061</td><td class='num soft-col'>33.024</td><td class='num soft-col'>3.187</td><td class='num soft-col'>9.779</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://ebaconline.com.br/cyber-security' target='_blank' rel='noopener'>Curso de Cyber Security - aprenda com EBAC online</a><span class='dom'>ebaconline.com.br</span></td><td class='num strong'>54.434</td><td class='num'>166.339</td><td class='num soft-col'>84.566</td><td class='num soft-col'>300.698</td><td class='num soft-col'>65.312</td><td class='num soft-col'>298.501</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>ciberseguranca</h4>
+              <span class="kw-meta">22.200 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/cybersecurity' target='_blank' rel='noopener'>O que é cibersegurança?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.anhanguera.com/curso/ciberseguranca-tecnologo/' target='_blank' rel='noopener'>Cibersegurança - Tecnólogo - EAD</a><span class='dom'>anhanguera.com</span></td><td class='num strong'>1.959.332</td><td class='num'>663.305</td><td class='num soft-col'>1.144.173</td><td class='num soft-col'>805.615</td><td class='num soft-col'>1.129.102</td><td class='num soft-col'>594.861</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.akamai.com/pt/glossary/what-is-cybersecurity' target='_blank' rel='noopener'>O que é cibersegurança ou segurança cibernética?</a><span class='dom'>akamai.com</span></td><td class='num strong'>732</td><td class='num'>32.623</td><td class='num soft-col'>5.061</td><td class='num soft-col'>33.024</td><td class='num soft-col'>3.187</td><td class='num soft-col'>9.779</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://mbauspesalq.com/minicursos/ciberseguranca-seguranca-da-informacao-e-ataques-ciberneticos' target='_blank' rel='noopener'>Segurança da Informação e Ataques Cibernéticos</a><span class='dom'>mbauspesalq.com</span></td><td class='num strong'>61.523</td><td class='num'>43.938</td><td class='num soft-col'>68.988</td><td class='num soft-col'>23.960</td><td class='num soft-col'>51.252</td><td class='num soft-col'>13.043</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://ibsec.com.br/' target='_blank' rel='noopener'>Cibersegurança | Cursos, Pós-Graduação e Certificação Grátis</a><span class='dom'>ibsec.com.br</span></td><td class='num strong'>2.464</td><td class='num'>16.517</td><td class='num soft-col'>2.224</td><td class='num soft-col'>12.016</td><td class='num soft-col'>1.850</td><td class='num soft-col'>1.726</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Automação &amp; IA</h3>
+            <p>Fácil 1 · Médio 0 · Difícil 14</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>inteligência artificial</h4>
+              <span class="kw-meta">301.000 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/artificial-intelligence' target='_blank' rel='noopener'>O que é inteligência artificial (IA)?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://online.pucrs.br/blog/inteligencia-artificial' target='_blank' rel='noopener'>Inteligência Artificial: o que é e como funciona</a><span class='dom'>online.pucrs.br</span></td><td class='num strong'>341.804</td><td class='num'>509.769</td><td class='num soft-col'>394.440</td><td class='num soft-col'>780.495</td><td class='num soft-col'>300.735</td><td class='num soft-col'>540.490</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://www1.folha.uol.com.br/folha-topicos/inteligencia-artificial/' target='_blank' rel='noopener'>Notícias sobre inteligência artificial | Folha Tópicos - UOL</a><span class='dom'>www1.folha.uol.com.br</span></td><td class='num strong'>26.360.461</td><td class='num'>57.865.386</td><td class='num soft-col'>35.398.989</td><td class='num soft-col'>117.737.880</td><td class='num soft-col'>42.488.831</td><td class='num soft-col'>183.745.345</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>10</td><td class='term'><a href='https://www.totvs.com/blog/inovacoes/o-que-e-inteligencia-artificial/' target='_blank' rel='noopener'>O que é inteligência artificial (IA)? Tipos, exemplos e ...</a><span class='dom'>totvs.com</span></td><td class='num strong'>136.452</td><td class='num'>333.830</td><td class='num soft-col'>153.907</td><td class='num soft-col'>639.001</td><td class='num soft-col'>137.295</td><td class='num soft-col'>539.205</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>11</td><td class='term'><a href='https://aws.amazon.com/pt/what-is/artificial-intelligence/' target='_blank' rel='noopener'>O que é IA? - Explicação sobre inteligência artificial</a><span class='dom'>aws.amazon.com</span></td><td class='num strong'>741.640</td><td class='num'>3.316.018</td><td class='num soft-col'>1.254.875</td><td class='num soft-col'>3.510.656</td><td class='num soft-col'>752.570</td><td class='num soft-col'>2.902.483</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>automação industrial</h4>
+              <span class="kw-meta">27.100 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.sp.senai.br/curso/tecnico-em-automacao-industrial/95708' target='_blank' rel='noopener'>Técnico em Automação Industrial</a><span class='dom'>sp.senai.br</span></td><td class='num strong'>1.539.519</td><td class='num'>323.635</td><td class='num soft-col'>923.598</td><td class='num soft-col'>859.889</td><td class='num soft-col'>1.686.803</td><td class='num soft-col'>204.209</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.anhanguera.com/curso/automacao-industrial/' target='_blank' rel='noopener'>Automação Industrial - Tecnólogo - Presencial</a><span class='dom'>anhanguera.com</span></td><td class='num strong'>1.959.332</td><td class='num'>663.305</td><td class='num soft-col'>1.144.173</td><td class='num soft-col'>805.615</td><td class='num soft-col'>1.129.102</td><td class='num soft-col'>594.861</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.educamaisbrasil.com.br/cursos-e-faculdades/automacao-industrial' target='_blank' rel='noopener'>Automação Industrial: o que faz, salários e onde estudar</a><span class='dom'>educamaisbrasil.com.br</span></td><td class='num strong'>468.391</td><td class='num'>1.694.510</td><td class='num soft-col'>675.622</td><td class='num soft-col'>2.981.294</td><td class='num soft-col'>760.045</td><td class='num soft-col'>6.019.522</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>11</td><td class='term'><a href='https://www.produttivo.com.br/blog/automacao-industrial/' target='_blank' rel='noopener'>Automação Industrial: o que é, objetivos e vantagens</a><span class='dom'>produttivo.com.br</span></td><td class='num strong'>3.722</td><td class='num'>53.204</td><td class='num soft-col'>9.166</td><td class='num soft-col'>96.834</td><td class='num soft-col'>3.434</td><td class='num soft-col'>162.413</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>12</td><td class='term'><a href='https://unisenaipr.com.br/cursos/graduacao/automacao-industrial' target='_blank' rel='noopener'>Tecnólogo em Automação Industrial</a><span class='dom'>unisenaipr.com.br</span></td><td class='num strong'>1.129</td><td class='num'>10.100</td><td class='num soft-col'>3.463</td><td class='num soft-col'>2.230</td><td class='num soft-col'>1.560</td><td class='num soft-col'>1.842</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>rpa</h4>
+              <span class="kw-meta">27.100 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.contabilizei.com.br/contabilidade-online/rpa-recibo-de-pagamento-autonomo/' target='_blank' rel='noopener'>RPA (Recibo de Pagamento Autônomo): O que é e como ...</a><span class='dom'>contabilizei.com.br</span></td><td class='num strong'>118.457</td><td class='num'>1.093.531</td><td class='num soft-col'>132.432</td><td class='num soft-col'>2.056.831</td><td class='num soft-col'>73.861</td><td class='num soft-col'>1.324.066</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://carmelitas.com.br/ferramentas/rpa.php' target='_blank' rel='noopener'>Gerador de RPA 2026: calcule INSS, IRRF, ISS e ...</a><span class='dom'>carmelitas.com.br</span></td><td class='num strong'>0</td><td class='num'>340.206</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.mercadopago.com.br/blog/o-que-e-rpa-para-que-serve' target='_blank' rel='noopener'>RPA: o que é e como calcular o recibo de autônomo</a><span class='dom'>mercadopago.com.br</span></td><td class='num strong'>1.162.950</td><td class='num'>480.506</td><td class='num soft-col'>1.743.080</td><td class='num soft-col'>168.987</td><td class='num soft-col'>1.727.802</td><td class='num soft-col'>105.806</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.crc-ce.org.br/2026/01/o-rpa-em-2026-e-a-reforma-tributaria-esclarecimentos-necessarios/' target='_blank' rel='noopener'>O RPA em 2026 e a Reforma Tributária – Esclarecimentos ...</a><span class='dom'>crc-ce.org.br</span></td><td class='num strong'>5.363</td><td class='num'>28.927</td><td class='num soft-col'>4.970</td><td class='num soft-col'>8.062</td><td class='num soft-col'>6.327</td><td class='num soft-col'>13.289</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://blog.cresol.com.br/rpa-o-que-e-como-emitir/' target='_blank' rel='noopener'>Recibo de Pagamento Autônomo (RPA): o que é e como ...</a><span class='dom'>blog.cresol.com.br</span></td><td class='num strong'>13.150</td><td class='num'>30.224</td><td class='num soft-col'>74.435</td><td class='num soft-col'>70.491</td><td class='num soft-col'>77.756</td><td class='num soft-col'>111.170</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Desenvolvimento</h3>
+            <p>Fácil 1 · Médio 3 · Difícil 11</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>desenvolvimento de sistemas</h4>
+              <span class="kw-meta">9.900 buscas/mês · Fundo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.sp.senac.br/cursos-tecnicos/curso-tecnico-em-desenvolvimento-de-sistemas' target='_blank' rel='noopener'>Curso Técnico - Técnico em Desenvolvimento de Sistemas</a><span class='dom'>sp.senac.br</span></td><td class='num strong'>2.163.974</td><td class='num'>952.131</td><td class='num soft-col'>3.372.519</td><td class='num soft-col'>1.382.215</td><td class='num soft-col'>2.740.858</td><td class='num soft-col'>1.276.892</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.cps.sp.gov.br/cursos-etec/desenvolvimento-de-sistemas/' target='_blank' rel='noopener'>Desenvolvimento de Sistemas</a><span class='dom'>cps.sp.gov.br</span></td><td class='num strong'>311.037</td><td class='num'>427.523</td><td class='num soft-col'>483.522</td><td class='num soft-col'>575.729</td><td class='num soft-col'>306.757</td><td class='num soft-col'>289.599</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.cruzeirodosulvirtual.com.br/cursos-tecnicos/tecnico-em-desenvolvimento-de-sistemas/' target='_blank' rel='noopener'>Técnico em Desenvolvimento de Sistemas</a><span class='dom'>cruzeirodosulvirtual.com.br</span></td><td class='num strong'>468.239</td><td class='num'>369.094</td><td class='num soft-col'>221.649</td><td class='num soft-col'>357.742</td><td class='num soft-col'>248.480</td><td class='num soft-col'>381.485</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://inscricoes.unicesumar.edu.br/curso/tecnico-em-desenvolvimento-de-sistemas' target='_blank' rel='noopener'>Curso de Técnico em Desenvolvimento de Sistemas</a><span class='dom'>inscricoes.unicesumar.edu.br</span></td><td class='num strong'>1.743.340</td><td class='num'>319.461</td><td class='num soft-col'>1.710.413</td><td class='num soft-col'>269.097</td><td class='num soft-col'>1.591.261</td><td class='num soft-col'>179.324</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.sp.senai.br/curso/tecnico-em-desenvolvimento-de-sistemas/102655' target='_blank' rel='noopener'>Técnico em Desenvolvimento de Sistemas</a><span class='dom'>sp.senai.br</span></td><td class='num strong'>1.539.519</td><td class='num'>323.635</td><td class='num soft-col'>923.598</td><td class='num soft-col'>859.889</td><td class='num soft-col'>1.686.803</td><td class='num soft-col'>204.209</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>desenvolvimento de software</h4>
+              <span class="kw-meta">4.400 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://querobolsa.com.br/carreiras-e-profissoes/desenvolvedor-de-software' target='_blank' rel='noopener'>Desenvolvedor de Software - O que faz, Faculdade e Curso</a><span class='dom'>querobolsa.com.br</span></td><td class='num strong'>284.215</td><td class='num'>3.960.020</td><td class='num soft-col'>338.332</td><td class='num soft-col'>8.790.065</td><td class='num soft-col'>300.025</td><td class='num soft-col'>6.752.401</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/software-development' target='_blank' rel='noopener'>O que é desenvolvimento de software?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.usjt.br/blog/desenvolvimento-de-software/' target='_blank' rel='noopener'>Desenvolvimento de Software: o que é, áreas de atuação e ...</a><span class='dom'>usjt.br</span></td><td class='num strong'>124.415</td><td class='num'>37.861</td><td class='num soft-col'>240.039</td><td class='num soft-col'>30.649</td><td class='num soft-col'>226.730</td><td class='num soft-col'>13.490</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.microsoft.com/pt-br/power-platform/topics/phases-of-the-software-development-lifecycle' target='_blank' rel='noopener'>Ciclo de Vida do Desenvolvimento de Software</a><span class='dom'>microsoft.com</span></td><td class='num strong'>7.294.395</td><td class='num'>15.333.598</td><td class='num soft-col'>12.703.258</td><td class='num soft-col'>26.888.392</td><td class='num soft-col'>15.815.222</td><td class='num soft-col'>19.505.262</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.educamaisbrasil.com.br/cursos-e-faculdades/desenvolvimento-de-software' target='_blank' rel='noopener'>Sobre o curso de DESENVOLVIMENTO DE SOFTWARE</a><span class='dom'>educamaisbrasil.com.br</span></td><td class='num strong'>468.391</td><td class='num'>1.694.510</td><td class='num soft-col'>675.622</td><td class='num soft-col'>2.981.294</td><td class='num soft-col'>760.045</td><td class='num soft-col'>6.019.522</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>sistemas web</h4>
+              <span class="kw-meta">1.000 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.sistemasnaweb.com.br/' target='_blank' rel='noopener'>Sistema na Web</a><span class='dom'>sistemasnaweb.com.br</span></td><td class='num strong'>320</td><td class='num'>535</td><td class='num soft-col'>208</td><td class='num soft-col'>136</td><td class='num soft-col'>0</td><td class='num soft-col'>104</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.mestresdaweb.com.br/tecnologias/sistema-web-o-que-e-e-como-funciona' target='_blank' rel='noopener'>Sistema web: o que é e como funciona</a><span class='dom'>mestresdaweb.com.br</span></td><td class='num strong'>256</td><td class='num'>1.841</td><td class='num soft-col'>392</td><td class='num soft-col'>8.157</td><td class='num soft-col'>344</td><td class='num soft-col'>7.283</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.servicewebsistemas.com.br/' target='_blank' rel='noopener'>Service Web Sistemas: Sistemas Web Sob Medida</a><span class='dom'>servicewebsistemas.com.br</span></td><td class='num strong'>0</td><td class='num'>17</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.eniac.edu.br/blog/conheca-sobre-o-desenvolvimento-de-sistemas-web' target='_blank' rel='noopener'>Conheça sobre o desenvolvimento de sistemas web</a><span class='dom'>eniac.edu.br</span></td><td class='num strong'>52.753</td><td class='num'>15.185</td><td class='num soft-col'>52.857</td><td class='num soft-col'>30.981</td><td class='num soft-col'>0</td><td class='num soft-col'>15.316</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://codebit.com.br/blog/voce-sabe-o-que-e-o-sistema-web' target='_blank' rel='noopener'>Você sabe o que é o Sistema Web? - CodeBlog</a><span class='dom'>codebit.com.br</span></td><td class='num strong'>168</td><td class='num'>688</td><td class='num soft-col'>168</td><td class='num soft-col'>1.059</td><td class='num soft-col'>168</td><td class='num soft-col'>2.471</td><td><span class='diff medio'>Médio</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Consultoria &amp; Cloud</h3>
+            <p>Fácil 2 · Médio 0 · Difícil 13</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>cobit</h4>
+              <span class="kw-meta">2.900 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.isaca.org/resources/cobit' target='_blank' rel='noopener'>COBIT®| Control Objectives for Information Technologies®</a><span class='dom'>isaca.org</span></td><td class='num strong'>709</td><td class='num'>1.195</td><td class='num soft-col'>889</td><td class='num soft-col'>1.477</td><td class='num soft-col'>1.040</td><td class='num soft-col'>888</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://posdigital.pucpr.br/blog/cobit' target='_blank' rel='noopener'>O que é COBIT, os benefícios e a relação com a governança ...</a><span class='dom'>posdigital.pucpr.br</span></td><td class='num strong'>189.264</td><td class='num'>208.436</td><td class='num soft-col'>178.913</td><td class='num soft-col'>199.291</td><td class='num soft-col'>155.581</td><td class='num soft-col'>148.453</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://portal.trt24.jus.br/web/ggti/cobit1' target='_blank' rel='noopener'>Cobit</a><span class='dom'>portal.trt24.jus.br</span></td><td class='num strong'>39.397</td><td class='num'>7.813</td><td class='num soft-col'>40.157</td><td class='num soft-col'>11.968</td><td class='num soft-col'>43.148</td><td class='num soft-col'>4.898</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.zendesk.com.br/blog/employee-service/itsm/cobit-o-que-e/' target='_blank' rel='noopener'>COBIT: o que é, para que serve, princípios e certificação</a><span class='dom'>zendesk.com.br</span></td><td class='num strong'>6.838</td><td class='num'>64.836</td><td class='num soft-col'>26.952</td><td class='num soft-col'>355.430</td><td class='num soft-col'>24.676</td><td class='num soft-col'>304.637</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://www.fortinet.com/br/resources/cyberglossary/what-is-cobit' target='_blank' rel='noopener'>O que é a estrutura COBIT? Metas e princípios do COBIT</a><span class='dom'>fortinet.com</span></td><td class='num strong'>57.741</td><td class='num'>236.419</td><td class='num soft-col'>80.061</td><td class='num soft-col'>133.913</td><td class='num soft-col'>32.839</td><td class='num soft-col'>68.799</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>transformacao digital</h4>
+              <span class="kw-meta">2.400 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/transformacaodigital' target='_blank' rel='noopener'>Transformação Digital — Ministério da Ciência, Tecnologia e ...</a><span class='dom'>gov.br</span></td><td class='num strong'>0</td><td class='num'>315.692</td><td class='num soft-col'>0</td><td class='num soft-col'>858.723</td><td class='num soft-col'>0</td><td class='num soft-col'>493.905</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/digital-transformation' target='_blank' rel='noopener'>O que é transformação digital?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://transformacaodigital.com/o-que-e-transformacao-digital/' target='_blank' rel='noopener'>O que é Transformação Digital?</a><span class='dom'>transformacaodigital.com</span></td><td class='num strong'>0</td><td class='num'>549</td><td class='num soft-col'>72</td><td class='num soft-col'>5.973</td><td class='num soft-col'>0</td><td class='num soft-col'>5.651</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://fia.com.br/blog/transformacao-digital/' target='_blank' rel='noopener'>Transformação Digital: Conceito e Relevância Atual</a><span class='dom'>fia.com.br</span></td><td class='num strong'>7.079</td><td class='num'>830.925</td><td class='num soft-col'>20.436</td><td class='num soft-col'>414.387</td><td class='num soft-col'>22.341</td><td class='num soft-col'>925.464</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://aws.amazon.com/pt/what-is/digital-transformation/' target='_blank' rel='noopener'>O que é transformação digital?</a><span class='dom'>aws.amazon.com</span></td><td class='num strong'>741.640</td><td class='num'>3.316.018</td><td class='num soft-col'>1.254.875</td><td class='num soft-col'>3.510.656</td><td class='num soft-col'>752.570</td><td class='num soft-col'>2.902.483</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>governanca de ti</h4>
+              <span class="kw-meta">1.600 buscas/mês · Fundo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://www.ibm.com/br-pt/think/topics/it-governance' target='_blank' rel='noopener'>O que é governança de TI?</a><span class='dom'>ibm.com</span></td><td class='num strong'>42.862</td><td class='num'>1.320.477</td><td class='num soft-col'>106.812</td><td class='num soft-col'>670.788</td><td class='num soft-col'>50.106</td><td class='num soft-col'>357.990</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://especializacao.ccec.puc-rio.br/blog/governanca-ti' target='_blank' rel='noopener'>Princípios e frameworks de governança de TI</a><span class='dom'>especializacao.ccec.puc-rio.br</span></td><td class='num strong'>145.847</td><td class='num'>172.992</td><td class='num soft-col'>160.941</td><td class='num soft-col'>1.234.299</td><td class='num soft-col'>120.076</td><td class='num soft-col'>222.854</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.claranet.com/br/blog/governanca-ti-o-que-e' target='_blank' rel='noopener'>Governança de TI o que é? Qual o seu papel?</a><span class='dom'>claranet.com</span></td><td class='num strong'>2.383</td><td class='num'>7.828</td><td class='num soft-col'>1.866</td><td class='num soft-col'>9.515</td><td class='num soft-col'>1.834</td><td class='num soft-col'>8.902</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.alura.com.br/formacao-governanca-ti?srsltid=AfmBOooUfjeK5L28txNJOLfhFQJRRdDyqKgeaaJiarzAGEqzMGRH56dp' target='_blank' rel='noopener'>Até 30% OFF | Curso online: formação em Governança de TI</a><span class='dom'>alura.com.br</span></td><td class='num strong'>1.011.437</td><td class='num'>283.515</td><td class='num soft-col'>1.061.581</td><td class='num soft-col'>489.294</td><td class='num soft-col'>792.627</td><td class='num soft-col'>570.427</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://portal.tcu.gov.br/governanca/governanca-de-ti/' target='_blank' rel='noopener'>Governança de TI</a><span class='dom'>portal.tcu.gov.br</span></td><td class='num strong'>73.898</td><td class='num'>69.733</td><td class='num soft-col'>126.957</td><td class='num soft-col'>102.659</td><td class='num soft-col'>136.962</td><td class='num soft-col'>121.863</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Open Finance</h3>
+            <p>Fácil 1 · Médio 0 · Difícil 14</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>open finance</h4>
+              <span class="kw-meta">22.200 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://openfinancebrasil.org.br/' target='_blank' rel='noopener'>Home - Open Finance Brasil</a><span class='dom'>openfinancebrasil.org.br</span></td><td class='num strong'>2.311</td><td class='num'>1.740</td><td class='num soft-col'>16.914</td><td class='num soft-col'>3.475</td><td class='num soft-col'>17.513</td><td class='num soft-col'>2.012</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.bcb.gov.br/estabilidadefinanceira/openfinance' target='_blank' rel='noopener'>Open Finance</a><span class='dom'>bcb.gov.br</span></td><td class='num strong'>1.528.915</td><td class='num'>2.660.790</td><td class='num soft-col'>4.321.129</td><td class='num soft-col'>4.002.832</td><td class='num soft-col'>2.786.055</td><td class='num soft-col'>2.938.941</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='http://www.caixa.gov.br/open-finance/Paginas/default.aspx' target='_blank' rel='noopener'>Open Finance</a><span class='dom'>caixa.gov.br</span></td><td class='num strong'>14.913.562</td><td class='num'>11.311.806</td><td class='num soft-col'>22.497.746</td><td class='num soft-col'>14.409.240</td><td class='num soft-col'>20.570.905</td><td class='num soft-col'>13.581.112</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://blog.nubank.com.br/o-que-e-open-finance/' target='_blank' rel='noopener'>Open Finance: o que é e como funciona</a><span class='dom'>blog.nubank.com.br</span></td><td class='num strong'>1.248.996</td><td class='num'>654.016</td><td class='num soft-col'>4.327.511</td><td class='num soft-col'>964.690</td><td class='num soft-col'>3.391.754</td><td class='num soft-col'>860.077</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.bb.com.br/site/open-finance/' target='_blank' rel='noopener'>Open Finance BB com controle e crédito fácil</a><span class='dom'>bb.com.br</span></td><td class='num strong'>3.933.839</td><td class='num'>1.019.937</td><td class='num soft-col'>4.730.794</td><td class='num soft-col'>2.119.307</td><td class='num soft-col'>5.939.564</td><td class='num soft-col'>978.829</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>open banking</h4>
+              <span class="kw-meta">2.400 buscas/mês · Meio</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>2</td><td class='term'><a href='https://www.bcb.gov.br/estabilidadefinanceira/openfinance' target='_blank' rel='noopener'>Open Finance</a><span class='dom'>bcb.gov.br</span></td><td class='num strong'>1.528.915</td><td class='num'>2.660.790</td><td class='num soft-col'>4.321.129</td><td class='num soft-col'>4.002.832</td><td class='num soft-col'>2.786.055</td><td class='num soft-col'>2.938.941</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://openfinancebrasil.org.br/' target='_blank' rel='noopener'>Home - Open Finance Brasil</a><span class='dom'>openfinancebrasil.org.br</span></td><td class='num strong'>2.311</td><td class='num'>1.740</td><td class='num soft-col'>16.914</td><td class='num soft-col'>3.475</td><td class='num soft-col'>17.513</td><td class='num soft-col'>2.012</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='http://www.caixa.gov.br/open-finance/Paginas/default.aspx' target='_blank' rel='noopener'>Open Finance</a><span class='dom'>caixa.gov.br</span></td><td class='num strong'>14.913.562</td><td class='num'>11.311.806</td><td class='num soft-col'>22.497.746</td><td class='num soft-col'>14.409.240</td><td class='num soft-col'>20.570.905</td><td class='num soft-col'>13.581.112</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://www.topazevolution.com/blog/o-papel-do-open-banking-na-inclusao-financeira' target='_blank' rel='noopener'>Open Banking: o que é, como funciona, vantagens e desafios</a><span class='dom'>topazevolution.com</span></td><td class='num strong'>2</td><td class='num'>13.974</td><td class='num soft-col'>0</td><td class='num soft-col'>2.465</td><td class='num soft-col'>0</td><td class='num soft-col'>2.991</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.bb.com.br/site/open-finance/' target='_blank' rel='noopener'>Open Finance BB com controle e crédito fácil</a><span class='dom'>bb.com.br</span></td><td class='num strong'>3.933.839</td><td class='num'>1.019.937</td><td class='num soft-col'>4.730.794</td><td class='num soft-col'>2.119.307</td><td class='num soft-col'>5.939.564</td><td class='num soft-col'>978.829</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>o que e open finance</h4>
+              <span class="kw-meta">480 buscas/mês · Topo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://openfinancebrasil.org.br/' target='_blank' rel='noopener'>Home - Open Finance Brasil</a><span class='dom'>openfinancebrasil.org.br</span></td><td class='num strong'>2.311</td><td class='num'>1.740</td><td class='num soft-col'>16.914</td><td class='num soft-col'>3.475</td><td class='num soft-col'>17.513</td><td class='num soft-col'>2.012</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.bcb.gov.br/estabilidadefinanceira/openfinance' target='_blank' rel='noopener'>Open Finance</a><span class='dom'>bcb.gov.br</span></td><td class='num strong'>1.528.915</td><td class='num'>2.660.790</td><td class='num soft-col'>4.321.129</td><td class='num soft-col'>4.002.832</td><td class='num soft-col'>2.786.055</td><td class='num soft-col'>2.938.941</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://blog.nubank.com.br/o-que-e-open-finance/' target='_blank' rel='noopener'>Open Finance: o que é e como funciona</a><span class='dom'>blog.nubank.com.br</span></td><td class='num strong'>1.248.996</td><td class='num'>654.016</td><td class='num soft-col'>4.327.511</td><td class='num soft-col'>964.690</td><td class='num soft-col'>3.391.754</td><td class='num soft-col'>860.077</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.santander.com.br/blog/o-que-e-open-finance' target='_blank' rel='noopener'>Open Finance: como funciona? - Blog Santander</a><span class='dom'>santander.com.br</span></td><td class='num strong'>2.884.953</td><td class='num'>1.254.882</td><td class='num soft-col'>4.231.875</td><td class='num soft-col'>1.057.490</td><td class='num soft-col'>4.498.088</td><td class='num soft-col'>712.626</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.serasa.com.br/blog/open-finance/' target='_blank' rel='noopener'>O que é Open Finance: cinco vantagens do sistema</a><span class='dom'>serasa.com.br</span></td><td class='num strong'>7.028.374</td><td class='num'>2.291.363</td><td class='num soft-col'>9.824.844</td><td class='num soft-col'>2.837.502</td><td class='num soft-col'>9.829.781</td><td class='num soft-col'>3.101.216</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Branding</h3>
+            <p>Fácil 4 · Médio 0 · Difícil 4</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        
+          <div class="kw">
+            <div class="kw-head">
+              <h4>grupo data</h4>
+              <span class="kw-meta">210 buscas/mês · Fundo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://www.glassdoor.com.br/Sal%C3%A1rio/Grupo-Data-Sal%C3%A1rios-E8022094.htm' target='_blank' rel='noopener'>Quanto a empresa Grupo Data paga em 2026? (16 salários)</a><span class='dom'>glassdoor.com.br</span></td><td class='num strong'>238.686</td><td class='num'>1.887.875</td><td class='num soft-col'>218.680</td><td class='num soft-col'>2.978.307</td><td class='num soft-col'>175.633</td><td class='num soft-col'>1.826.448</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://www.careers-page.com/grupo-data' target='_blank' rel='noopener'>Grupo Data - Careers-page.com</a><span class='dom'>careers-page.com</span></td><td class='num strong'>0</td><td class='num'>665</td><td class='num soft-col'>0</td><td class='num soft-col'>575</td><td class='num soft-col'>0</td><td class='num soft-col'>144</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://www.reddit.com/r/devpt/comments/1l8t4i8/algu%C3%A9m_conhece_a_grupo_data_portugal/' target='_blank' rel='noopener'>Alguém conhece a Grupo Data Portugal? : r/devpt</a><span class='dom'>reddit.com</span></td><td class='num strong'>1.832.004</td><td class='num'>38.581.040</td><td class='num soft-col'>1.649.898</td><td class='num soft-col'>15.178.818</td><td class='num soft-col'>1.457.597</td><td class='num soft-col'>2.388.514</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://www.datagrupo.com.br/' target='_blank' rel='noopener'>Data Grupo - Soluções em Tecnologia e Desenvolvimento</a><span class='dom'>datagrupo.com.br</span></td><td class='num strong'>0</td><td class='num'>8</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>1</td><td><span class='diff facil'>Fácil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="kw">
+            <div class="kw-head">
+              <h4>grupodata</h4>
+              <span class="kw-meta">210 buscas/mês · Fundo</span>
+            </div>
+            <div class="scroll">
+              <table class="grid serp">
+                <thead>
+                  <tr>
+                    <th class="idx">#</th>
+                    <th>Resultado no Google</th>
+                    <th class="num">Marca</th>
+                    <th class="num">Seo</th>
+                    <th class="num soft-col">2025 Marca</th>
+                    <th class="num soft-col">2025 Seo</th>
+                    <th class="num soft-col">2024 Marca</th>
+                    <th class="num soft-col">2024 Seo</th>
+                    <th>Dificuldade</th>
+                  </tr>
+                </thead>
+                <tbody><tr><td class='idx'>3</td><td class='term'><a href='https://www.careers-page.com/grupo-data' target='_blank' rel='noopener'>Grupo Data - Careers-page.com</a><span class='dom'>careers-page.com</span></td><td class='num strong'>0</td><td class='num'>665</td><td class='num soft-col'>0</td><td class='num soft-col'>575</td><td class='num soft-col'>0</td><td class='num soft-col'>144</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://www.reddit.com/r/devpt/comments/1l8t4i8/algu%C3%A9m_conhece_a_grupo_data_portugal/' target='_blank' rel='noopener'>Alguém conhece a Grupo Data Portugal? : r/devpt</a><span class='dom'>reddit.com</span></td><td class='num strong'>1.832.004</td><td class='num'>38.581.040</td><td class='num soft-col'>1.649.898</td><td class='num soft-col'>15.178.818</td><td class='num soft-col'>1.457.597</td><td class='num soft-col'>2.388.514</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://rh.grupo-data.com/' target='_blank' rel='noopener'>Employee Web Portal - Grupo Data</a><span class='dom'>rh.grupo-data.com</span></td><td class='num strong'>0</td><td class='num'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td class='num soft-col'>0</td><td><span class='diff facil'>Fácil</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://pt.indeed.com/q-grupo-data-ofertas.html' target='_blank' rel='noopener'>25+ Ofertas (Grupo Data), Emprego 15 de agosto de 2026</a><span class='dom'>pt.indeed.com</span></td><td class='num strong'>1.159.182</td><td class='num'>2.038.081</td><td class='num soft-col'>1.205.652</td><td class='num soft-col'>3.511.257</td><td class='num soft-col'>1.046.331</td><td class='num soft-col'>2.235.458</td><td><span class='diff dificil'>Difícil</span></td></tr><tr class='jk'><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data</a><span class='dom'>grupodata.com.br · referência</span></td><td class='num strong'>140</td><td class='num'>119</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td class='num soft-col'>72</td><td class='num soft-col'>0</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+      </section></div>
+    </div>
+    <div id="view-programacao" class="panel-view">
+    <section class="callout">
+      <span class="callout-badge">Conclusão</span>
+      <h2>Os critérios básicos de programação estão ok</h2>
+      <p>No site <a href="https://grupodata.com.br/" target="_blank" rel="noopener">grupodata.com.br</a>, código legível pelo Google, meta title, meta description e URLs amigáveis passam. O blog próprio está no domínio (https://grupodata.com.br/blog/).</p>
+    </section>
+
+    <div class="kpi-grid prog-kpis">
+      <div class="kpi ok-kpi">
+        <span class="kpi-label">Critérios ok</span>
+        <strong class="kpi-value">5</strong>
+        <span class="kpi-hint">Código · Title · Description · URL · Blog</span>
+      </div>
+      <div class="kpi ok-kpi">
+        <span class="kpi-label">Critério negativo</span>
+        <strong class="kpi-value">0</strong>
+        <span class="kpi-hint">Nenhum bloqueio estrutural</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Páginas no Google</span>
+        <strong class="kpi-value">10</strong>
+        <span class="kpi-hint">via site:grupodata.com.br</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Robots</span>
+        <strong class="kpi-value" style="font-size:1.35rem">index</strong>
+        <span class="kpi-hint">max-image-preview:large</span>
+      </div>
+    </div>
+
+    <div class="crit-list">
+      <article class="crit ok">
+        <header class="crit-head">
+          <span class="crit-num">01</span>
+          <div>
+            <h3>Código legível pelo Google</h3>
+            <p>O HTML é indexável e o Google já carrega páginas do domínio.</p>
+          </div>
+          <span class="crit-badge ok">Ok</span>
+        </header>
+        <div class="crit-body">
+          <p class="crit-note">Comprovação com a busca <code>site:grupodata.com.br</code> — páginas retornadas pelo Google:</p>
+          <div class="scroll">
+            <table class="grid">
+              <thead>
+                <tr><th class="idx">#</th><th>Página indexada</th><th>Tipo</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='idx'>1</td><td class='term'><a href='https://grupodata.com.br/' target='_blank' rel='noopener'>Grupo Data - Soluções em TI</a><span class='dom'>https://grupodata.com.br/</span></td><td>CONDUZIMOS A REVOLUÇÃO DIGITAL DAS MAIORES EMPRESAS BRASILEIRAS. Automação com IA nos principais processos de sua organização.</td></tr><tr><td class='idx'>2</td><td class='term'><a href='https://grupodata.com.br/talents/' target='_blank' rel='noopener'>Talents - Grupo Data</a><span class='dom'>https://grupodata.com.br/talents/</span></td><td>Buscamos Talentos de TI onde quer que estejam Empresa: Abra sua vaga Profissional de TI: Venha para o time 1 - Abra sua vaga sem contrato nem taxaO Grupo ...</td></tr><tr><td class='idx'>3</td><td class='term'><a href='https://grupodata.com.br/contato/' target='_blank' rel='noopener'>Contato - Grupo Data</a><span class='dom'>https://grupodata.com.br/contato/</span></td><td>Licenciamento Claude Compra, ativação e gestão de licenças Claude com condições de maior parceiro do Brasil. Projetos e Consultoria Mapeamento de casos de uso, ...</td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://grupodata.com.br/hunting/' target='_blank' rel='noopener'>Hunting – Grupo Data</a><span class='dom'>https://grupodata.com.br/hunting/</span></td><td>A equipe de recrutamento do Grupo Data Talent é capacitada para a realização de análises técnicas e comportamentais, além de ser especializada em tecnologia ...</td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://grupodata.com.br/clientes/' target='_blank' rel='noopener'>Clientes - Grupo Data</a><span class='dom'>https://grupodata.com.br/clientes/</span></td><td>Licenciamento Claude Compra, ativação e gestão de licenças Claude com condições de maior parceiro do Brasil. Projetos e Consultoria Mapeamento de casos de uso, ...</td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/desenvolvimento/' target='_blank' rel='noopener'>Desenvolvimento - Grupo Data</a><span class='dom'>https://grupodata.com.br/desenvolvimento/</span></td><td>Desenvolvimento de Soluções e Aplicações Web é a elaboração, implementação e entrega de um produto de TI para o cliente. O serviço é alinhado a necessidade de ...</td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://grupodata.com.br/blog/' target='_blank' rel='noopener'>Blog [Automarticles] - GD Insights - Grupo Data</a><span class='dom'>https://grupodata.com.br/blog/</span></td><td>GD Insights Dicas e tendências para quem busca inovação e eficiência em TI. Últimos Posts março 3, 2026 ITIL v5: Tudo sobre a evolução, novidades, ...</td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://claude.grupodata.com.br/' target='_blank' rel='noopener'>Maior Parceiro Claude no Brasil: Parceiro Oficial Claude</a><span class='dom'>https://claude.grupodata.com.br/</span></td><td>Grupo Data é parceiro oficial Claude e o maior parceiro Claude no Brasil: licenciamento Claude, consultoria e treinamento Claude para empresas e setor ...</td></tr><tr><td class='idx'>9</td><td class='term'><a href='https://grupodata.com.br/ciberseguranca/' target='_blank' rel='noopener'>Cibersegurança - Grupo Data</a><span class='dom'>https://grupodata.com.br/ciberseguranca/</span></td><td>Infraestruturas críticas como Usinas de energia, Hospitais, Industrias e empresas de serviços financeiros cada vez são mais alvos de ataques.</td></tr><tr><td class='idx'>10</td><td class='term'><a href='https://grupodata.com.br/infraestrutura/' target='_blank' rel='noopener'>Infraestrutura - Grupo Data</a><span class='dom'>https://grupodata.com.br/infraestrutura/</span></td><td>Oferecemos serviço completo de infraestrutura para que você execute seus projetos de TI com prazos e orçamentos enxutos e sem preocupação. Temos as melhores ...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="crit ok">
+        <header class="crit-head">
+          <span class="crit-num">02</span>
+          <div>
+            <h3>Meta title</h3>
+            <p>Presente no código-fonte e refletido no título da página / SERP.</p>
+          </div>
+          <span class="crit-badge ok">Ok</span>
+        </header>
+        <div class="crit-body">
+          <div class="meta-proof">
+            <div class="meta-card">
+              <span class="meta-label">No código-fonte</span>
+              <code>&lt;title&gt;Grupo Data - Soluções em TI&lt;/title&gt;</code>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">No site / Google</span>
+              <strong class="meta-title-preview">Grupo Data - Soluções em TI</strong>
+              <span class="dom">https://grupodata.com.br/</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="crit ok">
+        <header class="crit-head">
+          <span class="crit-num">03</span>
+          <div>
+            <h3>Meta description</h3>
+            <p>Tag <code>meta name="description"</code> presente e preenchida.</p>
+          </div>
+          <span class="crit-badge ok">Ok</span>
+        </header>
+        <div class="crit-body">
+          <div class="meta-proof">
+            <div class="meta-card wide">
+              <span class="meta-label">Descrição encontrada</span>
+              <p class="meta-desc">CONDUZIMOS A REVOLUÇÃO DIGITAL DAS MAIORES EMPRESAS BRASILEIRAS. Automação com IA nos principais processos de sua organização. Receber orçamento + 0 Clientes Satisfeitos em todo o Brasil O Grupo Data foi reconhecido pelo GPTW como uma das melhores empresas para se trabalhar no Brasil pela 3ª vez consecutiva! Saiba mais Publicações recentes Cibersegurança IA ofensiva chegou</p>
+              <pre class="source-block">&lt;title&gt;Grupo Data - Soluções em TI&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;CONDUZIMOS A REVOLUÇÃO DIGITAL DAS MAIORES EMPRESAS BRASILEIRAS. Automação com IA nos principais processos de sua organização. Receber orçamento + 0 Clientes Satisfeitos em todo o Brasil O Grupo Data foi reconhecido pelo GPTW como uma das melhores empresas para se trabalhar no Brasil pela 3ª vez consecutiva! Saiba mais Publicações recentes Cibersegurança IA ofensiva chegou&quot;&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;max-image-preview:large&quot;&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="crit ok">
+        <header class="crit-head">
+          <span class="crit-num">04</span>
+          <div>
+            <h3>URL amigável</h3>
+            <p>Paths curtos, legíveis e sem parâmetros dinâmicos desnecessários.</p>
+          </div>
+          <span class="crit-badge ok">Ok</span>
+        </header>
+        <div class="crit-body">
+          <p class="crit-note">Exemplos de URLs do domínio:</p>
+          <div class="url-chips"><span class='url-chip'>/gestao-de-ti/</span><span class='url-chip'>/gestao-de-ativos</span><span class='url-chip'>/projetos-e-consultoria/</span><span class='url-chip'>/desenvolvimento/</span><span class='url-chip'>/infraestrutura/</span><span class='url-chip'>/solucoes-financeiras/</span><span class='url-chip'>/talents/</span><span class='url-chip'>/outsourcing-sv</span><span class='url-chip'>/hunting</span><span class='url-chip'>/noc-soc</span><span class='url-chip'>/lgpd</span><span class='url-chip'>/ciberseguranca</span></div>
+        </div>
+      </article>
+
+      <article class="crit ok">
+        <header class="crit-head">
+          <span class="crit-num">05</span>
+          <div>
+            <h3>Blog</h3>
+            <p>Blog próprio no domínio, com artigos indexáveis.</p>
+          </div>
+          <span class="crit-badge ok">Ok</span>
+        </header>
+        <div class="crit-body">
+          <div class="blog-grid">
+            <div class="meta-card">
+              <span class="meta-label">No menu do site</span>
+              <strong>Blog</strong>
+              <span class="dom">href = /blog/</span>
+              <p class="meta-desc" style="margin-top:10px">O site tem blog próprio em https://grupodata.com.br/blog/ (GD Insights). O sitemap lista 43 artigos no domínio.</p>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">Destino do conteúdo</span>
+              <a class="medium-link" href="https://grupodata.com.br/blog/" target="_blank" rel="noopener">https://grupodata.com.br/blog/</a>
+              <p class="meta-desc" style="margin-top:10px">8 posts visíveis na listagem do blog.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+    </div>
+    <div id="view-blog" class="panel-view">
+    
+    <section class="callout">
+      <span class="callout-badge">Status</span>
+      <h2>Há blog próprio — a avaliação dos 8 fatores já é possível</h2>
+      <p>O site tem blog próprio em https://grupodata.com.br/blog/ (GD Insights). O sitemap lista 43 artigos no domínio. Abaixo, o framework padrão aplicado aos posts visíveis.</p>
+    </section>
+
+    <div class="kpi-grid blog-kpis">
+      <div class="kpi">
+        <span class="kpi-label">Fatores do framework</span>
+        <strong class="kpi-value">8</strong>
+        <span class="kpi-hint">Checklist padrão de conteúdo</span>
+      </div>
+      <div class="kpi ">
+        <span class="kpi-label">Artigos no domínio</span>
+        <strong class="kpi-value">8</strong>
+        <span class="kpi-hint">Listagem do blog</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Posts lidos</span>
+        <strong class="kpi-value">4</strong>
+        <span class="kpi-hint">Amostra para os 8 fatores</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Destino atual</span>
+        <strong class="kpi-value" style="font-size:1.15rem">Blog</strong>
+        <span class="kpi-hint">grupodata.com.br/blog/</span>
+      </div>
+    </div>
+
+    
+    <div class="section-label"><span>Posts visíveis</span></div>
+    <section class="panel wide">
+      <div class="scroll">
+        <table class="grid">
+          <thead><tr><th class="idx">#</th><th>Artigo</th></tr></thead>
+          <tbody><tr><td class='idx'>1</td><td class='term'><a href='https://grupodata.com.br/2026/04/09/como-a-ia-esta-transformando-a-ciberseguranca/' target='_blank' rel='noopener'>IA ofensiva chegou antes da defesa: O que o Project Glasswing revela sobre o futuro da Cibersegurança - Grupo Data</a><span class='dom'>https://grupodata.com.br/2026/04/09/como-a-ia-esta-transformando-a-ciberseguranca/</span></td></tr><tr><td class='idx'>2</td><td class='term'><a href='https://grupodata.com.br/2026/03/24/terceirizacao-de-ti-7-passos-para-escolher-parceiro-ideal/' target='_blank' rel='noopener'>Outsourcing de TI: 7 Passos para Escolher o Parceiro Ideal - Grupo Data</a><span class='dom'>https://grupodata.com.br/2026/03/24/terceirizacao-de-ti-7-passos-para-escolher-parceiro-ideal/</span></td></tr><tr><td class='idx'>3</td><td class='term'><a href='https://grupodata.com.br/2026/03/17/certificacao-itil-5-como-impulsionar-sua-carreira-na-era-da-ia/' target='_blank' rel='noopener'>Certificação ITIL 5: Como Impulsionar sua Carreira na Era da IA - Grupo Data</a><span class='dom'>https://grupodata.com.br/2026/03/17/certificacao-itil-5-como-impulsionar-sua-carreira-na-era-da-ia/</span></td></tr><tr><td class='idx'>4</td><td class='term'><a href='https://grupodata.com.br/2026/03/03/itil-v5-a-evolucao-nativa-em-ia-que-redefine-a-gestao-de-servicos/' target='_blank' rel='noopener'>ITIL v5: A Evolução Nativa em IA que Redefine a Gestão de Serviços - Grupo Data</a><span class='dom'>https://grupodata.com.br/2026/03/03/itil-v5-a-evolucao-nativa-em-ia-que-redefine-a-gestao-de-servicos/</span></td></tr><tr><td class='idx'>5</td><td class='term'><a href='https://grupodata.com.br/2026/03/12/como-o-morphisec-ajuda-msps-a-mitigar-o-ai-flywheel-com-ciberdefesa-preemptiva/' target='_blank' rel='noopener'>como o morphisec ajuda msps a mitigar o ai flywheel com ciberdefesa preemptiva</a><span class='dom'>https://grupodata.com.br/2026/03/12/como-o-morphisec-ajuda-msps-a-mitigar-o-ai-flywheel-com-ciberdefesa-preemptiva/</span></td></tr><tr><td class='idx'>6</td><td class='term'><a href='https://grupodata.com.br/2026/02/26/futuro-defesa-ransomware/' target='_blank' rel='noopener'>futuro defesa ransomware</a><span class='dom'>https://grupodata.com.br/2026/02/26/futuro-defesa-ransomware/</span></td></tr><tr><td class='idx'>7</td><td class='term'><a href='https://grupodata.com.br/2026/02/17/atendimento-n1-n2-suporte-ti-2026/' target='_blank' rel='noopener'>atendimento n1 n2 suporte ti 2026</a><span class='dom'>https://grupodata.com.br/2026/02/17/atendimento-n1-n2-suporte-ti-2026/</span></td></tr><tr><td class='idx'>8</td><td class='term'><a href='https://grupodata.com.br/2025/12/09/tendencias-principais-areas-gestao-ti/' target='_blank' rel='noopener'>tendencias principais areas gestao ti</a><span class='dom'>https://grupodata.com.br/2025/12/09/tendencias-principais-areas-gestao-ti/</span></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="section-label"><span>Fatores que geralmente analisamos</span></div>
+    <div class="factor-grid">
+      <article class="factor-card">
+        <span class="factor-num">01</span>
+        <div>
+          <h3>Cobertura de palavras-chave</h3>
+          <p>Quais termos principais e secundários o artigo cobre, e se a intenção de busca está atendida de ponta a ponta.</p>
+          <p class='meta-desc' style='margin-top:6px'>4 temas do mapa SEO aparecem nos títulos</p>
+        </div>
+        <span class="factor-status">Parcial</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">02</span>
+        <div>
+          <h3>Links internos</h3>
+          <p>Como o post se conecta a outras páginas do site para distribuir autoridade e guiar o leitor no funil.</p>
+          <p class='meta-desc' style='margin-top:6px'>Média de 38 links internos por post</p>
+        </div>
+        <span class="factor-status">Ok</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">03</span>
+        <div>
+          <h3>Subtópicos</h3>
+          <p>Seções e ângulos que aprofundam o tema central, respondendo perguntas relacionadas que o Google espera ver.</p>
+          <p class='meta-desc' style='margin-top:6px'>42 subtítulos nos posts lidos</p>
+        </div>
+        <span class="factor-status">Ok</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">04</span>
+        <div>
+          <h3>Índice</h3>
+          <p>Sumário ou âncoras no topo que organizam a leitura, melhoram UX e podem gerar sitelinks no resultado.</p>
+          <p class='meta-desc' style='margin-top:6px'>Nenhum índice visível nos posts lidos</p>
+        </div>
+        <span class="factor-status">Ausente</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">05</span>
+        <div>
+          <h3>CTA</h3>
+          <p>Chamadas à ação claras (diagnóstico, ebook, contato, lead) alinhadas ao estágio do funil do conteúdo.</p>
+          <p class='meta-desc' style='margin-top:6px'>CTA comercial presente</p>
+        </div>
+        <span class="factor-status">Ok</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">06</span>
+        <div>
+          <h3>Densidade de palavras</h3>
+          <p>Equilíbrio entre volume de texto, repetição natural do termo e legibilidade — sem stuffing e sem conteúdo raso.</p>
+          <p class='meta-desc' style='margin-top:6px'>Média de 2098 palavras</p>
+        </div>
+        <span class="factor-status">Ok</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">07</span>
+        <div>
+          <h3>Autoridade por tópicos</h3>
+          <p>Se o domínio constrói clusters temáticos (outsourcing, cibersegurança, IA, infraestrutura) e reforça expertise ao longo do tempo.</p>
+          <p class='meta-desc' style='margin-top:6px'>8 posts visíveis — cluster ainda inicial</p>
+        </div>
+        <span class="factor-status">Parcial</span>
+      </article>
+      <article class="factor-card">
+        <span class="factor-num">08</span>
+        <div>
+          <h3>Autor</h3>
+          <p>Assinatura, bio e sinais de E-E-A-T: quem escreve, credenciais e consistência da voz com a marca.</p>
+          <p class='meta-desc' style='margin-top:6px'>Sem assinatura/bio evidente</p>
+        </div>
+        <span class="factor-status">Ausente</span>
+      </article></div>
+    </div>
+    <div id="view-backlinks" class="panel-view">
+    <section class="callout">
+      <span class="callout-badge">Conclusão</span>
+      <h2>Backlinks: Grupo Data como referência frente aos concorrentes</h2>
+      <p>Authority Score <strong>9</strong>, <strong>200</strong> backlinks e <strong>109</strong> domínios referentes (Semrush Overview · subdomain/root). Dificuldade espelha a aba Concorrência: Fácil se o AS for menor que o JK, Médio até 3×, Difícil acima de 3×. Categorias: 2 oportunidades + 1 difícil, com top 3 de cada.</p>
+      <div class="conc-lists">
+        <div>
+          <span class="list-label">Categorias com oportunidade (Fácil / Média)</span>
+          <div class="tags"><span class='tag op'>Outsourcing &amp; TI para empresas</span><span class='tag op'>Gestão de TI &amp; Service Desk</span></div>
+        </div>
+        <div>
+          <span class="list-label">Categoria difícil</span>
+          <div class="tags"><span class='tag hard'>Consultoria &amp; Cloud</span></div>
+        </div>
+      </div>
+      <p class="crit-note" style="margin-top:14px">0 concorrentes com AS menor que o cliente · 9 com AS igual ou maior.</p>
+    </section>
+
+    
+    <div class="kpi-grid">
+      <div class="kpi">
+        <span class="kpi-label">Authority Score</span>
+        <strong class="kpi-value">9</strong>
+        <span class="kpi-hint">Semrush · root domain</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Backlinks</span>
+        <strong class="kpi-value">200</strong>
+        <span class="kpi-hint">200 links</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Domínios referentes</span>
+        <strong class="kpi-value">109</strong>
+        <span class="kpi-hint">Referring domains</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">Concorrentes</span>
+        <strong class="kpi-value">9</strong>
+        <span class="kpi-hint">2 categorias fáceis + 1 difícil</span>
+      </div>
+    </div>
+
+    <div class="section-label"><span>Comparativo geral</span></div>
+    <section class="panel wide">
+      <header class="panel-head">
+        <div class="panel-title">
+          <h3>Ranking por Authority Score</h3>
+          <p>Fonte: <a href="https://www.semrush.com/analytics/backlinks/overview/?q=grupodata.com.br&amp;searchType=domain" target="_blank" rel="noopener">Semrush Backlinks Overview</a></p>
+        </div>
+      </header>
+      <div class="scroll">
+        <table class="grid serp">
+          <thead>
+            <tr>
+              <th>Domínio</th>
+              <th class="num">Authority Score</th>
+              <th class="num">Backlinks</th>
+              <th class="num">Ref. domains</th>
+              <th class="num soft-col">Follow</th>
+              <th class="num soft-col">Nofollow</th>
+              <th class="num soft-col">IPs</th>
+              <th>Dificuldade</th>
+            </tr>
+          </thead>
+          <tbody><tr><td class='term'><strong>helpdesk.com</strong></td><td class='num strong'>56</td><td class='num'>700.282</td><td class='num'>4.248</td><td class='num soft-col'>686.844</td><td class='num soft-col'>13.656</td><td class='num soft-col'>4.696</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>isaca.org</strong></td><td class='num strong'>53</td><td class='num'>602.606</td><td class='num'>31.905</td><td class='num soft-col'>502.292</td><td class='num soft-col'>101.333</td><td class='num soft-col'>23.687</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>especializacao.ccec.puc-rio.br</strong></td><td class='num strong'>51</td><td class='num'>2.590.571</td><td class='num'>19.325</td><td class='num soft-col'>2.435.953</td><td class='num soft-col'>157.731</td><td class='num soft-col'>18.176</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>posdigital.pucpr.br</strong></td><td class='num strong'>50</td><td class='num'>247.930</td><td class='num'>9.598</td><td class='num soft-col'>222.378</td><td class='num soft-col'>25.968</td><td class='num soft-col'>8.756</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>claranet.com</strong></td><td class='num strong'>44</td><td class='num'>465.779</td><td class='num'>7.507</td><td class='num soft-col'>401.873</td><td class='num soft-col'>64.250</td><td class='num soft-col'>5.958</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>softdesign.com.br</strong></td><td class='num strong'>31</td><td class='num'>10.331</td><td class='num'>673</td><td class='num soft-col'>1.305</td><td class='num soft-col'>9.051</td><td class='num soft-col'>863</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>flowti.com.br</strong></td><td class='num strong'>24</td><td class='num'>3.680</td><td class='num'>589</td><td class='num soft-col'>2.494</td><td class='num soft-col'>1.190</td><td class='num soft-col'>686</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='term'><strong>elinfor.com.br</strong></td><td class='num strong'>20</td><td class='num'>4.769</td><td class='num'>181</td><td class='num soft-col'>4.622</td><td class='num soft-col'>148</td><td class='num soft-col'>139</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='term'><strong>globalti.com.br</strong></td><td class='num strong'>10</td><td class='num'>589</td><td class='num'>206</td><td class='num soft-col'>393</td><td class='num soft-col'>196</td><td class='num soft-col'>193</td><td><span class='diff medio'>Médio</span></td></tr><tr class="jk"><td class='term'><strong>grupodata.com.br</strong><span class="dom">referência</span></td><td class='num strong'>9</td><td class='num'>200</td><td class='num'>109</td><td class='num soft-col'>133</td><td class='num soft-col'>67</td><td class='num soft-col'>46</td><td><span class='diff ref'>Referência</span></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="section-label"><span>Por categoria (mesmo recorte da Concorrência)</span></div>
+    <div class="stack">
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Outsourcing &amp; TI para empresas</h3>
+            <p>Top 3 concorrentes da SERP · Authority Score vs Grupo Data (9)</p>
+          </div>
+          <span class="tag op">Oportunidade</span>
+        </header>
+        <div class="scroll">
+          <table class="grid serp">
+            <thead>
+              <tr>
+                <th>Domínio</th>
+                <th class="num">Authority Score</th>
+                <th class="num">Backlinks</th>
+                <th class="num">Ref. domains</th>
+                <th class="num soft-col">Follow</th>
+                <th class="num soft-col">Nofollow</th>
+                <th class="num soft-col">IPs</th>
+                <th>Dificuldade</th>
+              </tr>
+            </thead>
+            <tbody><tr class="jk"><td class='term'><strong>grupodata.com.br</strong><span class="dom">referência</span></td><td class='num strong'>9</td><td class='num'>200</td><td class='num'>109</td><td class='num soft-col'>133</td><td class='num soft-col'>67</td><td class='num soft-col'>46</td><td><span class='diff ref'>Referência</span></td></tr><tr><td class='term'><strong>globalti.com.br</strong></td><td class='num strong'>10</td><td class='num'>589</td><td class='num'>206</td><td class='num soft-col'>393</td><td class='num soft-col'>196</td><td class='num soft-col'>193</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='term'><strong>elinfor.com.br</strong></td><td class='num strong'>20</td><td class='num'>4.769</td><td class='num'>181</td><td class='num soft-col'>4.622</td><td class='num soft-col'>148</td><td class='num soft-col'>139</td><td><span class='diff medio'>Médio</span></td></tr><tr><td class='term'><strong>softdesign.com.br</strong></td><td class='num strong'>31</td><td class='num'>10.331</td><td class='num'>673</td><td class='num soft-col'>1.305</td><td class='num soft-col'>9.051</td><td class='num soft-col'>863</td><td><span class='diff dificil'>Difícil</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Gestão de TI &amp; Service Desk</h3>
+            <p>Top 3 concorrentes da SERP · Authority Score vs Grupo Data (9)</p>
+          </div>
+          <span class="tag op">Oportunidade</span>
+        </header>
+        <div class="scroll">
+          <table class="grid serp">
+            <thead>
+              <tr>
+                <th>Domínio</th>
+                <th class="num">Authority Score</th>
+                <th class="num">Backlinks</th>
+                <th class="num">Ref. domains</th>
+                <th class="num soft-col">Follow</th>
+                <th class="num soft-col">Nofollow</th>
+                <th class="num soft-col">IPs</th>
+                <th>Dificuldade</th>
+              </tr>
+            </thead>
+            <tbody><tr class="jk"><td class='term'><strong>grupodata.com.br</strong><span class="dom">referência</span></td><td class='num strong'>9</td><td class='num'>200</td><td class='num'>109</td><td class='num soft-col'>133</td><td class='num soft-col'>67</td><td class='num soft-col'>46</td><td><span class='diff ref'>Referência</span></td></tr><tr><td class='term'><strong>claranet.com</strong></td><td class='num strong'>44</td><td class='num'>465.779</td><td class='num'>7.507</td><td class='num soft-col'>401.873</td><td class='num soft-col'>64.250</td><td class='num soft-col'>5.958</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>helpdesk.com</strong></td><td class='num strong'>56</td><td class='num'>700.282</td><td class='num'>4.248</td><td class='num soft-col'>686.844</td><td class='num soft-col'>13.656</td><td class='num soft-col'>4.696</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>flowti.com.br</strong></td><td class='num strong'>24</td><td class='num'>3.680</td><td class='num'>589</td><td class='num soft-col'>2.494</td><td class='num soft-col'>1.190</td><td class='num soft-col'>686</td><td><span class='diff medio'>Médio</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel wide">
+        <header class="panel-head">
+          <div class="panel-title">
+            <h3>Consultoria &amp; Cloud</h3>
+            <p>Top 3 concorrentes da SERP · Authority Score vs Grupo Data (9)</p>
+          </div>
+          <span class="tag hard">Difícil</span>
+        </header>
+        <div class="scroll">
+          <table class="grid serp">
+            <thead>
+              <tr>
+                <th>Domínio</th>
+                <th class="num">Authority Score</th>
+                <th class="num">Backlinks</th>
+                <th class="num">Ref. domains</th>
+                <th class="num soft-col">Follow</th>
+                <th class="num soft-col">Nofollow</th>
+                <th class="num soft-col">IPs</th>
+                <th>Dificuldade</th>
+              </tr>
+            </thead>
+            <tbody><tr class="jk"><td class='term'><strong>grupodata.com.br</strong><span class="dom">referência</span></td><td class='num strong'>9</td><td class='num'>200</td><td class='num'>109</td><td class='num soft-col'>133</td><td class='num soft-col'>67</td><td class='num soft-col'>46</td><td><span class='diff ref'>Referência</span></td></tr><tr><td class='term'><strong>isaca.org</strong></td><td class='num strong'>53</td><td class='num'>602.606</td><td class='num'>31.905</td><td class='num soft-col'>502.292</td><td class='num soft-col'>101.333</td><td class='num soft-col'>23.687</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>posdigital.pucpr.br</strong></td><td class='num strong'>50</td><td class='num'>247.930</td><td class='num'>9.598</td><td class='num soft-col'>222.378</td><td class='num soft-col'>25.968</td><td class='num soft-col'>8.756</td><td><span class='diff dificil'>Difícil</span></td></tr><tr><td class='term'><strong>especializacao.ccec.puc-rio.br</strong></td><td class='num strong'>51</td><td class='num'>2.590.571</td><td class='num'>19.325</td><td class='num soft-col'>2.435.953</td><td class='num soft-col'>157.731</td><td class='num soft-col'>18.176</td><td><span class='diff dificil'>Difícil</span></td></tr></tbody>
+          </table>
+        </div>
+      </section></div>
+    </div>
+
+    <footer class="foot">
+      <span>Volumes: DataForSEO · Marca/Seo e Backlinks: Semrush · Programação/Blog: auditoria grupodata.com.br</span>
+      <span>Referência de marca Grupo Data: 140</span>
+    </footer>
+  </div>
+<script>
+document.querySelectorAll('.tab').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var id = btn.dataset.view;
+    document.querySelectorAll('.tab').forEach(function (b) { b.classList.toggle('active', b === btn); });
+    document.querySelectorAll('.panel-view').forEach(function (v) {
+      v.classList.toggle('active', v.id === 'view-' + id);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+function sortPanel(panel, dir) {
+  var tbody = panel.querySelector('tbody');
+  if (!tbody) return;
+  var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+  rows.sort(function (a, b) {
+    var va = Number(a.dataset.volume || 0);
+    var vb = Number(b.dataset.volume || 0);
+    return dir === 'asc' ? va - vb : vb - va;
+  });
+  rows.forEach(function (row, i) {
+    var idx = row.querySelector('.idx');
+    if (idx) idx.textContent = String(i + 1);
+    tbody.appendChild(row);
+  });
+  panel.querySelectorAll('.chip').forEach(function (c) {
+    c.classList.toggle('active', c.dataset.sort === dir);
+  });
+}
+
+document.querySelectorAll('.chip[data-sort]').forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    sortPanel(chip.closest('.panel'), chip.dataset.sort);
+  });
+});
+
+document.querySelectorAll('th.sortable').forEach(function (th) {
+  th.addEventListener('click', function () {
+    var panel = th.closest('.panel');
+    var active = panel.querySelector('.chip.active');
+    var next = active && active.dataset.sort === 'desc' ? 'asc' : 'desc';
+    sortPanel(panel, next);
+  });
+});
+</script>
+</body>
+</html>
