@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LinkedIn Ad Library — terceirizar ti</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 20px 48px}
+.brand-bar{height:5px;background:linear-gradient(90deg,#0A66C2,#2563eb,#7c3aed);border-radius:4px;margin-bottom:24px}
+h1{font-size:26px;font-weight:800;color:#0f172a;margin-bottom:4px}
+.sub{font-size:14px;color:#64748b;margin-bottom:18px}
+h2{font-size:16px;font-weight:800;color:#0f172a;margin:22px 0 10px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.card{background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:4px solid #0A66C2}
+.card.c2{border-left-color:#0f766e}.card.c3{border-left-color:#10b981}.card.c4{border-left-color:#f59e0b}
+.card.click{cursor:pointer;transition:box-shadow .15s,transform .15s}
+.card.click:hover{box-shadow:0 4px 12px rgba(10,102,194,.12);transform:translateY(-1px)}
+.card.click.active{outline:2px solid #0A66C2}
+.card .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#64748b}
+.card .val{font-size:22px;font-weight:800;color:#0f172a;margin-top:4px}
+.block{background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.kv{display:grid;grid-template-columns:200px 1fr;gap:6px 14px;font-size:13px}
+.kv .k{color:#64748b}.kv .v{color:#0f172a;font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:0 0 12px;background:#fff;padding:10px 12px;border-radius:10px}
+.filters label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#64748b;display:flex;flex-direction:column;gap:4px}
+.filters select,.filters input{font-size:13px;padding:6px 8px;border:1px solid #e2e8f0;border-radius:8px;min-width:160px}
+.note{font-size:13px;color:#64748b;margin-bottom:10px}
+.count{font-size:12px;color:#64748b;margin-bottom:8px}
+.table-wrap{overflow:auto;background:#fff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff}
+th{background:#f1f5f9;color:#475569;font-size:10px;text-transform:uppercase;letter-spacing:.4px;text-align:left;padding:10px;white-space:nowrap}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:#0f172a;background:#e2e8f0}
+th.sortable .sort-ind{display:inline-block;min-width:12px;margin-left:4px;color:#94a3b8;font-size:10px}
+th.sorted-desc .sort-ind{color:#0A66C2}
+th.sorted-desc .sort-ind::after{content:"▼"}
+th.sorted-asc .sort-ind{color:#0A66C2}
+th.sorted-asc .sort-ind::after{content:"▲"}
+td{padding:9px 10px;border-top:1px solid #f1f5f9;vertical-align:top;color:#334155}
+td.c{text-align:center}td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.clip{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tbody tr:hover{background:#f8fafc}
+.muted{font-size:11px;color:#94a3b8;font-weight:400;margin-top:2px}
+a{color:#0A66C2;text-decoration:none}a:hover{text-decoration:underline}
+.lv-Alto,.lv-Especialista,.lv-Sim{display:inline-block;background:rgba(16,185,129,.14);color:#047857;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;min-width:70px;text-align:center}
+.lv-Medio,.lv-Generalista{display:inline-block;background:rgba(245,158,11,.14);color:#a16207;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;min-width:70px;text-align:center}
+.lv-Baixo,.lv-Nao{display:inline-block;background:rgba(220,38,38,.10);color:#b91c1c;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;min-width:70px;text-align:center}
+.lv-Nenhum,.lv-{display:inline-block;background:rgba(100,116,139,.14);color:#475569;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;min-width:70px;text-align:center}
+footer{text-align:center;margin-top:28px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8}
+@media(max-width:760px){.cards{grid-template-columns:1fr 1fr}.kv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand-bar"></div>
+  <h1>LinkedIn Ad Library</h1>
+  <div class="sub">Grupo Data &middot; keyword <b>terceirizar ti</b> &middot; 20 empresas</div>
+
+  <div class="cards">
+    <div class="card click active" data-sim-filter="" title="Mostrar todas">
+      <div class="label">Empresas</div><div class="val">20</div>
+    </div>
+    <div class="card c3 click" data-sim-filter="Alto" title="Filtrar Alto">
+      <div class="label">Alto</div><div class="val">9</div>
+    </div>
+    <div class="card c4 click" data-sim-filter="Medio" title="Filtrar Medio">
+      <div class="label">Medio</div><div class="val">7</div>
+    </div>
+    <div class="card click" data-sim-filter="Baixo,Nenhum" title="Filtrar Baixo e Nenhum">
+      <div class="label">Baixo / Nenhum</div><div class="val">4</div>
+    </div>
+  </div>
+
+  <h2>1. Pesquisa</h2>
+  <div class="block">
+    <div class="kv">
+      <div class="k">Keyword</div><div class="v">terceirizar ti</div>
+      <div class="k">URL keyword</div><div class="v"><a href="https://www.linkedin.com/ad-library/search?keyword=terceirizar+ti" target="_blank">https://www.linkedin.com/ad-library/search?keyword=terceirizar+ti</a></div>
+      <div class="k">Total na pagina</div><div class="v">54</div>
+      <div class="k">Nicho cliente</div><div class="v">Soluções em TI</div>
+    </div>
+  </div>
+
+  <h2>2. Empresas (texto validado + total de ads)</h2>
+  <p class="note">Ordenado por total de ads (maior para menor). Clique no cabecalho para reordenar. Filtre por similaridade no select ou nos cards. <b>Investimento</b> = total de anúncios × R$ 200 (estimativa por criativo).</p>
+  <div class="filters" id="emp-filters">
+    <label>Similaridade
+      <select class="f-sim">
+        <option value="">Todas</option>
+        <option value="Alto">Alto (9)</option><option value="Medio">Medio (7)</option><option value="Baixo">Baixo (2)</option><option value="Nenhum">Nenhum (2)</option><option value="Baixo,Nenhum">Baixo / Nenhum (4)</option>
+      </select>
+    </label>
+    <label>Busca
+      <input type="search" class="f-q" placeholder="empresa, pagante, nicho...">
+    </label>
+  </div>
+  <div class="count" id="emp-count">20 empresa(s)</div>
+  <div class="table-wrap">
+  <table class="sortable-table" id="tbl-empresas">
+    <thead><tr>
+      <th class="sortable" data-col="0">#<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="1">Empresa / pagante<span class="sort-ind"></span></th>
+      <th class="sortable sorted-desc" data-col="2">Total ads<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="3">Investimento<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="4">Confiavel<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="5">TI<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="6">Sim.<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="7">Perfil<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="8">Nicho<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="9">Motivo<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="10">Texto<span class="sort-ind"></span></th>
+    </tr></thead>
+    <tbody><tr data-sim='Alto'><td data-n='1'>1</td><td data-n='Psm Company'><b>Psm Company</b><div class='muted'>PSM Company · <a href='https://www.linkedin.com/ad-library/search?payer=PSM+Company' target='_blank'>pagante</a></div></td><td class='num' data-n='258'>258</td><td class='num' data-n='51600'>R$ 51.600</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Outsourcing de TI com gestão contínua'>Outsourcing de TI com gestão contínua</td><td class='clip' data-n='O anunciante oferece outsourcing de TI com foco em gestão e governança, sendo um' title='O anunciante oferece outsourcing de TI com foco em gestão e governança, sendo um concorrente direto para empresas que buscam soluções de TI.'>O anunciante oferece outsourcing de TI com foco em gestão e governança, sendo um concorrente direto para empresas que buscam soluções de TI.</td><td class='clip' data-n='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam T' title='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é crítica, o que conta é previsibilidade, continuidade e um modelo que sustenta a rotina sem depender da sorte.
+
+Por isso, essas empresas valorizam um outsourcing com gestão contínua e acompanhamento ativo, com governança de ponta a ponta, não apenas alocação.
+
+Entenda como funciona o modelo da PSM'>Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é crítica, o que conta é previsibilidade, continuidade e um modelo que sustenta a rotina sem depender da sorte.
+
+Por isso, essas empresas valorizam um outsourcing com gestão contínua e acompanhamento ativo, com governança de ponta a ponta, não apenas alocação.
+
+Entenda como funciona o modelo da PSM</td></tr><tr data-sim='Medio'><td data-n='2'>2</td><td data-n='Mirante Tecnologia'><b>Mirante Tecnologia</b><div class='muted'>Mirante Tecnologia · <a href='https://www.linkedin.com/ad-library/search?payer=Mirante+Tecnologia' target='_blank'>pagante</a></div></td><td class='num' data-n='150'>150</td><td class='num' data-n='30000'>R$ 30.000</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Consultoria e Análise de IA'>Consultoria e Análise de IA</td><td class='clip' data-n='O anunciante foca em desafios e soluções de IA, um subsegmento de TI, mas não of' title='O anunciante foca em desafios e soluções de IA, um subsegmento de TI, mas não oferece serviços de TI genéricos como o Grupo Data.'>O anunciante foca em desafios e soluções de IA, um subsegmento de TI, mas não oferece serviços de TI genéricos como o Grupo Data.</td><td class='clip' data-n='O maior risco da inteligência artificial nas empresas já não está nas chamadas “' title='O maior risco da inteligência artificial nas empresas já não está nas chamadas “alucinações”, mas na capacidade de produzir análises coerentes, bem estruturadas e aparentemente sólidas, mesmo quando partem de premissas frágeis.
+
+Na prática, isso começa a impactar decisões. Narrativas plausíveis passam a orientar estratégias, critérios são delegados silenciosamente para modelos e a sensação de segurança aumenta mesmo sem o devido questionamento.
+Quanto mais a IA avança, mais crítico se torna o papel da liderança de TI em garantir que a tecnologia amplifique a análise, sem substituir o julgamento.
+
+Na newsletter desta semana, aprofundamos esse tema e as quatro armadilhas cognitivas da IA nas empresas.'>O maior risco da inteligência artificial nas empresas já não está nas chamadas “alucinações”, mas na capacidade de produzir análises coerentes, bem estruturadas e aparentemente sólidas, mesmo quando partem de premissas frágeis.
+
+Na prática, isso começa a impactar decisões. Narrativas plausíveis passam a orientar estratégias, critérios são delegados silenciosamente para modelos e a sensação de segurança aumenta mesmo sem o devido questionamento.
+Quanto mais a IA avança, mais crítico se torna o papel da liderança de TI em garantir que a tecnologia amplifique a análise, sem substituir o julgamento.
+
+Na newsletter desta semana, aprofundamos esse tema e as quatro armadilhas cognitivas da IA nas empresas.</td></tr><tr data-sim='Medio'><td data-n='3'>3</td><td data-n='Ademir Vicente Machado Junior'><b>Ademir Vicente Machado Junior</b><div class='muted'>Tiflux Sistema de Gestão Ltda · <a href='https://www.linkedin.com/ad-library/search?payer=Tiflux+Sistema+de+Gest%C3%A3o+Ltda' target='_blank'>pagante</a></div></td><td class='num' data-n='137'>137</td><td class='num' data-n='27400'>R$ 27.400</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Transformação digital e gestão de atendimento'>Transformação digital e gestão de atendimento</td><td class='clip' data-n='O anunciante foca em transformação digital e uso de ferramentas de TI para atend' title='O anunciante foca em transformação digital e uso de ferramentas de TI para atendimento, o que se relaciona com soluções em TI, mas com um recorte específico em liderança e engajamento.'>O anunciante foca em transformação digital e uso de ferramentas de TI para atendimento, o que se relaciona com soluções em TI, mas com um recorte específico em liderança e engajamento.</td><td class='clip' data-n='Transformação digital no atendimento não começa com ferramentas.
+
+Começa com a c' title='Transformação digital no atendimento não começa com ferramentas.
+
+Começa com a coragem da liderança. 
+Tem gente que quer digitalizar o atendimento…
+…mas ainda imprime planilha e manda no WhatsApp do grupo. 
+
+Hoje o papo é sério, mas leve:
+
+Quem quer mudança real precisa parar de terceirizar a transformação.
+Ela começa no topo. Sempre.
+
+- Dado para refletir:
+Segundo estudo da MIT Sloan Management Review, as empresas onde a liderança se engaja ativamente na transformação digital têm 2,5x mais chances de sucesso do que aquelas onde a mudança é empurrada &quot;de baixo pra cima&quot;.
+
+Ou seja: se o líder não acredita, o time não engaja.
+Se o líder não usa, ninguém adota.
+Se o líder não apoia, tudo trava.**
+A ferramenta pode ser boa.
+O processo pode ser incrível.
+Mas sem exemplo no topo, tudo vira projeto-fantasma.
+
+- Exemplo real: Forza JMalucelli
+Quando decidiram implementar a Tiflux, a liderança não ficou na arquibancada assistindo.
+
+Eles:
+Mapearam os processos com todas as áreas
+Participaram dos treinamentos
+Estimularam a cultura de melhoria contínua
+Colocaram indicadores de atendimento na mesa da diretoria
+
+O resultado?
+🟢 +1.000 tickets resolvidos por mês
+🟢 Atendimento centralizado e padronizado
+🟢 Time engajado (porque viu o líder usar e valorizar a ferramenta)
+🟢 E, principalmente: uma mentalidade digital enraizada
+
+E aqui vai o modelo mental para qualquer líder que queira transformar seu atendimento:
+
+Seja o primeiro a usar a ferramenta que você quer que o time adote.
+
+Se envolva na criação dos fluxos. Não é microgerenciamento, é alinhamento estratégico.
+
+Comunique a visão com clareza. Diga por que a mudança está acontecendo e o que ela resolve.
+
+Crie rituais de acompanhamento. Dashboards, reuniões curtas, checkpoints.
+
+Comemore as pequenas vitórias. Automação não é sobre tecno...'>Transformação digital no atendimento não começa com ferramentas.
+
+Começa com a coragem da liderança. 
+Tem gente que quer digitalizar o atendimento…
+…mas ainda imprime planilha e manda no WhatsApp do grupo. 
+
+Hoje o papo é sério, mas leve:
+
+Quem quer mudança real precisa parar de terceirizar a transformação.
+Ela começa no topo. Sempre.
+
+- Dado para refletir:
+Segundo estudo da MIT Sloan Management Review, as empresas onde a liderança se engaja ativamente na transformação digital têm 2,5x mais chances de sucesso do que aquelas onde a mudança é empurrada &quot;de baixo pra cima&quot;.
+
+Ou seja: se o líder não acredita, o time não engaja.
+Se o líder não usa, ninguém adota.
+Se o líder não apoia, tudo trava.**
+A ferramenta pode ser boa.
+O processo pode ser incrível.
+Mas sem exemplo no topo, tudo vira projeto-fantasma.
+
+- Exemplo real: Forza JMalucelli
+Quando decidiram implementar a Tiflux, a liderança não ficou na arquibancada assistindo.
+
+Eles:
+Mapearam os processos com todas as áreas
+Participaram dos treinamentos
+Estimularam a cultura de melhoria contínua
+Colocaram indicadores de atendimento na mesa da diretoria
+
+O resultado?
+🟢 +1.000 tickets resolvidos por mês
+🟢 Atendimento centralizado e padronizado
+🟢 Time engajado (porque viu o líder usar e valorizar a ferramenta)
+🟢 E, principalmente: uma mentalidade digital enraizada
+
+E aqui vai o modelo mental para qualquer líder que queira transformar seu atendimento:
+
+Seja o primeiro a usar a ferramenta que você quer que o time adote.
+
+Se envolva na criação dos fluxos. Não é microgerenciamento, é alinhamento estratégico.
+
+Comunique a visão com clareza. Diga por que a mudança está acontecendo e o que ela resolve.
+
+Crie rituais de acompanhamento. Dashboards, reuniões curtas, checkpoints.
+
+Comemore as pequenas vitórias. Automação não é sobre tecno...</td></tr><tr data-sim='Baixo'><td data-n='4'>4</td><td data-n='EqualWeb Acessibilidade Digital'><b>EqualWeb Acessibilidade Digital</b><div class='muted'>EqualWeb Acessibilidade Digital · <a href='https://www.linkedin.com/ad-library/search?payer=EqualWeb+Acessibilidade+Digital' target='_blank'>pagante</a></div></td><td class='num' data-n='92'>92</td><td class='num' data-n='18400'>R$ 18.400</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='1'><span class='lv-Baixo'>Baixo</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Acessibilidade Digital'>Acessibilidade Digital</td><td class='clip' data-n='O anunciante oferece uma solução específica de acessibilidade digital, que é um ' title='O anunciante oferece uma solução específica de acessibilidade digital, que é um subsegmento de TI, mas não um concorrente direto das soluções gerais de TI do Grupo Data.'>O anunciante oferece uma solução específica de acessibilidade digital, que é um subsegmento de TI, mas não um concorrente direto das soluções gerais de TI do Grupo Data.</td><td class='clip' data-n='Acessibilidade digital não precisa virar mais uma task no seu backlog.
+
+Se você ' title='Acessibilidade digital não precisa virar mais uma task no seu backlog.
+
+Se você trabalha com TI ou front-end, sabe exatamente como é:
+roadmap cheio, sprint estourando, demandas urgentes, correções, melhorias, integrações…
+
+E então surge mais uma “prioridade”:
+“Precisamos tornar o site acessível.”
+
+E junto com ela vem o mito:
+
+“Isso vai dar muito trabalho.”
+“Vai custar caro.”
+“Vamos ter que mexer em toda a estrutura do site.”
+
+Mas a verdade é outra.
+
+A acessibilidade digital pode, sim, ser implementada sem sobrecarregar o time de tecnologia, e com custo acessível.
+
+É por isso que eu recomendo a tecnologia da EqualWeb Brasil. 
+
+O que muda na prática para o time de TI?
+
+✔ Implementação simples
+Basta inserir uma única linha de código no site para o widget começar a funcionar.
+
+✔ Sem mexer na estrutura original
+Nada de reconstruir páginas ou revisar todo o front-end.
+
+✔ Baixo custo de implementação
+A solução é escalável e acessível, muito diferente do que se imagina quando se fala em conformidade com WCAG.
+
+Mas o grande diferencial vai além do widget.
+
+EqualWeb Brasil não é “apenas um plugin”.
+
+É a única tecnologia que une:
+
+🔹 Inteligência Artificial avançada
++
+🔹 Equipe de especialistas humanos em acessibilidade
+
+Essa combinação híbrida garante altos níveis de conformidade com:
+
+• NBR 17225
+• WCAG 2.2
+
+E aqui está o ponto que muitos profissionais de tecnologia valorizam:
+
+A EqualWeb Brasil pode terceirizar a responsabilidade da acessibilidade digital, realizando ajustes e correções sem precisar acessar o código-fonte do site.
+
+Ou seja:
+
+Menos tarefas para o seu time.
+Mais segurança técnica e jurídica para a empresa.
+Mais autonomia para os usuários.
+
+Acessibilidade não deve ser um peso operacional para TI.
+Ela deve ser uma decisão estratégica do negócio.
+
+Se você trabalha com...'>Acessibilidade digital não precisa virar mais uma task no seu backlog.
+
+Se você trabalha com TI ou front-end, sabe exatamente como é:
+roadmap cheio, sprint estourando, demandas urgentes, correções, melhorias, integrações…
+
+E então surge mais uma “prioridade”:
+“Precisamos tornar o site acessível.”
+
+E junto com ela vem o mito:
+
+“Isso vai dar muito trabalho.”
+“Vai custar caro.”
+“Vamos ter que mexer em toda a estrutura do site.”
+
+Mas a verdade é outra.
+
+A acessibilidade digital pode, sim, ser implementada sem sobrecarregar o time de tecnologia, e com custo acessível.
+
+É por isso que eu recomendo a tecnologia da EqualWeb Brasil. 
+
+O que muda na prática para o time de TI?
+
+✔ Implementação simples
+Basta inserir uma única linha de código no site para o widget começar a funcionar.
+
+✔ Sem mexer na estrutura original
+Nada de reconstruir páginas ou revisar todo o front-end.
+
+✔ Baixo custo de implementação
+A solução é escalável e acessível, muito diferente do que se imagina quando se fala em conformidade com WCAG.
+
+Mas o grande diferencial vai além do widget.
+
+EqualWeb Brasil não é “apenas um plugin”.
+
+É a única tecnologia que une:
+
+🔹 Inteligência Artificial avançada
++
+🔹 Equipe de especialistas humanos em acessibilidade
+
+Essa combinação híbrida garante altos níveis de conformidade com:
+
+• NBR 17225
+• WCAG 2.2
+
+E aqui está o ponto que muitos profissionais de tecnologia valorizam:
+
+A EqualWeb Brasil pode terceirizar a responsabilidade da acessibilidade digital, realizando ajustes e correções sem precisar acessar o código-fonte do site.
+
+Ou seja:
+
+Menos tarefas para o seu time.
+Mais segurança técnica e jurídica para a empresa.
+Mais autonomia para os usuários.
+
+Acessibilidade não deve ser um peso operacional para TI.
+Ela deve ser uma decisão estratégica do negócio.
+
+Se você trabalha com...</td></tr><tr data-sim='Alto'><td data-n='5'>5</td><td data-n='Dominit Cloud and Management IT'><b>Dominit Cloud and Management IT</b><div class='muted'>Dominit TI · <a href='https://www.linkedin.com/ad-library/search?payer=Dominit+TI' target='_blank'>pagante</a></div></td><td class='num' data-n='36'>36</td><td class='num' data-n='7200'>R$ 7.200</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Cloud e Gestão de TI'>Cloud e Gestão de TI</td><td class='clip' data-n='A Dominit oferece serviços de cloud e gestão de TI, sendo um concorrente direto ' title='A Dominit oferece serviços de cloud e gestão de TI, sendo um concorrente direto do Grupo Data no nicho de soluções em TI.'>A Dominit oferece serviços de cloud e gestão de TI, sendo um concorrente direto do Grupo Data no nicho de soluções em TI.</td><td class='clip' data-n='' title=''>—</td></tr><tr data-sim='Alto'><td data-n='6'>6</td><td data-n='MPJ Solutions'><b>MPJ Solutions</b><div class='muted'>MPJ Solutions · <a href='https://www.linkedin.com/ad-library/search?payer=MPJ+Solutions' target='_blank'>pagante</a></div></td><td class='num' data-n='33'>33</td><td class='num' data-n='6600'>R$ 6.600</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Terceirização de profissionais de TI'>Terceirização de profissionais de TI</td><td class='clip' data-n='O anunciante oferece outsourcing de TI, um serviço diretamente relacionado ao ni' title='O anunciante oferece outsourcing de TI, um serviço diretamente relacionado ao nicho-alvo de soluções em TI, com foco em profissionais especializados.'>O anunciante oferece outsourcing de TI, um serviço diretamente relacionado ao nicho-alvo de soluções em TI, com foco em profissionais especializados.</td><td class='clip' data-n='Em 2025, a terceirização de profissionais de TI se consolida como uma alavanca e' title='Em 2025, a terceirização de profissionais de TI se consolida como uma alavanca estratégica para aumentar performance, eficiência e resultados.
+
+Benefícios para CIOs:
+
+ • Aceleração de projetos críticos – equipes dedicadas para entregar com agilidade
+ • Acesso a skills especializadas – DevOps, Data Science, UX/UI e mais, sem sobrecarregar o time interno
+ • Governança e controle – processos e KPIs mantidos, enquanto a operação escala
+
+Transforme talentos em vantagem competitiva. Quer aplicar na sua empresa? Fale com nossos especialistas: 📲 (11) 99456-4317
+
+#mpjsolutions #soluçõesmpj #outsourcingdeti'>Em 2025, a terceirização de profissionais de TI se consolida como uma alavanca estratégica para aumentar performance, eficiência e resultados.
+
+Benefícios para CIOs:
+
+ • Aceleração de projetos críticos – equipes dedicadas para entregar com agilidade
+ • Acesso a skills especializadas – DevOps, Data Science, UX/UI e mais, sem sobrecarregar o time interno
+ • Governança e controle – processos e KPIs mantidos, enquanto a operação escala
+
+Transforme talentos em vantagem competitiva. Quer aplicar na sua empresa? Fale com nossos especialistas: 📲 (11) 99456-4317
+
+#mpjsolutions #soluçõesmpj #outsourcingdeti</td></tr><tr data-sim='Nenhum'><td data-n='7'>7</td><td data-n='Agence Consultoria'><b>Agence Consultoria</b><div class='muted'>AGENCE CONSULTORIA E DESENVOLVIMENTO PARA WEB LTDA · <a href='https://www.linkedin.com/ad-library/search?payer=AGENCE+CONSULTORIA+E+DESENVOLVIMENTO+PARA+WEB+LTDA' target='_blank'>pagante</a></div></td><td class='num' data-n='31'>31</td><td class='num' data-n='6200'>R$ 6.200</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='c' data-n='0'><span class='lv-Nenhum'>Nenhum</span></td><td class='c' data-n='Generalista'><span class='lv-Generalista'>Generalista</span></td><td data-n='Consultoria de RH'>Consultoria de RH</td><td class='clip' data-n='O anunciante é uma consultoria de RH, não oferecendo soluções em TI.' title='O anunciante é uma consultoria de RH, não oferecendo soluções em TI.'>O anunciante é uma consultoria de RH, não oferecendo soluções em TI.</td><td class='clip' data-n='' title=''>—</td></tr><tr data-sim='Alto'><td data-n='8'>8</td><td data-n='luciano lima'><b>luciano lima</b><div class='muted'>CoronaSDKgames.com · <a href='https://www.linkedin.com/ad-library/search?payer=CoronaSDKgames.com' target='_blank'>pagante</a></div></td><td class='num' data-n='30'>30</td><td class='num' data-n='6000'>R$ 6.000</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Terceirização de profissionais de TI (PJ)'>Terceirização de profissionais de TI (PJ)</td><td class='clip' data-n='O anunciante oferece soluções de terceirização de profissionais de TI (PJ) com f' title='O anunciante oferece soluções de terceirização de profissionais de TI (PJ) com foco em mitigar problemas trabalhistas, o que é um serviço diretamente relacionado ao nicho de soluções em TI e ao público B2B.'>O anunciante oferece soluções de terceirização de profissionais de TI (PJ) com foco em mitigar problemas trabalhistas, o que é um serviço diretamente relacionado ao nicho de soluções em TI e ao público B2B.</td><td class='clip' data-n='TECHTALENT BRAZIL
+Em Busca do Empresário/Empresa com Visão e Paixão pela Profiss' title='TECHTALENT BRAZIL
+Em Busca do Empresário/Empresa com Visão e Paixão pela Profissão
+Imagine você podendo pagar salários de 18K, 20K ou mais para seus profissionais de TI, todos pjtizados, mas mitigados todos os possíveis problemas trabalhistas. O que acha que acontecerá no mercado quando os bons profissionais descobrirem que podem trabalhar 1/3 do tempo pelo mesmo salário ou escalar o ganho?... Resultado, em curto e médio prazo terá os melhores profissionais do mercado trabalhando online em tempo record, clientes recebendo os produtos em curto espaço de tempo e com a melhor qualidade do mercado. Esse artigo mostra como isso vai ocorrer e com todos os detalhes que a TechTalent Brazil entrega sem custos neste artigo porque ainda sobram detalhes e ações que fazem e farão toda a diferença. Aguardo seu contato
+                                           
+Você Vê Algo e Pensa Que Já Conhece? Que Já Viu Tudo... ou Quase!
+Detalhes fazem a diferença.
+
+Imagine: 
+-você experimenta um hambúrguer no Girafas. 
+-Depois, prova o Double cheddar do McDonald&#x27;s e se surpreende. 
+-Eis que entra em uma hamburgueria gourmet e descobre um mundo novo – ovos de galinhas caipiras, carne suína artesanal, filé de angus premium, alface orgânica fresca e pão com fermento natural, 
+-aí experimenta algo semelhante, mas com um tempero e ponto de entrega que muda todos os seus conceitos sobre hamburgers. 
+
+Esse tempero, após as diferenças, é o que oferece a TECHTALENT BRAZIL. 
+                                     Detalhes fazem a diferença.
+
+-Conhecemos queijos suíços e franceses de reputação internacional. 
+-Eis que surge o queijo da Canastra, Minas Gerais, Brasil, que conquistou o título de melhor queijo do mundo na França.
+                            Detalhes – diferenças que ignoramos.
+
+Detalhes – nem...'>TECHTALENT BRAZIL
+Em Busca do Empresário/Empresa com Visão e Paixão pela Profissão
+Imagine você podendo pagar salários de 18K, 20K ou mais para seus profissionais de TI, todos pjtizados, mas mitigados todos os possíveis problemas trabalhistas. O que acha que acontecerá no mercado quando os bons profissionais descobrirem que podem trabalhar 1/3 do tempo pelo mesmo salário ou escalar o ganho?... Resultado, em curto e médio prazo terá os melhores profissionais do mercado trabalhando online em tempo record, clientes recebendo os produtos em curto espaço de tempo e com a melhor qualidade do mercado. Esse artigo mostra como isso vai ocorrer e com todos os detalhes que a TechTalent Brazil entrega sem custos neste artigo porque ainda sobram detalhes e ações que fazem e farão toda a diferença. Aguardo seu contato
+                                           
+Você Vê Algo e Pensa Que Já Conhece? Que Já Viu Tudo... ou Quase!
+Detalhes fazem a diferença.
+
+Imagine: 
+-você experimenta um hambúrguer no Girafas. 
+-Depois, prova o Double cheddar do McDonald&#x27;s e se surpreende. 
+-Eis que entra em uma hamburgueria gourmet e descobre um mundo novo – ovos de galinhas caipiras, carne suína artesanal, filé de angus premium, alface orgânica fresca e pão com fermento natural, 
+-aí experimenta algo semelhante, mas com um tempero e ponto de entrega que muda todos os seus conceitos sobre hamburgers. 
+
+Esse tempero, após as diferenças, é o que oferece a TECHTALENT BRAZIL. 
+                                     Detalhes fazem a diferença.
+
+-Conhecemos queijos suíços e franceses de reputação internacional. 
+-Eis que surge o queijo da Canastra, Minas Gerais, Brasil, que conquistou o título de melhor queijo do mundo na França.
+                            Detalhes – diferenças que ignoramos.
+
+Detalhes – nem...</td></tr><tr data-sim='Medio'><td data-n='9'>9</td><td data-n='Nova IT'><b>Nova IT</b><div class='muted'>Nova IT Brasil · <a href='https://www.linkedin.com/ad-library/search?payer=Nova+IT+Brasil' target='_blank'>pagante</a></div></td><td class='num' data-n='29'>29</td><td class='num' data-n='5800'>R$ 5.800</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Automação de Processos (RPA e Hiperautomação)'>Automação de Processos (RPA e Hiperautomação)</td><td class='clip' data-n='A Nova IT é especialista em automação de processos, um subnicho de TI, o que a t' title='A Nova IT é especialista em automação de processos, um subnicho de TI, o que a torna um concorrente indireto do Grupo Data, que oferece soluções de TI mais amplas.'>A Nova IT é especialista em automação de processos, um subnicho de TI, o que a torna um concorrente indireto do Grupo Data, que oferece soluções de TI mais amplas.</td><td class='clip' data-n='Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por' title='Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por que. Provavelmente o problema não é o RPA e o que você pediu para ele fazer.
+
+RPA é excelente para uma coisa: executar tarefas repetitivas e estruturadas, na mesma tela, com os mesmos dados, sempre da mesma forma.
+Fora desse perímetro, ele quebra.
+ 
+Hiper Automacao e uma camada acima.
+Ela usa RPA onde RPA funciona e onde precisa de interpretação, e orquestração para conectar tudo, inclusive quando o processo sai do script.
+ 
+O problema não é a tecnologia. E que muitas empresas compraram RPA esperando Hiperautomação.
+E aí não é falha da ferramenta. E expectativa mal calibrada na venda ou na especificação do projeto.
+Como identificar o que voce realmente precisa e o que não deve terceirizar para nenhuma ferramenta, está no artigo.
+
+👉  Leia o artigo completo: www.novaitbrasil.com/blog
+
+#RPA #Hiperautomacao #AutomacaoDeProcessos #InteligenciaArtificial #NovaIT'>Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por que. Provavelmente o problema não é o RPA e o que você pediu para ele fazer.
+
+RPA é excelente para uma coisa: executar tarefas repetitivas e estruturadas, na mesma tela, com os mesmos dados, sempre da mesma forma.
+Fora desse perímetro, ele quebra.
+ 
+Hiper Automacao e uma camada acima.
+Ela usa RPA onde RPA funciona e onde precisa de interpretação, e orquestração para conectar tudo, inclusive quando o processo sai do script.
+ 
+O problema não é a tecnologia. E que muitas empresas compraram RPA esperando Hiperautomação.
+E aí não é falha da ferramenta. E expectativa mal calibrada na venda ou na especificação do projeto.
+Como identificar o que voce realmente precisa e o que não deve terceirizar para nenhuma ferramenta, está no artigo.
+
+👉  Leia o artigo completo: www.novaitbrasil.com/blog
+
+#RPA #Hiperautomacao #AutomacaoDeProcessos #InteligenciaArtificial #NovaIT</td></tr><tr data-sim='Medio'><td data-n='10'>10</td><td data-n='Allied IT'><b>Allied IT</b><div class='muted'>J&amp;M Soluções Técnologicas · <a href='https://www.linkedin.com/ad-library/search?payer=J%26M+Solu%C3%A7%C3%B5es+T%C3%A9cnologicas' target='_blank'>pagante</a></div></td><td class='num' data-n='25'>25</td><td class='num' data-n='5000'>R$ 5.000</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Análise de dados e automação'>Análise de dados e automação</td><td class='clip' data-n='O anunciante foca em soluções para análise de dados, o que é um subsegmento dent' title='O anunciante foca em soluções para análise de dados, o que é um subsegmento dentro de soluções em TI, indicando uma sobreposição parcial com o nicho-alvo.'>O anunciante foca em soluções para análise de dados, o que é um subsegmento dentro de soluções em TI, indicando uma sobreposição parcial com o nicho-alvo.</td><td class='clip' data-n='A coleta dos dados na sua empresa ainda é manual?
+
+Se a sua análise de dados ain' title='A coleta dos dados na sua empresa ainda é manual?
+
+Se a sua análise de dados ainda depende de carregar pilhas de planilh…'>A coleta dos dados na sua empresa ainda é manual?
+
+Se a sua análise de dados ainda depende de carregar pilhas de planilh…</td></tr><tr data-sim='Alto'><td data-n='11'>11</td><td data-n='Ródio Tech Soluções'><b>Ródio Tech Soluções</b><div class='muted'>Rodio Tech Soluções · <a href='https://www.linkedin.com/ad-library/search?payer=Rodio+Tech+Solu%C3%A7%C3%B5es' target='_blank'>pagante</a></div></td><td class='num' data-n='13'>13</td><td class='num' data-n='2600'>R$ 2.600</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Outsourcing estratégico de TI'>Outsourcing estratégico de TI</td><td class='clip' data-n='O anunciante oferece outsourcing de TI, um serviço diretamente relacionado ao ni' title='O anunciante oferece outsourcing de TI, um serviço diretamente relacionado ao nicho de soluções em TI, e se posiciona como especialista nesse tipo de serviço.'>O anunciante oferece outsourcing de TI, um serviço diretamente relacionado ao nicho de soluções em TI, e se posiciona como especialista nesse tipo de serviço.</td><td class='clip' data-n='Sua empresa está crescendo e o time de TI não acompanha o ritmo?
+
+  Muitas empre' title='Sua empresa está crescendo e o time de TI não acompanha o ritmo?
+
+  Muitas empresas resolvem isso contratando — mas existe uma alternativa mais rápida e 20 a 30% mais barata.
+
+  Outsourcing estratégico de TI não é terceirização de baixo custo. É escala inteligente.
+
+  Assista ao vídeo e descubra se faz sentido para o seu momento.'>Sua empresa está crescendo e o time de TI não acompanha o ritmo?
+
+  Muitas empresas resolvem isso contratando — mas existe uma alternativa mais rápida e 20 a 30% mais barata.
+
+  Outsourcing estratégico de TI não é terceirização de baixo custo. É escala inteligente.
+
+  Assista ao vídeo e descubra se faz sentido para o seu momento.</td></tr><tr data-sim='Medio'><td data-n='12'>12</td><td data-n='Nuviom'><b>Nuviom</b><div class='muted'>42.399.987/0001-09 · <a href='https://www.linkedin.com/ad-library/search?payer=42.399.987%2F0001-09' target='_blank'>pagante</a></div></td><td class='num' data-n='11'>11</td><td class='num' data-n='2200'>R$ 2.200</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Desenvolvimento de software'>Desenvolvimento de software</td><td class='clip' data-n='Nuviom oferece desenvolvimento de software, que é uma solução de TI, mas o texto' title='Nuviom oferece desenvolvimento de software, que é uma solução de TI, mas o texto do anúncio não especifica se o foco é B2B ou se há sobreposição direta com os serviços do Grupo Data.'>Nuviom oferece desenvolvimento de software, que é uma solução de TI, mas o texto do anúncio não especifica se o foco é B2B ou se há sobreposição direta com os serviços do Grupo Data.</td><td class='clip' data-n='' title=''>—</td></tr><tr data-sim='Alto'><td data-n='13'>13</td><td data-n='Coopersystem'><b>Coopersystem</b><div class='muted'>Coopersystem · <a href='https://www.linkedin.com/ad-library/search?payer=Coopersystem' target='_blank'>pagante</a></div></td><td class='num' data-n='10'>10</td><td class='num' data-n='2000'>R$ 2.000</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Terceirização de equipe de TI'>Terceirização de equipe de TI</td><td class='clip' data-n='O anunciante oferece terceirização de equipe de TI, um serviço diretamente relac' title='O anunciante oferece terceirização de equipe de TI, um serviço diretamente relacionado às soluções em TI e ao público B2B.'>O anunciante oferece terceirização de equipe de TI, um serviço diretamente relacionado às soluções em TI e ao público B2B.</td><td class='clip' data-n='Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora ' title='Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora 4 vantagens em terceirizar sua equipe de…'>Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora 4 vantagens em terceirizar sua equipe de…</td></tr><tr data-sim='Medio'><td data-n='14'>14</td><td data-n='farol soluções'><b>farol soluções</b><div class='muted'>FAROL DE ALEXANDRIA ASSESSORIA TI LTDA · <a href='https://www.linkedin.com/ad-library/search?payer=FAROL+DE+ALEXANDRIA+ASSESSORIA+TI+LTDA' target='_blank'>pagante</a></div></td><td class='num' data-n='10'>10</td><td class='num' data-n='2000'>R$ 2.000</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Governança de risco e segurança da cadeia de fornecedores'>Governança de risco e segurança da cadeia de fornecedores</td><td class='clip' data-n='O anunciante foca em governança de risco de fornecedores, que é um aspecto da se' title='O anunciante foca em governança de risco de fornecedores, que é um aspecto da segurança da informação e, portanto, relevante para TI, mas não é uma solução de TI no sentido tradicional de desenvolvimento ou infraestrutura.'>O anunciante foca em governança de risco de fornecedores, que é um aspecto da segurança da informação e, portanto, relevante para TI, mas não é uma solução de TI no sentido tradicional de desenvolvimento ou infraestrutura.</td><td class='clip' data-n='Parte relevante dos incidentes de segurança não começa dentro da empresa.
+
+Começ' title='Parte relevante dos incidentes de segurança não começa dentro da empresa.
+
+Começa em quem ela confia: fornecedores, parceiros, plataformas em nuvem e terceiros indiretos hoje fazem parte do risco operacional.
+
+Terceirizar não transfere responsabilidade. Transfere dependência.
+
+Leia por que governança da cadeia de fornecedores deixou de ser tema técnico ou jurídico e passou a ser uma decisão direta de continuidade de negócios, reputação e resiliência operacional.
+
+Baixe gratuitamente o e-book e reflita: quem governa seus fornecedores governa seu risco.  E convidamos a complementar com seu ponto de vista.'>Parte relevante dos incidentes de segurança não começa dentro da empresa.
+
+Começa em quem ela confia: fornecedores, parceiros, plataformas em nuvem e terceiros indiretos hoje fazem parte do risco operacional.
+
+Terceirizar não transfere responsabilidade. Transfere dependência.
+
+Leia por que governança da cadeia de fornecedores deixou de ser tema técnico ou jurídico e passou a ser uma decisão direta de continuidade de negócios, reputação e resiliência operacional.
+
+Baixe gratuitamente o e-book e reflita: quem governa seus fornecedores governa seu risco.  E convidamos a complementar com seu ponto de vista.</td></tr><tr data-sim='Alto'><td data-n='15'>15</td><td data-n='Zummit'><b>Zummit</b><div class='muted'>ZUMMIT TECNOLOGIA LTDA · <a href='https://www.linkedin.com/ad-library/search?payer=ZUMMIT+TECNOLOGIA+LTDA' target='_blank'>pagante</a></div></td><td class='num' data-n='8'>8</td><td class='num' data-n='1600'>R$ 1.600</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Outsourcing de TI'>Outsourcing de TI</td><td class='clip' data-n='A Zummit oferece outsourcing de TI, um serviço diretamente relacionado às soluçõ' title='A Zummit oferece outsourcing de TI, um serviço diretamente relacionado às soluções em TI e que atende ao mesmo público B2B do Grupo Data.'>A Zummit oferece outsourcing de TI, um serviço diretamente relacionado às soluções em TI e que atende ao mesmo público B2B do Grupo Data.</td><td class='clip' data-n='O gap de talentos em TI é real. E as grandes empresas já encontraram uma saída.
+' title='O gap de talentos em TI é real. E as grandes empresas já encontraram uma saída.
+
+Enquanto o processo tradicional de contratação leva meses (vaga aberta, triagem, entrevistas, integração) as empresas que estão na frente já operam com outro modelo.
+
+Elas não esperam o mercado de trabalho responder. Elas acessam profissionais especializados de forma ágil, sem aumentar headcount fixo e com toda a gestão contratual resolvida.
+
+O resultado é direto: time escalado em semanas, não meses. Gestor de TI focado em entrega, não em recrutamento.
+
+Outsourcing de TI qualificado não é sobre terceirizar um problema. É sobre ter o profissional certo, no momento certo, com o suporte que ele precisa para performar.
+
+É assim que a Zummit opera, e é por isso que grandes empresas confiam nessa forma de trabalhar.
+
+Quer entender como esse modelo funciona na prática? O link está nos comentários.
+
+#outsourcingTI #gestãodeTI #bodyshopTI'>O gap de talentos em TI é real. E as grandes empresas já encontraram uma saída.
+
+Enquanto o processo tradicional de contratação leva meses (vaga aberta, triagem, entrevistas, integração) as empresas que estão na frente já operam com outro modelo.
+
+Elas não esperam o mercado de trabalho responder. Elas acessam profissionais especializados de forma ágil, sem aumentar headcount fixo e com toda a gestão contratual resolvida.
+
+O resultado é direto: time escalado em semanas, não meses. Gestor de TI focado em entrega, não em recrutamento.
+
+Outsourcing de TI qualificado não é sobre terceirizar um problema. É sobre ter o profissional certo, no momento certo, com o suporte que ele precisa para performar.
+
+É assim que a Zummit opera, e é por isso que grandes empresas confiam nessa forma de trabalhar.
+
+Quer entender como esse modelo funciona na prática? O link está nos comentários.
+
+#outsourcingTI #gestãodeTI #bodyshopTI</td></tr><tr data-sim='Alto'><td data-n='16'>16</td><td data-n='Lucas Furtado de Mendonça'><b>Lucas Furtado de Mendonça</b><div class='muted'>Lucas Furtado de Mendonça · <a href='https://www.linkedin.com/ad-library/search?payer=Lucas+Furtado+de+Mendon%C3%A7a' target='_blank'>pagante</a></div></td><td class='num' data-n='4'>4</td><td class='num' data-n='800'>R$ 800</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Serviços Gerenciados de TI e Cibersegurança'>Serviços Gerenciados de TI e Cibersegurança</td><td class='clip' data-n='O anunciante oferece serviços gerenciados de infraestrutura e segurança da infor' title='O anunciante oferece serviços gerenciados de infraestrutura e segurança da informação, que são soluções em TI diretamente relacionadas ao nicho-alvo e ao público B2B.'>O anunciante oferece serviços gerenciados de infraestrutura e segurança da informação, que são soluções em TI diretamente relacionadas ao nicho-alvo e ao público B2B.</td><td class='clip' data-n='O Valor da &quot;Infraestrutura Invisível&quot;
+
+Em cybersegurança, o sucesso de uma opera' title='O Valor da &quot;Infraestrutura Invisível&quot;
+
+Em cybersegurança, o sucesso de uma operação é medido pelo que não acontece.
+
+Não houve queda de sistema. Não houve vazamento de dados. Não houve interrupção no fluxo de trabalho.
+
+No meu dia a dia na Solor, percebo que a tecnologia mais eficiente é aquela que se torna &quot;invisível&quot; para o board dos meus clientes. Quando a infraestrutura e a segurança são tratadas como serviços gerenciados estratégicos, o foco da liderança deixa de ser &quot;apagar incêndios&quot; e passa a ser, finalmente, a inovação e o core business.
+
+Terceirizar a gestão crítica não é apenas sobre reduzir custos, é sobre comprar tempo e previsibilidade. Afinal, em um mercado onde cada minuto de downtime custa caro, o verdadeiro luxo é a confiança de que a fundação tecnológica da sua empresa está em mãos especialistas.
+
+#TI #ManagedServices #Solor #Infraestrutura #SegurançaDaInformação #Liderança'>O Valor da &quot;Infraestrutura Invisível&quot;
+
+Em cybersegurança, o sucesso de uma operação é medido pelo que não acontece.
+
+Não houve queda de sistema. Não houve vazamento de dados. Não houve interrupção no fluxo de trabalho.
+
+No meu dia a dia na Solor, percebo que a tecnologia mais eficiente é aquela que se torna &quot;invisível&quot; para o board dos meus clientes. Quando a infraestrutura e a segurança são tratadas como serviços gerenciados estratégicos, o foco da liderança deixa de ser &quot;apagar incêndios&quot; e passa a ser, finalmente, a inovação e o core business.
+
+Terceirizar a gestão crítica não é apenas sobre reduzir custos, é sobre comprar tempo e previsibilidade. Afinal, em um mercado onde cada minuto de downtime custa caro, o verdadeiro luxo é a confiança de que a fundação tecnológica da sua empresa está em mãos especialistas.
+
+#TI #ManagedServices #Solor #Infraestrutura #SegurançaDaInformação #Liderança</td></tr><tr data-sim='Medio'><td data-n='17'>17</td><td data-n='Hardlink'><b>Hardlink</b><div class='muted'>HARDLINK INFORMATICA E SISTEMAS LTDA · <a href='https://www.linkedin.com/ad-library/search?payer=HARDLINK+INFORMATICA+E+SISTEMAS+LTDA' target='_blank'>pagante</a></div></td><td class='num' data-n='3'>3</td><td class='num' data-n='600'>R$ 600</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='2'><span class='lv-Medio'>Medio</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Treinamento e soluções VMware'>Treinamento e soluções VMware</td><td class='clip' data-n='O anunciante foca em soluções e treinamento de uma tecnologia específica de TI, ' title='O anunciante foca em soluções e treinamento de uma tecnologia específica de TI, o que o torna um concorrente indireto no nicho de soluções em TI.'>O anunciante foca em soluções e treinamento de uma tecnologia específica de TI, o que o torna um concorrente indireto no nicho de soluções em TI.</td><td class='clip' data-n='Diretamente dos EUA, nosso gerente de produtos, Alisson Cardoso, desvenda os seg' title='Diretamente dos EUA, nosso gerente de produtos, Alisson Cardoso, desvenda os segredos do Hands-on Labs da VMware. Aprend…'>Diretamente dos EUA, nosso gerente de produtos, Alisson Cardoso, desvenda os segredos do Hands-on Labs da VMware. Aprend…</td></tr><tr data-sim='Baixo'><td data-n='18'>18</td><td data-n='Centro de Gestão e Liderança Contemporânea - CGLC'><b>Centro de Gestão e Liderança Contemporânea - CGLC</b><div class='muted'>CENTRO DE GESTÃO E LIDERANÇA CONTEMPORÂNEA - CGLC · <a href='https://www.linkedin.com/ad-library/search?payer=CENTRO+DE+GEST%C3%83O+E+LIDERAN%C3%87A+CONTEMPOR%C3%82NEA+-+CGLC' target='_blank'>pagante</a></div></td><td class='num' data-n='3'>3</td><td class='num' data-n='600'>R$ 600</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='c' data-n='1'><span class='lv-Baixo'>Baixo</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Desenvolvimento de liderança e governança em IA'>Desenvolvimento de liderança e governança em IA</td><td class='clip' data-n='O anunciante foca em capacitação de liderança para IA, não em soluções de TI, e ' title='O anunciante foca em capacitação de liderança para IA, não em soluções de TI, e o público-alvo é de líderes, não de empresas buscando serviços de TI.'>O anunciante foca em capacitação de liderança para IA, não em soluções de TI, e o público-alvo é de líderes, não de empresas buscando serviços de TI.</td><td class='clip' data-n='Inteligência Artificial não é mais pauta técnica. É pauta de liderança.
+
+A IA já' title='Inteligência Artificial não é mais pauta técnica. É pauta de liderança.
+
+A IA já está dentro das organizações: em seleções, relatórios, recomendações, produtividade. Muitas vezes sem decisão formal, sem critério claro e sem responsável definido. E quando isso acontece, a tecnologia não “ajuda”: ela define padrões.
+
+O que separa quem captura valor de quem só acumula ruído não é a ferramenta. É a Liderança que redesenha fluxos, cria governança e sustenta confiança. 
+
+E confiança, hoje, é parte do problema: 68% dos colaboradores e 46% dos gestores relatam ansiedade/sobrecarga com IA. (fonte: Axios)
+
+IA precisa de mais mulheres no centro das decisões - não por pauta identitária, mas por estratégia: diversidade melhora julgamento quando o tema é viés, risco e impacto humano.
+
+No CGLC – Insights desta semana, aprofundamos esse ponto e apresenta o Laboratório de Inteligência Artificial para Mulheres: um encontro presencial, voltado a visão estratégica e liderança em um mundo com IA, liderando pela PhD em IA Fabiana Raulino.
+
+📅 05/03/2026: 09h-12h30
+📍 Av. Paulista, 807 – 17º andar – SP
+🔗 Inscrições: https://lnkd.in/dY2EAnmD
+
+Se você lidera pessoas, projetos ou decisões: a pergunta não é “se” vai usar IA. É como e quem vai definir os critérios.
+
+#CGLCInsights #Liderança #InteligênciaArtificial #Governança #MulheresNaLiderança #FuturoDoTrabalho'>Inteligência Artificial não é mais pauta técnica. É pauta de liderança.
+
+A IA já está dentro das organizações: em seleções, relatórios, recomendações, produtividade. Muitas vezes sem decisão formal, sem critério claro e sem responsável definido. E quando isso acontece, a tecnologia não “ajuda”: ela define padrões.
+
+O que separa quem captura valor de quem só acumula ruído não é a ferramenta. É a Liderança que redesenha fluxos, cria governança e sustenta confiança. 
+
+E confiança, hoje, é parte do problema: 68% dos colaboradores e 46% dos gestores relatam ansiedade/sobrecarga com IA. (fonte: Axios)
+
+IA precisa de mais mulheres no centro das decisões - não por pauta identitária, mas por estratégia: diversidade melhora julgamento quando o tema é viés, risco e impacto humano.
+
+No CGLC – Insights desta semana, aprofundamos esse ponto e apresenta o Laboratório de Inteligência Artificial para Mulheres: um encontro presencial, voltado a visão estratégica e liderança em um mundo com IA, liderando pela PhD em IA Fabiana Raulino.
+
+📅 05/03/2026: 09h-12h30
+📍 Av. Paulista, 807 – 17º andar – SP
+🔗 Inscrições: https://lnkd.in/dY2EAnmD
+
+Se você lidera pessoas, projetos ou decisões: a pergunta não é “se” vai usar IA. É como e quem vai definir os critérios.
+
+#CGLCInsights #Liderança #InteligênciaArtificial #Governança #MulheresNaLiderança #FuturoDoTrabalho</td></tr><tr data-sim='Nenhum'><td data-n='19'>19</td><td data-n='JGroup'><b>JGroup</b><div class='muted'>JGroup · <a href='https://www.linkedin.com/ad-library/search?payer=JGroup' target='_blank'>pagante</a></div></td><td class='num' data-n='2'>2</td><td class='num' data-n='400'>R$ 400</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='c' data-n='0'><span class='lv-Nenhum'>Nenhum</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Consultoria e pesquisa em mineração'>Consultoria e pesquisa em mineração</td><td class='clip' data-n='O anunciante foca em soluções para o setor de mineração, sem relação com TI.' title='O anunciante foca em soluções para o setor de mineração, sem relação com TI.'>O anunciante foca em soluções para o setor de mineração, sem relação com TI.</td><td class='clip' data-n='Curto prazo gera caixa. Longo prazo garante futuro.
+
+Integração entre mineração ' title='Curto prazo gera caixa. Longo prazo garante futuro.
+
+Integração entre mineração e instituto de pesquisa não é custo. É estratégia.
+
+Muitos diretores me dizem:
+
+“Heitor, eu preciso de resultado agora. Não posso esperar anos por um projeto acadêmico.”
+
+Eu entendo.
+
+A operação está pressionada.
+Recuperação precisa subir.
+Custo precisa cair.
+CAPEX precisa ser otimizado.
+
+Mas aqui está o ponto:
+
+Quando a empresa olha apenas para o curto prazo, ela vira refém da própria rota atual.
+
+E quando olha apenas para o longo prazo, compromete o caixa e a previsibilidade.
+
+As empresas mais maduras que acompanhei fazem diferente.
+
+Elas estruturam a integração em dois horizontes claros.
+
+Curto prazo (3–12 meses):
+
+Projetos objetivos.
+Escopo bem definido.
+Impacto direto no resultado.
+
+– Testes metalúrgicos direcionados.
+– Otimização de parâmetros críticos.
+– Ganho de recuperação.
+– Redução de consumo de reagentes.
+– Estudos de reaproveitamento de rejeitos.
+
+Aqui no Brasil, centros como o SENAI CIMATEC, o Larex - USP e o Escalab - Centro de Escalonamento de Tecnologias, por exemplo, oferecem infraestrutura e competência técnica que muitas vezes a empresa não tem internamente — sem necessidade de imobilizar capital.
+
+Projetos rápidos.
+Com método.
+Com validação técnica robusta.
+
+Agora o segundo horizonte.
+
+Longo prazo (2–5 anos):
+
+– Desenvolvimento de novas rotas hidrometalúrgicas.
+– Processamento de minerais críticos (Li, Ni, Co, V, Ti).
+– Tecnologias proprietárias.
+– Scale-up estruturado.
+– Valorização de subprodutos.
+
+Aqui não estamos falando apenas de melhoria operacional.
+
+Estamos falando de reduzir risco estratégico.
+
+Quando a integração é bem estruturada, a empresa ganha:
+
+✔ Redução de incerteza técnica antes do investimento pesado.
+✔ Acesso a especialistas de alto nível sob demanda....'>Curto prazo gera caixa. Longo prazo garante futuro.
+
+Integração entre mineração e instituto de pesquisa não é custo. É estratégia.
+
+Muitos diretores me dizem:
+
+“Heitor, eu preciso de resultado agora. Não posso esperar anos por um projeto acadêmico.”
+
+Eu entendo.
+
+A operação está pressionada.
+Recuperação precisa subir.
+Custo precisa cair.
+CAPEX precisa ser otimizado.
+
+Mas aqui está o ponto:
+
+Quando a empresa olha apenas para o curto prazo, ela vira refém da própria rota atual.
+
+E quando olha apenas para o longo prazo, compromete o caixa e a previsibilidade.
+
+As empresas mais maduras que acompanhei fazem diferente.
+
+Elas estruturam a integração em dois horizontes claros.
+
+Curto prazo (3–12 meses):
+
+Projetos objetivos.
+Escopo bem definido.
+Impacto direto no resultado.
+
+– Testes metalúrgicos direcionados.
+– Otimização de parâmetros críticos.
+– Ganho de recuperação.
+– Redução de consumo de reagentes.
+– Estudos de reaproveitamento de rejeitos.
+
+Aqui no Brasil, centros como o SENAI CIMATEC, o Larex - USP e o Escalab - Centro de Escalonamento de Tecnologias, por exemplo, oferecem infraestrutura e competência técnica que muitas vezes a empresa não tem internamente — sem necessidade de imobilizar capital.
+
+Projetos rápidos.
+Com método.
+Com validação técnica robusta.
+
+Agora o segundo horizonte.
+
+Longo prazo (2–5 anos):
+
+– Desenvolvimento de novas rotas hidrometalúrgicas.
+– Processamento de minerais críticos (Li, Ni, Co, V, Ti).
+– Tecnologias proprietárias.
+– Scale-up estruturado.
+– Valorização de subprodutos.
+
+Aqui não estamos falando apenas de melhoria operacional.
+
+Estamos falando de reduzir risco estratégico.
+
+Quando a integração é bem estruturada, a empresa ganha:
+
+✔ Redução de incerteza técnica antes do investimento pesado.
+✔ Acesso a especialistas de alto nível sob demanda....</td></tr><tr data-sim='Alto'><td data-n='20'>20</td><td data-n='Recrutify'><b>Recrutify</b><div class='muted'>Recrutify · <a href='https://www.linkedin.com/ad-library/search?payer=Recrutify' target='_blank'>pagante</a></div></td><td class='num' data-n='1'>1</td><td class='num' data-n='200'>R$ 200</td><td class='c' data-n='Sim'>Sim</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='c' data-n='3'><span class='lv-Alto'>Alto</span></td><td class='c' data-n='Especialista'><span class='lv-Especialista'>Especialista</span></td><td data-n='Terceirização de profissionais de TI'>Terceirização de profissionais de TI</td><td class='clip' data-n='A Recrutify oferece terceirização de profissionais de TI, um serviço que pode se' title='A Recrutify oferece terceirização de profissionais de TI, um serviço que pode ser tanto um concorrente direto quanto um parceiro potencial para o Grupo Data, dependendo dos serviços específicos oferecidos por ambos.'>A Recrutify oferece terceirização de profissionais de TI, um serviço que pode ser tanto um concorrente direto quanto um parceiro potencial para o Grupo Data, dependendo dos serviços específicos oferecidos por ambos.</td><td class='clip' data-n='Estamos mudando a lógica da terceirização tech!! 
+ 
+Lógica atual do mercado: ❌ C' title='Estamos mudando a lógica da terceirização tech!! 
+ 
+Lógica atual do mercado: ❌ Contratar o mais barato possível ❌ Cobrar o máximo possível ❌ Gestores perdendo tempo com candidatos sem fit
+ 
+Nossa inovação é Alocação Transparente: ✅ Precificação 100% transparente ✅ Foco nos melhores candidatos ✅ +-10% de economia + qualidade superior
+ 
+Transparência na precificação = melhores profissionais = melhores resultados.
+ 
+Acabamos de lançar nosso site dedicado com uma calculadora Online para vc ver os custos de contratação:  https://lnkd.in/dA5ei9ey
+ 
+Pronto para terceirizar com transparência?
+  
+#inovacao #terceirizacao #tech #transparencia #gestaotech'>Estamos mudando a lógica da terceirização tech!! 
+ 
+Lógica atual do mercado: ❌ Contratar o mais barato possível ❌ Cobrar o máximo possível ❌ Gestores perdendo tempo com candidatos sem fit
+ 
+Nossa inovação é Alocação Transparente: ✅ Precificação 100% transparente ✅ Foco nos melhores candidatos ✅ +-10% de economia + qualidade superior
+ 
+Transparência na precificação = melhores profissionais = melhores resultados.
+ 
+Acabamos de lançar nosso site dedicado com uma calculadora Online para vc ver os custos de contratação:  https://lnkd.in/dA5ei9ey
+ 
+Pronto para terceirizar com transparência?
+  
+#inovacao #terceirizacao #tech #transparencia #gestaotech</td></tr></tbody>
+  </table>
+  </div>
+
+  <h2>3. Anuncios da keyword</h2>
+  <div class="table-wrap">
+  <table class="sortable-table" id="tbl-ads">
+    <thead><tr>
+      <th class="sortable" data-col="0">#<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="1">Empresa<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="2">TI heuristica<span class="sort-ind"></span></th>
+      <th class="sortable" data-col="3">Texto<span class="sort-ind"></span></th>
+      <th>Link</th>
+    </tr></thead>
+    <tbody><tr><td data-n='1'>1</td><td data-n='Nova IT'>Nova IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por' title='Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por que. Provavelmente o problema não é o R…'>Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por que. Provavelmente o problema não é o R…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1441020683' target='_blank'>detalhe</a></td></tr><tr><td data-n='2'>2</td><td data-n='Luiz Dietze'>Luiz Dietze</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Quando o ChatGPT foi lançado, em 2022, muita gente olhou para a IA com curiosida' title='Quando o ChatGPT foi lançado, em 2022, muita gente olhou para a IA com curiosidade, surpresa e até desconfiança.
+Para al…'>Quando o ChatGPT foi lançado, em 2022, muita gente olhou para a IA com curiosidade, surpresa e até desconfiança.
+Para al…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1441837613' target='_blank'>detalhe</a></td></tr><tr><td data-n='3'>3</td><td data-n='Heitor Augusto Duarte'>Heitor Augusto Duarte</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Curto prazo gera caixa. Longo prazo garante futuro.
+
+Integração entre mineração ' title='Curto prazo gera caixa. Longo prazo garante futuro.
+
+Integração entre mineração e instituto de pesquisa não é custo. É e…'>Curto prazo gera caixa. Longo prazo garante futuro.
+
+Integração entre mineração e instituto de pesquisa não é custo. É e…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1183597263' target='_blank'>detalhe</a></td></tr><tr><td data-n='4'>4</td><td data-n='Agence Consultoria'>Agence Consultoria</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1430080543' target='_blank'>detalhe</a></td></tr><tr><td data-n='5'>5</td><td data-n='Zummit'>Zummit</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='O gap de talentos em TI é real. E as grandes empresas já encontraram uma saída.
+' title='O gap de talentos em TI é real. E as grandes empresas já encontraram uma saída.
+
+Enquanto o processo tradicional de cont…'>O gap de talentos em TI é real. E as grandes empresas já encontraram uma saída.
+
+Enquanto o processo tradicional de cont…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1429826243' target='_blank'>detalhe</a></td></tr><tr><td data-n='6'>6</td><td data-n='Allied IT'>Allied IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1440864223' target='_blank'>detalhe</a></td></tr><tr><td data-n='7'>7</td><td data-n='Allied IT'>Allied IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1436100083' target='_blank'>detalhe</a></td></tr><tr><td data-n='8'>8</td><td data-n='Nova IT'>Nova IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por' title='Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por que. Provavelmente o problema não é o R…'>Sua empresa contratou RPA. Os processos ainda travam. O TI não sabe explicar por que. Provavelmente o problema não é o R…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1452256073' target='_blank'>detalhe</a></td></tr><tr><td data-n='9'>9</td><td data-n='Viviane Rangel'>Viviane Rangel</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Estratégia de Sourcing de Tecnologia!' title='Estratégia de Sourcing de Tecnologia!'>Estratégia de Sourcing de Tecnologia!</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1307797704' target='_blank'>detalhe</a></td></tr><tr><td data-n='10'>10</td><td data-n='Ródio Tech Soluções'>Ródio Tech Soluções</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Sua empresa está crescendo e o time de TI não acompanha o ritmo?
+
+  Muitas empre' title='Sua empresa está crescendo e o time de TI não acompanha o ritmo?
+
+  Muitas empresas resolvem isso contratando — mas exis…'>Sua empresa está crescendo e o time de TI não acompanha o ritmo?
+
+  Muitas empresas resolvem isso contratando — mas exis…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1239290684' target='_blank'>detalhe</a></td></tr><tr><td data-n='11'>11</td><td data-n='Andrea Schwarz'>Andrea Schwarz</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Acessibilidade digital não precisa virar mais uma task no seu backlog.
+
+Se você ' title='Acessibilidade digital não precisa virar mais uma task no seu backlog.
+
+Se você trabalha com TI ou front-end, sabe exata…'>Acessibilidade digital não precisa virar mais uma task no seu backlog.
+
+Se você trabalha com TI ou front-end, sabe exata…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1182021033' target='_blank'>detalhe</a></td></tr><tr><td data-n='12'>12</td><td data-n='Lucas Mendonça'>Lucas Mendonça</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='O Valor da &quot;Infraestrutura Invisível&quot;
+
+Em cybersegurança, o sucesso de uma opera' title='O Valor da &quot;Infraestrutura Invisível&quot;
+
+Em cybersegurança, o sucesso de uma operação é medido pelo que não acontece.
+
+Não…'>O Valor da &quot;Infraestrutura Invisível&quot;
+
+Em cybersegurança, o sucesso de uma operação é medido pelo que não acontece.
+
+Não…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1193004573' target='_blank'>detalhe</a></td></tr><tr><td data-n='13'>13</td><td data-n='Global Source'>Global Source</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Esse é um dos cálculos que mais muda a cabeça de donos de provedor quando fazem ' title='Esse é um dos cálculos que mais muda a cabeça de donos de provedor quando fazem pela primeira vez.
+
+O custo do suporte t…'>Esse é um dos cálculos que mais muda a cabeça de donos de provedor quando fazem pela primeira vez.
+
+O custo do suporte t…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1428170703' target='_blank'>detalhe</a></td></tr><tr><td data-n='14'>14</td><td data-n='Dominit Cloud and Management IT'>Dominit Cloud and Management IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1182003323' target='_blank'>detalhe</a></td></tr><tr><td data-n='15'>15</td><td data-n='Zummit'>Zummit</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Você tem orçamento. Tem a entrega. Mas não tem time, e a vaga não pode ser abert' title='Você tem orçamento. Tem a entrega. Mas não tem time, e a vaga não pode ser aberta.
+
+Esse cenário é mais comum do que par…'>Você tem orçamento. Tem a entrega. Mas não tem time, e a vaga não pode ser aberta.
+
+Esse cenário é mais comum do que par…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1301406803' target='_blank'>detalhe</a></td></tr><tr><td data-n='16'>16</td><td data-n='Marcio Chleba'>Marcio Chleba</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Cultura é como chuva' title='Cultura é como chuva'>Cultura é como chuva</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1436210653' target='_blank'>detalhe</a></td></tr><tr><td data-n='17'>17</td><td data-n='Allied IT'>Allied IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1447799913' target='_blank'>detalhe</a></td></tr><tr><td data-n='18'>18</td><td data-n='Arthur Frota'>Arthur Frota</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Nas últimas semanas, participei de várias conversas sobre inteligência artificia' title='Nas últimas semanas, participei de várias conversas sobre inteligência artificial. Quase todas terminavam na mesma discu…'>Nas últimas semanas, participei de várias conversas sobre inteligência artificial. Quase todas terminavam na mesma discu…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1442789343' target='_blank'>detalhe</a></td></tr><tr><td data-n='19'>19</td><td data-n='Allied IT'>Allied IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1441331843' target='_blank'>detalhe</a></td></tr><tr><td data-n='20'>20</td><td data-n='Cecilia Rocco'>Cecilia Rocco</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='A IA no RH não está eliminando pessoas. Está eliminando desculpas.
+
+Esse ano me ' title='A IA no RH não está eliminando pessoas. Está eliminando desculpas.
+
+Esse ano me senti desafiada pela minha diretoria — e…'>A IA no RH não está eliminando pessoas. Está eliminando desculpas.
+
+Esse ano me senti desafiada pela minha diretoria — e…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1455488423' target='_blank'>detalhe</a></td></tr><tr><td data-n='21'>21</td><td data-n='Allied IT'>Allied IT</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1436587803' target='_blank'>detalhe</a></td></tr><tr><td data-n='22'>22</td><td data-n='Leandro Renzi'>Leandro Renzi</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='81% das empresas brasileiras relatam dificuldade objetiva para encontrar mão de ' title='81% das empresas brasileiras relatam dificuldade objetiva para encontrar mão de obra qualificada, segundo o ManpowerGrou…'>81% das empresas brasileiras relatam dificuldade objetiva para encontrar mão de obra qualificada, segundo o ManpowerGrou…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1452263253' target='_blank'>detalhe</a></td></tr><tr><td data-n='23'>23</td><td data-n='Mirante Tecnologia'>Mirante Tecnologia</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='O maior risco da inteligência artificial nas empresas já não está nas chamadas “' title='O maior risco da inteligência artificial nas empresas já não está nas chamadas “alucinações”, mas na capacidade de produ…'>O maior risco da inteligência artificial nas empresas já não está nas chamadas “alucinações”, mas na capacidade de produ…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1201530733' target='_blank'>detalhe</a></td></tr><tr><td data-n='24'>24</td><td data-n='Anderson Campos'>Anderson Campos</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='FAZER MAIS COM MENOS??? 🚀📉
+
+Cortar é fácil. Difícil é não parar. Já pensou nisso' title='FAZER MAIS COM MENOS??? 🚀📉
+
+Cortar é fácil. Difícil é não parar. Já pensou nisso? 🤔
+
+👉 Fazer pastel em casa parece m…'>FAZER MAIS COM MENOS??? 🚀📉
+
+Cortar é fácil. Difícil é não parar. Já pensou nisso? 🤔
+
+👉 Fazer pastel em casa parece m…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1196086363' target='_blank'>detalhe</a></td></tr><tr><td data-n='25'>25</td><td data-n='Centro de Gestão e Liderança Contemporânea - CGLC'>Centro de Gestão e Liderança Contemporânea - CGLC</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Inteligência Artificial não é mais pauta técnica. É pauta de liderança.
+
+A IA já' title='Inteligência Artificial não é mais pauta técnica. É pauta de liderança.
+
+A IA já está dentro das organizações: em seleçõ…'>Inteligência Artificial não é mais pauta técnica. É pauta de liderança.
+
+A IA já está dentro das organizações: em seleçõ…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1174526003' target='_blank'>detalhe</a></td></tr><tr><td data-n='26'>26</td><td data-n='Psm Company'>Psm Company</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam T' title='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…'>Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1138160894' target='_blank'>detalhe</a></td></tr><tr><td data-n='27'>27</td><td data-n='Psm Company'>Psm Company</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam T' title='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…'>Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1139562014' target='_blank'>detalhe</a></td></tr><tr><td data-n='28'>28</td><td data-n='Psm Company'>Psm Company</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam T' title='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…'>Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1140591294' target='_blank'>detalhe</a></td></tr><tr><td data-n='29'>29</td><td data-n='Nuviom'>Nuviom</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/849460724' target='_blank'>detalhe</a></td></tr><tr><td data-n='30'>30</td><td data-n='Coopersystem'>Coopersystem</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='' title=''>—</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/867060893' target='_blank'>detalhe</a></td></tr><tr><td data-n='31'>31</td><td data-n='MPJ Solutions'>MPJ Solutions</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Em 2025, a terceirização de profissionais de TI se consolida como uma alavanca e' title='Em 2025, a terceirização de profissionais de TI se consolida como uma alavanca estratégica para aumentar performance, ef…'>Em 2025, a terceirização de profissionais de TI se consolida como uma alavanca estratégica para aumentar performance, ef…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/914460983' target='_blank'>detalhe</a></td></tr><tr><td data-n='32'>32</td><td data-n='Fernando Aurélio'>Fernando Aurélio</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Ele me disse algo que não consigo esquecer: &quot;Eu achei que ter alguém cuidando de' title='Ele me disse algo que não consigo esquecer: &quot;Eu achei que ter alguém cuidando de TI era suficiente para cibersegurança.&quot;'>Ele me disse algo que não consigo esquecer: &quot;Eu achei que ter alguém cuidando de TI era suficiente para cibersegurança.&quot;</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1100083783' target='_blank'>detalhe</a></td></tr><tr><td data-n='33'>33</td><td data-n='Frederico Sieck'>Frederico Sieck</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cená' title='Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cenário onde inovação é essencial e agilidad…'>Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cenário onde inovação é essencial e agilidad…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/918636453' target='_blank'>detalhe</a></td></tr><tr><td data-n='34'>34</td><td data-n='Selbetti Business Consulting'>Selbetti Business Consulting</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Antes de falar em IA, Automação ou Outsourcing, encare a verdade: seus processos' title='Antes de falar em IA, Automação ou Outsourcing, encare a verdade: seus processos estão prontos? 
+
+A verdade é dura, mas …'>Antes de falar em IA, Automação ou Outsourcing, encare a verdade: seus processos estão prontos? 
+
+A verdade é dura, mas …</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/924191933' target='_blank'>detalhe</a></td></tr><tr><td data-n='35'>35</td><td data-n='Psm Company'>Psm Company</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam T' title='Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…'>Existe um padrão claro nas empresas que operam em escala: elas não terceirizam TI “no escuro”
+
+Quando a operação é críti…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1139862084' target='_blank'>detalhe</a></td></tr><tr><td data-n='36'>36</td><td data-n='Marcelo Bertasi'>Marcelo Bertasi</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Quando a TI hospitalar vira o coração que não pode parar
+
+Em hospitais de grande' title='Quando a TI hospitalar vira o coração que não pode parar
+
+Em hospitais de grande porte, a TI se tornou tão vital quanto …'>Quando a TI hospitalar vira o coração que não pode parar
+
+Em hospitais de grande porte, a TI se tornou tão vital quanto …</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/933814853' target='_blank'>detalhe</a></td></tr><tr><td data-n='37'>37</td><td data-n='Denivaldo GOMES'>Denivaldo GOMES</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Sua equipe de TI está apagando incêndios ou prevenindo-os?
+
+&quot;Terceirizar TI sign' title='Sua equipe de TI está apagando incêndios ou prevenindo-os?
+
+&quot;Terceirizar TI significa perder controle.&quot; Essa é a objeção…'>Sua equipe de TI está apagando incêndios ou prevenindo-os?
+
+&quot;Terceirizar TI significa perder controle.&quot; Essa é a objeção…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1112580623' target='_blank'>detalhe</a></td></tr><tr><td data-n='38'>38</td><td data-n='Dan Almeida Porto'>Dan Almeida Porto</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='RH e Outsourcing: Parceria Estratégica, não Substituição.
+
+Quando falamos em alo' title='RH e Outsourcing: Parceria Estratégica, não Substituição.
+
+Quando falamos em alocação de profissionais de TI, não estamo…'>RH e Outsourcing: Parceria Estratégica, não Substituição.
+
+Quando falamos em alocação de profissionais de TI, não estamo…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1170296423' target='_blank'>detalhe</a></td></tr><tr><td data-n='39'>39</td><td data-n='Coopersystem'>Coopersystem</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora ' title='Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora 4 vantagens em terceirizar sua equipe de…'>Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora 4 vantagens em terceirizar sua equipe de…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/760645593' target='_blank'>detalhe</a></td></tr><tr><td data-n='40'>40</td><td data-n='farol soluções'>farol soluções</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Parte relevante dos incidentes de segurança não começa dentro da empresa.
+
+Começ' title='Parte relevante dos incidentes de segurança não começa dentro da empresa.
+
+Começa em quem ela confia: fornecedores, parc…'>Parte relevante dos incidentes de segurança não começa dentro da empresa.
+
+Começa em quem ela confia: fornecedores, parc…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1170688863' target='_blank'>detalhe</a></td></tr><tr><td data-n='41'>41</td><td data-n='luciano lima'>luciano lima</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='TECHTALENT BRAZIL
+Em Busca do Empresário/Empresa com Visão e Paixão pela Profiss' title='TECHTALENT BRAZIL
+Em Busca do Empresário/Empresa com Visão e Paixão pela Profissão
+Imagine você podendo pagar salários d…'>TECHTALENT BRAZIL
+Em Busca do Empresário/Empresa com Visão e Paixão pela Profissão
+Imagine você podendo pagar salários d…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/1080883104' target='_blank'>detalhe</a></td></tr><tr><td data-n='42'>42</td><td data-n='MPJ Solutions'>MPJ Solutions</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Falta braço ou tempo para gerenciar sua equipe de TI? Terceirizar com a MPJ sign' title='Falta braço ou tempo para gerenciar sua equipe de TI? Terceirizar com a MPJ significa:
+
+✅ Profissionais de alta performa…'>Falta braço ou tempo para gerenciar sua equipe de TI? Terceirizar com a MPJ significa:
+
+✅ Profissionais de alta performa…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/768179003' target='_blank'>detalhe</a></td></tr><tr><td data-n='43'>43</td><td data-n='Recrutify'>Recrutify</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Estamos mudando a lógica da terceirização tech!! 
+ 
+Lógica atual do mercado: ❌ C' title='Estamos mudando a lógica da terceirização tech!! 
+ 
+Lógica atual do mercado: ❌ Contratar o mais barato possível ❌ Cobrar…'>Estamos mudando a lógica da terceirização tech!! 
+ 
+Lógica atual do mercado: ❌ Contratar o mais barato possível ❌ Cobrar…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/969925533' target='_blank'>detalhe</a></td></tr><tr><td data-n='44'>44</td><td data-n='Frederico Sieck'>Frederico Sieck</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cená' title='Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cenário onde inovação é essencial e agilidad…'>Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cenário onde inovação é essencial e agilidad…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/918458993' target='_blank'>detalhe</a></td></tr><tr><td data-n='45'>45</td><td data-n='Selbetti Business Consulting'>Selbetti Business Consulting</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Antes de falar em IA, Automação ou Outsourcing, encare a verdade: seus processos' title='Antes de falar em IA, Automação ou Outsourcing, encare a verdade: seus processos estão prontos? 
+
+A verdade é dura, mas …'>Antes de falar em IA, Automação ou Outsourcing, encare a verdade: seus processos estão prontos? 
+
+A verdade é dura, mas …</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/924201913' target='_blank'>detalhe</a></td></tr><tr><td data-n='46'>46</td><td data-n='MPJ Solutions'>MPJ Solutions</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='💡 Terceirizar sua equipe de TI é mais do que uma escolha estratégica:
+
+ ✔️ Garan' title='💡 Terceirizar sua equipe de TI é mais do que uma escolha estratégica:
+
+ ✔️ Garante agilidade nos processos
+ ✔️ Reduz cu…'>💡 Terceirizar sua equipe de TI é mais do que uma escolha estratégica:
+
+ ✔️ Garante agilidade nos processos
+ ✔️ Reduz cu…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/854560163' target='_blank'>detalhe</a></td></tr><tr><td data-n='47'>47</td><td data-n='Mirante Tecnologia'>Mirante Tecnologia</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='O Atlantico LatAm Digital Report mostra que o valor de mercado do ecossistema de' title='O Atlantico LatAm Digital Report mostra que o valor de mercado do ecossistema de tecnologia da América Latina já ultrapa…'>O Atlantico LatAm Digital Report mostra que o valor de mercado do ecossistema de tecnologia da América Latina já ultrapa…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/857449333' target='_blank'>detalhe</a></td></tr><tr><td data-n='48'>48</td><td data-n='Frederico Sieck'>Frederico Sieck</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cená' title='Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cenário onde inovação é essencial e agilidad…'>Por que cada vez mais empresas estão apostando no Outsourcing de TI?
+
+Em um cenário onde inovação é essencial e agilidad…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/854637493' target='_blank'>detalhe</a></td></tr><tr><td data-n='49'>49</td><td data-n='Coopersystem'>Coopersystem</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='O que é mais vantajoso: manter uma equipe interna de TI ou terceirizar o serviço' title='O que é mais vantajoso: manter uma equipe interna de TI ou terceirizar o serviço? 🤔
+
+Essa é uma pergunta que merece uma…'>O que é mais vantajoso: manter uma equipe interna de TI ou terceirizar o serviço? 🤔
+
+Essa é uma pergunta que merece uma…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/680566324' target='_blank'>detalhe</a></td></tr><tr><td data-n='50'>50</td><td data-n='Fabricio Ribeiro'>Fabricio Ribeiro</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='90% das decisões de “make vs. buy” em TI têm sido tomadas pelos motivos errados.' title='90% das decisões de “make vs. buy” em TI têm sido tomadas pelos motivos errados.  
+E isso está custando milhões para a s…'>90% das decisões de “make vs. buy” em TI têm sido tomadas pelos motivos errados.  
+E isso está custando milhões para a s…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/696560013' target='_blank'>detalhe</a></td></tr><tr><td data-n='51'>51</td><td data-n='André Sanseverino'>André Sanseverino</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='10 constatações obtidas em mais de 1.000 projetos de custos da MyABCM ao longo d' title='10 constatações obtidas em mais de 1.000 projetos de custos da MyABCM ao longo dos últimos 30 anos 🎯
+
+• Produtos e Serv…'>10 constatações obtidas em mais de 1.000 projetos de custos da MyABCM ao longo dos últimos 30 anos 🎯
+
+• Produtos e Serv…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/583508053' target='_blank'>detalhe</a></td></tr><tr><td data-n='52'>52</td><td data-n='Ademir Vicente Machado Junior'>Ademir Vicente Machado Junior</td><td class='c' data-n='Nao'><span class='lv-Nao'>Nao</span></td><td class='clip' data-n='Transformação digital no atendimento não começa com ferramentas.
+
+Começa com a c' title='Transformação digital no atendimento não começa com ferramentas.
+
+Começa com a coragem da liderança. 
+Tem gente que quer…'>Transformação digital no atendimento não começa com ferramentas.
+
+Começa com a coragem da liderança. 
+Tem gente que quer…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/673717556' target='_blank'>detalhe</a></td></tr><tr><td data-n='53'>53</td><td data-n='Hardlink'>Hardlink</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Aluguel de Equipamentos de TI: Acelere a Inovação e Expanda o seu Negócio' title='Aluguel de Equipamentos de TI: Acelere a Inovação e Expanda o seu Negócio'>Aluguel de Equipamentos de TI: Acelere a Inovação e Expanda o seu Negócio</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/760680313' target='_blank'>detalhe</a></td></tr><tr><td data-n='54'>54</td><td data-n='Coopersystem'>Coopersystem</td><td class='c' data-n='Sim'><span class='lv-Sim'>Sim</span></td><td class='clip' data-n='Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora ' title='Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora 4 vantagens em terceirizar sua equipe de…'>Você precisa ampliar seu time de TI de forma rápida e eficiente? Descubra agora 4 vantagens em terceirizar sua equipe de…</td><td data-n='1'><a href='https://www.linkedin.com/ad-library/detail/468210096' target='_blank'>detalhe</a></td></tr></tbody>
+  </table>
+  </div>
+
+  <footer>Gerado 18/08/2026 17:33 &middot; linkedin-ads-terceirizar-ti.xlsx</footer>
+</div>
+<script>
+function cellSortValue(td) {
+  if (!td) return null;
+  const raw = (td.dataset.n || '').trim();
+  if (raw === '') return null;
+  const n = Number(raw);
+  if (Number.isFinite(n) && !/[^0-9eE.+-]/.test(raw)) return n;
+  return raw.toLowerCase();
+}
+function sortTable(table, col, dir) {
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+  const missing = v => v === null || v === undefined || v === '';
+  rows.sort((a, b) => {
+    const av = cellSortValue(a.cells[col]);
+    const bv = cellSortValue(b.cells[col]);
+    if (missing(av) && missing(bv)) return 0;
+    if (missing(av)) return 1;
+    if (missing(bv)) return -1;
+    if (typeof av === 'number' && typeof bv === 'number') {
+      return dir === 'desc' ? bv - av : av - bv;
+    }
+    return dir === 'desc'
+      ? String(bv).localeCompare(String(av), 'pt-BR')
+      : String(av).localeCompare(String(bv), 'pt-BR');
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+document.querySelectorAll('table.sortable-table th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const table = th.closest('table');
+    const col = Number(th.dataset.col);
+    const next = th.classList.contains('sorted-desc') ? 'asc' : 'desc';
+    table.querySelectorAll('th.sortable').forEach(h => h.classList.remove('sorted-desc', 'sorted-asc'));
+    th.classList.add(next === 'desc' ? 'sorted-desc' : 'sorted-asc');
+    sortTable(table, col, next);
+  });
+});
+function applyEmpFilters() {
+  const root = document.getElementById('emp-filters');
+  const sim = (root.querySelector('.f-sim') || {}).value || '';
+  const q = ((root.querySelector('.f-q') || {}).value || '').toLowerCase();
+  const table = document.getElementById('tbl-empresas');
+  let n = 0;
+  table.querySelectorAll('tbody tr').forEach(tr => {
+    const rowSim = tr.dataset.sim || '';
+    const allowed = sim ? sim.split(',') : [];
+    const okSim = !sim || allowed.includes(rowSim);
+    const okQ = !q || tr.innerText.toLowerCase().includes(q);
+    const show = okSim && okQ;
+    tr.style.display = show ? '' : 'none';
+    if (show) n++;
+  });
+  document.getElementById('emp-count').textContent = n + ' empresa(s)';
+  document.querySelectorAll('.card.click').forEach(c => {
+    c.classList.toggle('active', (c.dataset.simFilter || '') === sim);
+  });
+}
+document.getElementById('emp-filters').addEventListener('input', applyEmpFilters);
+document.getElementById('emp-filters').addEventListener('change', applyEmpFilters);
+document.querySelectorAll('.card.click').forEach(card => {
+  card.addEventListener('click', () => {
+    const sel = document.querySelector('.f-sim');
+    sel.value = card.dataset.simFilter || '';
+    applyEmpFilters();
+  });
+});
+</script>
+</body>
+</html>
